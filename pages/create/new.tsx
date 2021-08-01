@@ -1,7 +1,7 @@
 import React from 'react'
 import { css } from '@emotion/react'
 
-const New: React.FC = () => {
+const NewRoomPage: React.FC = () => {
   return (
     <div>
 
@@ -9,4 +9,4 @@ const New: React.FC = () => {
   )
 }
 
-export default New
+export default NewRoomPage

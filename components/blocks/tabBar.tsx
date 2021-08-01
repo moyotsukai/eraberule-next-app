@@ -10,26 +10,27 @@ type Props = {
 interface Tabs {
   text: string
   path: string
+  match: string[]
 }
 
 const tabs: Tabs[] = [
   {
     text: "参加",
     path: "/",
+    match: ["/", "/room"],
   },
   {
     text: "作成",
     path: "/create",
+    match: ["/create", "/create/new"],
   }
 ]
 
 const TabBar: React.FC<Props> = (props) => {
-  const path = props.path
-
   return (
     <div css={tabBarStyle}>
       {tabs.map((tab, index) => {
-        const isSelected = (path === tab.path)
+        const isSelected = (tab.match.indexOf(props.path) !== -1)
 
         return (
           <Tab text={tab.text} path={tab.path} isSelected={isSelected} key={index} />
@@ -50,6 +51,8 @@ const tabBarStyle = css`
   position: -webkit-sticky;
   position: sticky;
   top: 0;
+  transform: translate3d(0, 0, 0);
+  z-index: 100;
 `
 
 export default TabBar

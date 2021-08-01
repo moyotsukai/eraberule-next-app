@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { css } from '@emotion/react'
-import TabDescription from '../components/blocks/tabDescription'
+import Message from '../components/blocks/message'
 import SearchBox from '../components/blocks/searchBox'
-import { bgBlueColor } from '../styles/colors'
 import { useRouter } from 'next/router'
 
 const IndexPage: React.FC = () => {
@@ -11,18 +10,21 @@ const IndexPage: React.FC = () => {
 
   const handleTitleChange = (event) => {
     setEnteredTitle(event.target.value)
-    console.log(enteredTitle)
   }
 
   const toRoom = () => {
-    router.push("/room")
+    if (enteredTitle === "") { return }
+    router.push({
+      pathname: "/room",
+      query: { title: enteredTitle }
+    })
   }
 
   return (
     <div css={layoutStyle}>
-      <TabDescription>
+      <Message isLoading={false}>
         ルーム名を検索して投票に参加
-      </TabDescription>
+      </Message>
       <SearchBox value={enteredTitle} placeholder="ルーム名を入力" onChange={handleTitleChange} onEnterKey={toRoom} />
     </div>
   )
@@ -30,7 +32,6 @@ const IndexPage: React.FC = () => {
 
 const layoutStyle = css`
   min-height: 100vh;
-  background-color: ${bgBlueColor};
 `
 
 export default IndexPage

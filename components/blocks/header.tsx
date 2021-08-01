@@ -22,6 +22,8 @@ const headerStyle = css`
   background-color: #fff;
   border-bottom: 1px solid rgb(220, 220, 220);
   -webkit-tap-highlight-color: rgba(0,0,0,0);
+  transform: translate3d(0, 0, 0);
+  z-index: 100;
 `
 
 const linkStyle = css`

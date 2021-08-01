@@ -14,7 +14,7 @@ const InputSearch: React.FC<Props> = (props) => {
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      onEnterKey()
+      // onEnterKey()
     }
   }
 
