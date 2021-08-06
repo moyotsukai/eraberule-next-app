@@ -2230,6 +2230,11 @@
   "resolved" "https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.2.6.tgz"
   "version" "4.2.6"
 
+"hamt_plus@1.0.2":
+  "integrity" "sha1-4hwlKWjH4zsg9qGwlM2FeHomVgE="
+  "resolved" "https://registry.npmjs.org/hamt_plus/-/hamt_plus-1.0.2.tgz"
+  "version" "1.0.2"
+
 "has-bigints@^1.0.1":
   "integrity" "sha512-LSBS2LjbNBTf6287JEbEzvJgftkF5qFkmCo9hDRpAzKhUOlJ+hx8dd4USs00SgsUNwc4617J9ki5YtEClM2ffA=="
   "resolved" "https://registry.npmjs.org/has-bigints/-/has-bigints-1.0.1.tgz"
@@ -3410,7 +3415,7 @@
   "resolved" "https://registry.npmjs.org/react-refresh/-/react-refresh-0.8.3.tgz"
   "version" "0.8.3"
 
-"react@^16.8.0 || ^17.0.0", "react@^17.0.2", "react@>=16.8 || ^17.0.0", "react@>=16.8.0", "react@15.x.x || 16.x.x || 17.x.x", "react@17.0.2":
+"react@^16.8.0 || ^17.0.0", "react@^17.0.2", "react@>=16.13.1", "react@>=16.8 || ^17.0.0", "react@>=16.8.0", "react@15.x.x || 16.x.x || 17.x.x", "react@17.0.2":
   "integrity" "sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.2.tgz"
   "version" "17.0.2"
@@ -3463,6 +3468,13 @@
   "version" "3.5.0"
   dependencies:
     "picomatch" "^2.2.1"
+
+"recoil@^0.4.0":
+  "integrity" "sha512-FZ2ljI4ldZU820V0APbKOtS4bPwPJHvpDBQEl+Cf47DMaM35wuLXl2u37E0TSgdvKAZBOUsIwcBnzE+ncODRxQ=="
+  "resolved" "https://registry.npmjs.org/recoil/-/recoil-0.4.0.tgz"
+  "version" "0.4.0"
+  dependencies:
+    "hamt_plus" "1.0.2"
 
 "regenerator-runtime@^0.13.4":
   "integrity" "sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA=="

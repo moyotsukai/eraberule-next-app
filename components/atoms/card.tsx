@@ -27,9 +27,13 @@ const Card: React.FC<Props> = (props) => {
 const cardStyle = css`
   background-color: #fff;
   margin: 35px 15px;
-  padding: 15px 10px;
+  padding: 15px 5px;
   border-radius: 12px;
   text-align: center;
+
+  @media(min-width: 500px) {
+    padding: 15px 10px;
+  }
 `
 
 const cardAccordionStyle = css`

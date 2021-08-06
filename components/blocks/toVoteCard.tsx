@@ -11,6 +11,7 @@ type Props = {
 }
 
 const ToVoteCard: React.FC<Props> = (props) => {
+
   return (
     <Card isAccordion={false}>
       <SupportingTextCell shouldAlignLeft={true}>
@@ -20,7 +21,13 @@ const ToVoteCard: React.FC<Props> = (props) => {
         {props.roomTitle}
       </TextCell>
       <Spacer y="20px" />
-      <Button onClick={props.onClick}>投票する</Button>
+      <Button
+        onClick={props.onClick}
+        isEnabled={true}
+        isLoading={false}
+      >
+        投票する
+      </Button>
     </Card>
   )
 }

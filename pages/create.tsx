@@ -16,7 +16,13 @@ const CreatePage: React.FC = () => {
       <Message isLoading={false}>
         新しい投票ルームを作成
       </Message>
-      <Button onClick={toNewRoom}>作成</Button>
+      <Button
+        onClick={toNewRoom}
+        isEnabled={true}
+        isLoading={false}
+      >
+        作成
+      </Button>
     </div>
   )
 }

@@ -1,36 +1,88 @@
 import React from 'react'
 import { css } from '@emotion/react'
-import { primaryColor, primaryShadowColor } from '../../styles/colors'
+import { primaryColor, primaryShadowColor, primaryDisabledColor } from '../../styles/colors'
+import { motion } from "framer-motion"
+import LoadingCircle from "../atoms/loadingCircle"
+import Spacer from "../atoms/spacer"
 
 type Props = {
   onClick: (event: React.MouseEvent<HTMLInputElement>) => void
+  isEnabled: boolean
+  isLoading: boolean
   children?: React.ReactNode
 }
 
 const Button: React.FC<Props> = (props) => {
-  return (
-    <button onClick={props.onClick} css={buttonStyle}>
-      {props.children}
-    </button>
-  )
+  if (props.isEnabled) {
+    return (
+      <motion.button
+        onClick={props.onClick}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        css={() => buttonStyle(props.isEnabled)}>
+        {props.children}
+      </motion.button>
+    )
+
+  } else {
+    if (props.isLoading) {
+      return (
+        <button
+          onClick={props.onClick}
+          disabled={true}
+          css={buttonLoadingStyle}>
+          <LoadingCircle />
+          <Spacer x="5px" />
+          {props.children}
+        </button>
+      )
+    } else {
+      return (
+        <button
+          onClick={props.onClick}
+          disabled={true}
+          css={() => buttonStyle(props.isEnabled)}>
+          {props.children}
+        </button>
+      )
+    }
+  }
 }
 
-const buttonStyle = css`
+const buttonStyle = (isEnabled) => css`
   min-width: 95px;
   min-height: 42px;
   font-family: 'Noto Sans JP', sans-serif;
   font-size: 12pt;
   border-radius: 6px;
   color: #fff;
-  background-color: ${primaryColor};
+  background-color: ${isEnabled ? primaryColor : primaryDisabledColor};
   box-shadow: 0 2px 3px 0 ${primaryShadowColor};
   border: none;
-  cursor: pointer;
+  cursor: ${isEnabled ? "pointer" : "default"};
   -webkit-tap-highlight-color: rgba(0,0,0,0);
+  text-align: center;
+  margin: 0 auto;
 
   &:focus {
     outline: none;
   }
+`
+
+const buttonLoadingStyle = css`
+  min-width: 95px;
+  min-height: 42px;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 12pt;
+  border-radius: 6px;
+  color: #fff;
+  background-color: ${primaryDisabledColor};
+  box-shadow: 0 2px 3px 0 ${primaryShadowColor};
+  border: none;
+  cursor: default;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
 `
 
 export default Button

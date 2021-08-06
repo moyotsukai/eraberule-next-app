@@ -1,85 +1,84 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { css } from '@emotion/react'
 import { firebase, db } from '../../lib/firebase'
 import { useRouter } from 'next/router'
-import Card from '../../components/atoms/card'
-import TextCell from '../../components/atoms/textCell'
-import SupportingTextCell from '../../components/atoms/supportingTextCell'
 import Button from '../../components/atoms/button'
-import Spacer from '../../components/atoms/spacer'
 import Message from '../../components/blocks/message'
-import queryString from 'query-string'
-import { Room } from '../../structs/room'
-import { ruleDisplayNames } from '../../structs/rules'
+import VotePageCard from '../../components/blocks/votePageCard'
+import { useRecoilValue, useRecoilState } from 'recoil'
+import { roomDataState, personalRankState } from '../../recoil/atom'
+import { ruleNames } from '../../structs/rules'
 
 const VotePage: React.FC = () => {
-  const [roomData, setRoomData] = useState(undefined)
-
-  const [isConnected, setIsConnected] = useState(undefined)
-  if (db === undefined) { setIsConnected(false) }
-
+  //RECOIL
+  const roomData = useRecoilValue(roomDataState)
+  const [personalRank, setPersonalRank] = useRecoilState(personalRankState)
   const router = useRouter()
 
   useEffect(() => {
-    const queryParsed = queryString.parse(router.asPath.split(/\?/)[1])
-    if (Object.keys(queryParsed).length === 0) { router.push("/") }
-    setRoomData(queryParsed)
-    console.log("roomData", roomData)
+    if (roomData.isPlaceholder === true) {
+      router.push("/")
+    }
   }, [])
 
+  useEffect(() => {
+    return () => {
+      setPersonalRank([])
+      console.log("Page unmounted")
+    }
+  }, [])
+
+  //UI SETUP
+  const isConnected = useRef(undefined)
+  useEffect(() => {
+    if (db === undefined) {
+      isConnected.current = false
+    }
+  }, [])
+  const [isEnabled, setIsEnabled] = useState(true)
+  const [isClicked, setIsClicked] = useState(false)
+
+  //USER INTERACTION
   const sendVote = () => {
     console.log("send")
+    setIsClicked(true)
+    setIsEnabled(false)
   }
 
-  if (roomData === undefined) {
-    return (
-      <div css={layoutStyle}>
-        <Message isLoading={true}>
-          読み込み中
-        </Message>
-      </div>
-    )
-  }
+  useEffect(() => {
+    switch (roomData.rule) {
+      case ruleNames.majorityRule:
+        setIsEnabled(personalRank.indexOf(1) !== -1)
+        break
+      case ruleNames.bordaRule:
+      case ruleNames.condorcetRule:
+      case ruleNames.majorityJusgement:
+        setIsEnabled(personalRank.indexOf(0) === -1)
+        break
+    }
+  }, [personalRank])
+
+  // if (isConnected.current === false) {
+  //   return (
+  //     <div css={layoutStyle}>
+  //       <Message isLoading={false}>
+  //         データベースに接続できません。
+  //       </Message>
+  //     </div>
+  //   )
+  // }
 
   return (
     <div css={layoutStyle}>
-      <Card isAccordion={false}>
+      <VotePageCard isEnabled={!isClicked} />
 
-        <SupportingTextCell shouldAlignLeft={true}>
-          タイトル
-        </SupportingTextCell>
-        <TextCell>
-          {roomData.title}
-        </TextCell>
-        <Spacer y="15px" />
-
-        {roomData.explanation !== "" &&
-          <React.Fragment>
-            <SupportingTextCell shouldAlignLeft={true}>
-              説明
-            </SupportingTextCell>
-            <TextCell>
-              {roomData.explanation}
-            </TextCell>
-            <Spacer y="15px" />
-          </React.Fragment>
-        }
-
-        <SupportingTextCell shouldAlignLeft={true}>
-          候補
-        </SupportingTextCell>
-        {roomData.options.map((option, index) => {
-          <TextCell key={index}>
-            {option}
-          </TextCell>
-        })}
-        <Spacer y="15px" />
-
-        <SupportingTextCell shouldAlignLeft={true}>
-          この投票は{ruleDisplayNames[roomData.rule]}で集計されます。
-        </SupportingTextCell>
-      </Card>
-      <Button onClick={sendVote}>送信</Button>
+      <Button
+        onClick={sendVote}
+        isEnabled={isEnabled}
+        isLoading={isClicked}
+      >
+        {isClicked ? "送信中" : "送信"}
+      </Button>
     </div>
   )
 }

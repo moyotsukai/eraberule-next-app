@@ -5,12 +5,20 @@ import { useRouter } from 'next/router'
 import Message from '../components/blocks/message'
 import queryString from 'query-string'
 import ToVoteCard from '../components/blocks/toVoteCard'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { roomDataState, personalRankState } from '../recoil/atom'
 
 const RoomPage: React.FC = () => {
-  const [roomData, setRoomData] = useState(undefined)
+  //RECOIL
+  const [roomData, setRoomData] = useRecoilState(roomDataState)
+  const setPersonalRank = useSetRecoilState(personalRankState)
 
-  const [isConnected, setIsConnected] = useState(undefined)
-  if (db === undefined) { setIsConnected(false) }
+  const isConnected = useRef(undefined)
+  useEffect(() => {
+    if (db === undefined) {
+      isConnected.current = false
+    }
+  })
 
   const [enteredTitle, setEnteredTitle] = useState("")
 
@@ -28,49 +36,52 @@ const RoomPage: React.FC = () => {
     if (isFirstRender.current) {
       isFirstRender.current = false
     } else {
-
       if (hasRequested.current) { return }
-      db.collection("rooms").where("title", "==", enteredTitle)
-        .get()
-        .then((querySnapshot) => {
-          if (querySnapshot.size === 0) {
-            setRoomData(null)
-          }
-          querySnapshot.forEach((doc) => {
-            setRoomData(doc.data())
-          })
-          console.log("roomData", roomData)
-          hasRequested.current = true
-        })
-        .catch((error) => {
-          console.error("Error getting documents: ", error);
-        })
 
-      // setRoomData({
-      //   explanation: "みんなが好きな季節を投票で決めよう！",
-      //   options: [
-      //     "春",
-      //     "夏",
-      //     "秋",
-      //     "冬"
-      //   ],
-      //   rule: "condorcetRule",
-      //   senderId: "r2beUc7wMraEc7YAcM5tK9X7Rtn1",
-      //   state: "ongoing",
-      //   title: "好きな季節投票"
-      // })
+      // db.collection("rooms").where("title", "==", enteredTitle)
+      //   .get()
+      //   .then((querySnapshot) => {
+      //     if (querySnapshot.size === 0) {
+      //       setRoomData(null)
+      //     }
+      //     querySnapshot.forEach((doc) => {
+      //       setRoomData(doc.data())
+      //     })
+      //     console.log("roomData", roomData)
+      //     hasRequested.current = true
+      //   })
+      //   .catch((error) => {
+      //     console.error("Error getting documents: ", error);
+      //   })
 
+      setRoomData({
+        explanation: "みんなが好きな季節を投票で決めよう！",
+        options: [
+          "春",
+          "夏",
+          "秋",
+          "冬"
+        ],
+        rule: "condorcetRule",
+        senderId: "r2beUc7wMraEc7YAcM5tK9X7Rtn1",
+        state: "ongoing",
+        title: "好きな季節投票"
+      })
+      console.log("data fetched")
     }
   }, [enteredTitle])
 
   const toVote = () => {
+    console.log("clicked")
+    const rank = Array(roomData.options.length).fill(0)
+    setPersonalRank(rank)
+
     router.push({
-      pathname: "/room/vote",
-      query: roomData
+      pathname: "/room/vote"
     })
   }
 
-  if (roomData === undefined) {
+  if (roomData.isPlaceholder === true) {
     return (
       <div css={layoutStyle}>
         <Message isLoading={true}>
@@ -80,15 +91,15 @@ const RoomPage: React.FC = () => {
     )
   }
 
-  if (isConnected === false) {
-    return (
-      <div css={layoutStyle}>
-        <Message isLoading={false}>
-          データベースに接続できません。
-        </Message>
-      </div>
-    )
-  }
+  // if (isConnected.current === false) {
+  //   return (
+  //     <div css={layoutStyle}>
+  //       <Message isLoading={false}>
+  //         データベースに接続できません。
+  //       </Message>
+  //     </div>
+  //   )
+  // }
 
   if (roomData === null) {
     return (

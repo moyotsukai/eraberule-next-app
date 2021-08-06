@@ -3,6 +3,7 @@ import { css } from '@emotion/react'
 import SearchIcon from '../icons/searchIcon'
 import { primaryColor } from '../../styles/colors'
 import InputLarge from '../atoms/inputSearch'
+import { motion } from 'framer-motion'
 
 type Props = {
   value: string
@@ -22,9 +23,14 @@ const SearchBox: React.FC<Props> = (props) => {
           onEnterKey={props.onEnterKey}
           css={inputStyle}
         />
-        <button onClick={props.onEnterKey} css={buttonStyle}>
+        <motion.button
+          onClick={props.onEnterKey}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          css={buttonStyle}
+        >
           <SearchIcon color="#fff" />
-        </button>
+        </motion.button>
       </div>
     </div>
   )
