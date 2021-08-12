@@ -9,7 +9,7 @@ const ruleNames: Rule = {
   majorityRule: "majorityRule",
   bordaRule: "bordaRule",
   condorcetRule: "condorcetRule",
-  majorityJusgement: "majorityJusgement"
+  majorityJusgement: "majorityJudgement"
 }
 
 const ruleDisplayNames: Rule = {

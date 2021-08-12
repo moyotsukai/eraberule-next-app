@@ -14,7 +14,7 @@ const RankSelectionTable: React.FC<Props> = (props) => {
   const [personalRank, setPersonalRank] = useRecoilState(personalRankState)
 
   //USER INTERATION
-  const handleSingleSelection = (index) => {
+  const handleSelection = (index) => {
     if (!props.isEnabled) { return }
     let rank = [...personalRank]
     const largestNum = rank.filter(num => num !== 0).length
@@ -42,7 +42,7 @@ const RankSelectionTable: React.FC<Props> = (props) => {
         <RankSelectionCell
           text={option}
           rank={personalRank[index] === 0 ? "" : personalRank[index].toString()}
-          onClick={() => handleSingleSelection(index)}
+          onClick={() => handleSelection(index)}
           isSelected={personalRank[index] !== 0}
           key={index} />
       ))}

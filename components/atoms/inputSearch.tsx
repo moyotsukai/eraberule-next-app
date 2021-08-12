@@ -13,8 +13,9 @@ const InputSearch: React.FC<Props> = (props) => {
   const onEnterKey: () => void = props.onEnterKey
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      // onEnterKey()
+    if (event.keyCode === 13) {
+      console.log("on enter key")
+      onEnterKey()
     }
   }
 

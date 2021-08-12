@@ -5,15 +5,20 @@ import { useRouter } from 'next/router'
 import Button from '../../components/atoms/button'
 import Message from '../../components/blocks/message'
 import VotePageCard from '../../components/blocks/votePageCard'
+import Spacer from '../../components/atoms/spacer'
 import { useRecoilValue, useRecoilState } from 'recoil'
 import { roomDataState, personalRankState } from '../../recoil/atom'
 import { ruleNames } from '../../structs/rules'
+import { useAuthenticate } from '../../hooks/auth'
 
 const VotePage: React.FC = () => {
-  //RECOIL
+  //STATE
+  const user = useAuthenticate()
   const roomData = useRecoilValue(roomDataState)
   const [personalRank, setPersonalRank] = useRecoilState(personalRankState)
   const router = useRouter()
+  const [isEnabled, setIsEnabled] = useState(true)
+  const [isClicked, setIsClicked] = useState(false)
 
   useEffect(() => {
     if (roomData.isPlaceholder === true) {
@@ -28,23 +33,6 @@ const VotePage: React.FC = () => {
     }
   }, [])
 
-  //UI SETUP
-  const isConnected = useRef(undefined)
-  useEffect(() => {
-    if (db === undefined) {
-      isConnected.current = false
-    }
-  }, [])
-  const [isEnabled, setIsEnabled] = useState(true)
-  const [isClicked, setIsClicked] = useState(false)
-
-  //USER INTERACTION
-  const sendVote = () => {
-    console.log("send")
-    setIsClicked(true)
-    setIsEnabled(false)
-  }
-
   useEffect(() => {
     switch (roomData.rule) {
       case ruleNames.majorityRule:
@@ -58,15 +46,51 @@ const VotePage: React.FC = () => {
     }
   }, [personalRank])
 
-  // if (isConnected.current === false) {
-  //   return (
-  //     <div css={layoutStyle}>
-  //       <Message isLoading={false}>
-  //         データベースに接続できません。
-  //       </Message>
-  //     </div>
-  //   )
-  // }
+  //USER INTERACTION
+  const sendVote = () => {
+    console.log("send")
+    setIsClicked(true)
+    setIsEnabled(false)
+    console.log("roomData", roomData)
+
+    sendRoomData().then(() => {
+      console.log("did send roomData")
+      sendAttendance().then(() => {
+        console.log("did send attendance")
+        toResult()
+      })
+    })
+
+  }
+
+  const sendRoomData = async () => {
+    console.log("sendRoomData")
+    const votesRef = db.collection("rooms").doc(roomData.docId).collection("votes").doc()
+    votesRef.set({
+      personalRank: personalRank,
+      date: new Date()
+    })
+  }
+
+  const sendAttendance = async () => {
+    console.log("sendAttendance")
+  }
+
+  const toResult = () => {
+    console.log("roResult")
+    router.push("/room/result")
+  }
+
+  //RETURN
+  if (user === null) {
+    return (
+      <div css={layoutStyle}>
+        <Message isLoading={false}>
+          データベースに接続できません。
+        </Message>
+      </div>
+    )
+  }
 
   return (
     <div css={layoutStyle}>
@@ -79,6 +103,7 @@ const VotePage: React.FC = () => {
       >
         {isClicked ? "送信中" : "送信"}
       </Button>
+      <Spacer y="35px" />
     </div>
   )
 }

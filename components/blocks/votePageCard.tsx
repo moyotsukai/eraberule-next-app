@@ -9,6 +9,7 @@ import { roomDataState } from '../../recoil/atom'
 import { ruleNames } from '../../structs/rules'
 import SingleSelectionTable from '../blocks/singleSelectionTable'
 import RankSelectionTable from './rankSelectionTable'
+import MjSelectionTable from './mjSelectionTable'
 
 type Props = {
   isEnabled: boolean
@@ -20,10 +21,14 @@ const VotePageCard: React.FC<Props> = (props) => {
 
   //COMPONENTS
   const Table = () => {
-    if (roomData.rule === ruleNames.majorityRule) {
-      return <SingleSelectionTable isEnabled={props.isEnabled} />
-    } else {
-      return <RankSelectionTable isEnabled={props.isEnabled} />
+    switch (roomData.rule) {
+      case ruleNames.majorityRule:
+        return <SingleSelectionTable isEnabled={props.isEnabled} />
+      case ruleNames.bordaRule:
+      case ruleNames.condorcetRule:
+        return <RankSelectionTable isEnabled={props.isEnabled} />
+      case ruleNames.majorityJusgement:
+        return <MjSelectionTable isEnabled={props.isEnabled} />
     }
   }
 
