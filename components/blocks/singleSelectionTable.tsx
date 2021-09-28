@@ -9,7 +9,6 @@ type Props = {
 }
 
 const SingleSelectionTable: React.FC<Props> = (props) => {
-  //RECOIL
   const roomData = useRecoilValue(roomDataState)
   const [personalRank, setPersonalRank] = useRecoilState(personalRankState)
 

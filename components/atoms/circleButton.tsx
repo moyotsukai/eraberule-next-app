@@ -1,9 +1,8 @@
 import React from 'react'
 import { css } from '@emotion/react'
-import { primaryColor, primaryShadowColor, primaryDisabledColor } from '../../styles/colors'
+import { primaryColor, primaryDisabledColor } from '../../styles/colors'
 import { motion } from "framer-motion"
 import LoadingCircle from "../atoms/loadingCircle"
-import Spacer from "../atoms/spacer"
 
 type Props = {
   onClick: (event: React.MouseEvent<HTMLInputElement>) => void
@@ -12,14 +11,15 @@ type Props = {
   children?: React.ReactNode
 }
 
-const Button: React.FC<Props> = (props) => {
+const CircleButton: React.FC<Props> = (props) => {
   if (props.isEnabled) {
     return (
       <motion.button
         onClick={props.onClick}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        css={() => buttonStyle(props.isEnabled)}>
+        css={() => buttonStyle(props.isEnabled)}
+      >
         {props.children}
       </motion.button>
     )
@@ -30,18 +30,19 @@ const Button: React.FC<Props> = (props) => {
         <button
           onClick={props.onClick}
           disabled={true}
-          css={buttonLoadingStyle}>
+          css={buttonLoadingStyle}
+        >
           <LoadingCircle />
-          <Spacer x="5px" />
-          {props.children}
         </button>
       )
+
     } else {
       return (
         <button
           onClick={props.onClick}
           disabled={true}
-          css={() => buttonStyle(props.isEnabled)}>
+          css={() => buttonStyle(props.isEnabled)}
+        >
           {props.children}
         </button>
       )
@@ -50,20 +51,21 @@ const Button: React.FC<Props> = (props) => {
 }
 
 const buttonStyle = (isEnabled) => css`
-  min-width: 95px;
-  min-height: 42px;
-  font-family: 'Noto Sans JP', sans-serif;
-  font-size: 12pt;
-  border-radius: 6px;
-  color: #fff;
-  background-color: ${isEnabled ? primaryColor : primaryDisabledColor};
-  box-shadow: 0 2px 3px 0 ${primaryShadowColor};
+  width: 36px;
+  height: 36px;
+  border-radius: 18px;
   border: none;
+  background-color: ${isEnabled ? primaryColor : primaryDisabledColor};
   cursor: ${isEnabled ? "pointer" : "default"};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 5px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
-  text-align: center;
-  margin: 0 auto;
-  padding: 0 12px;
 
   &:focus {
     outline: none;
@@ -71,19 +73,20 @@ const buttonStyle = (isEnabled) => css`
 `
 
 const buttonLoadingStyle = css`
-  min-width: 95px;
-  min-height: 42px;
-  font-family: 'Noto Sans JP', sans-serif;
-  font-size: 12pt;
-  border-radius: 6px;
-  color: #fff;
-  background-color: ${primaryDisabledColor};
-  box-shadow: 0 2px 3px 0 ${primaryShadowColor};
+  width: 36px;
+  height: 36px;
+  border-radius: 18px;
   border: none;
+  background-color: ${primaryDisabledColor};
   cursor: default;
   display: flex;
+  justify-content: center;
   align-items: center;
-  margin: 0 auto;
+  position: absolute;
+  right: 5px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
 `
 
-export default Button
+export default CircleButton

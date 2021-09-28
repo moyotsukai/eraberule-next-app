@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { css } from '@emotion/react'
 import SearchIcon from '../icons/searchIcon'
 import { primaryColor } from '../../styles/colors'
-import InputLarge from '../atoms/inputSearch'
-import { motion } from 'framer-motion'
+import InputSearch from '../atoms/inputSearch'
+import CircleButton from '../atoms/circleButton'
 
 type Props = {
   value: string
@@ -13,26 +13,33 @@ type Props = {
 }
 
 const SearchBox: React.FC<Props> = (props) => {
+  const [isClicked, setIsClicked] = useState(false)
+
+  const onEnterKey: () => void = props.onEnterKey
+  const startSearch = () => {
+    setIsClicked(true)
+    onEnterKey()
+  }
+
   return (
     <div css={layoutStyle}>
       <div css={inputContainerStyle}>
-        <InputLarge
+        <InputSearch
           value={props.value}
           placeholder={props.placeholder}
           onChange={props.onChange}
-          onEnterKey={props.onEnterKey}
+          onEnterKey={startSearch}
           css={inputStyle}
         />
-        <motion.button
-          onClick={props.onEnterKey}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          css={buttonStyle}
+        <CircleButton
+          onClick={startSearch}
+          isEnabled={!isClicked}
+          isLoading={isClicked}
         >
-          <SearchIcon color="#fff" />
-        </motion.button>
+          {isClicked ? "" : <SearchIcon color="#fff" />}
+        </CircleButton>
       </div>
-    </div>
+    </div >
   )
 }
 

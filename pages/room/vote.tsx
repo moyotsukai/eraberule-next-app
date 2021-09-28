@@ -1,24 +1,24 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { css } from '@emotion/react'
-import { firebase, db } from '../../lib/firebase'
+import { db } from '../../lib/firebase'
 import { useRouter } from 'next/router'
 import Button from '../../components/atoms/button'
 import Message from '../../components/blocks/message'
 import VotePageCard from '../../components/blocks/votePageCard'
 import Spacer from '../../components/atoms/spacer'
 import { useRecoilValue, useRecoilState } from 'recoil'
-import { roomDataState, personalRankState } from '../../recoil/atom'
+import { roomDataState, personalRankState, attendedRoomIdsState } from '../../recoil/atom'
 import { ruleNames } from '../../structs/rules'
 import { useAuthenticate } from '../../hooks/auth'
 
 const VotePage: React.FC = () => {
-  //STATE
   const user = useAuthenticate()
   const roomData = useRecoilValue(roomDataState)
   const [personalRank, setPersonalRank] = useRecoilState(personalRankState)
   const router = useRouter()
   const [isEnabled, setIsEnabled] = useState(true)
   const [isClicked, setIsClicked] = useState(false)
+  const [attendedRoomIds, setAttendedRoomIds] = useRecoilState(attendedRoomIdsState)
 
   useEffect(() => {
     if (roomData.isPlaceholder === true) {
@@ -27,9 +27,10 @@ const VotePage: React.FC = () => {
   }, [])
 
   useEffect(() => {
+    console.log("roomData", roomData)
+
     return () => {
       setPersonalRank([])
-      console.log("Page unmounted")
     }
   }, [])
 
@@ -46,21 +47,16 @@ const VotePage: React.FC = () => {
     }
   }, [personalRank])
 
-  //USER INTERACTION
   const sendVote = () => {
-    console.log("send")
     setIsClicked(true)
     setIsEnabled(false)
-    console.log("roomData", roomData)
 
     sendRoomData().then(() => {
-      console.log("did send roomData")
       sendAttendance().then(() => {
-        console.log("did send attendance")
+        console.log("attended room ids", attendedRoomIds)
         toResult()
       })
     })
-
   }
 
   const sendRoomData = async () => {
@@ -74,14 +70,29 @@ const VotePage: React.FC = () => {
 
   const sendAttendance = async () => {
     console.log("sendAttendance")
+    const userId = user.uid
+    const roomIds = attendedRoomIds
+    const newAttendedRoomIds = [
+      roomData.docId,
+      ...roomIds
+    ]
+    setAttendedRoomIds(newAttendedRoomIds)
+    db.collection("users").doc(userId).set({
+      attendedRooms: newAttendedRoomIds,
+      createdRooms: [],
+      date: new Date()
+    })
   }
 
   const toResult = () => {
-    console.log("roResult")
     router.push("/room/result")
   }
 
-  //RETURN
+  const toError = () => {
+    router.push("/error")
+  }
+
+  //UI
   if (user === null) {
     return (
       <div css={layoutStyle}>

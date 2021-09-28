@@ -20,6 +20,11 @@ export const roomDataState = atom<Room>({
   }
 })
 
+export const attendedRoomIdsState = atom<string[] | undefined>({
+  key: "attendedRoomIds",
+  default: undefined
+})
+
 export const personalRankState = atom<number[]>({
   key: "personalRankState",
   default: []

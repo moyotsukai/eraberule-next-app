@@ -12,7 +12,7 @@ export const useAuthenticate = () => {
 
     firebase.auth().signInAnonymously()
       .then(() => {
-        //Signed in
+        console.log("signed in")
       })
       .catch((error) => {
         console.error(error.code)

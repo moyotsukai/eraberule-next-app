@@ -17,7 +17,7 @@ const tabs: Tabs[] = [
   {
     text: "参加",
     path: "/",
-    match: ["/", "/room", "/room/vote"],
+    match: ["/", "/room", "/room/vote", "/room/result"],
   },
   {
     text: "作成",

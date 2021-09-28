@@ -6,8 +6,9 @@ import Button from '../atoms/button'
 import Spacer from '../atoms/spacer'
 
 type Props = {
-  onClick: (event: React.MouseEvent<HTMLInputElement>) => void
   roomTitle: string
+  hasVoted: boolean
+  onClick: (event: React.MouseEvent<HTMLInputElement>) => void
 }
 
 const ToVoteCard: React.FC<Props> = (props) => {
@@ -26,7 +27,10 @@ const ToVoteCard: React.FC<Props> = (props) => {
         isEnabled={true}
         isLoading={false}
       >
-        投票する
+        {props.hasVoted
+          ? "結果を見る"
+          : "投票する"
+        }
       </Button>
     </Card>
   )

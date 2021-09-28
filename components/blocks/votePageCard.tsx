@@ -16,7 +16,7 @@ type Props = {
 }
 
 const VotePageCard: React.FC<Props> = (props) => {
-  //RECOIL
+  //STATE
   const roomData = useRecoilValue(roomDataState)
 
   //COMPONENTS
