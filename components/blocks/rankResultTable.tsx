@@ -1,11 +1,16 @@
 import React from 'react'
 import { css } from '@emotion/react'
-import { useRecoilValue, useRecoilState } from 'recoil'
-import { roomDataState, personalRankState } from '../../recoil/atom'
+import { useRecoilValue } from 'recoil'
+import { roomDataState } from '../../recoil/atom'
 
-const RankResultTable: React.FC = () => {
+type Props = {
+  personalRanks: number[]
+}
 
-  //RETURN
+const RankResultTable: React.FC<Props> = (props) => {
+  const roomData = useRecoilValue(roomDataState)
+
+  //UI
   return (
     <div css={tableStyle}>
 

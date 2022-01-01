@@ -15,74 +15,32 @@ const IndexPage: React.FC = () => {
   const [enteredTitle, setEnteredTitle] = useState("")
   const [roomData, setRoomData] = useRecoilState(roomDataState)
   const [attendedRoomIds, setAttendedRoomIds] = useRecoilState(attendedRoomIdsState)
-  const hasRequested = useRef(false)
 
   const handleTitleChange = (event) => {
     setEnteredTitle(event.target.value)
   }
 
   const handleOnClick = async () => {
-    // const queryParsed = queryString.parse(router.asPath.split(/\?/)[1])
-    // if (Object.keys(queryParsed).length === 0) { router.push("/") }
-    // const enteredTitle = queryParsed.title as string
-
     if (!isValidTitle) { return }
-
-    getRoomData().then(() => {
-      console.log("data fetched", roomData)
-      getAttendedRoomIds().then(() => {
-        console.log("attended room ids", attendedRoomIds)
-        toRoom()
-      })
-    })
+    // getRoomData().then(() => {
+    //   getAttendedRoomIds().then(() => {
+    //     toRoom()
+    //   })
+    // })
+    toRoom()
   }
 
   const isValidTitle = () => {
     if (enteredTitle === "") { return false }
-    if (hasRequested.current) { return false }
     if (roomData.title === enteredTitle) { return false }
     return true
   }
 
-  const getRoomData = async () => {
-    db.collection("rooms").where("title", "==", enteredTitle)
-      .get()
-      .then((querySnapshot) => {
-        if (querySnapshot.size === 0) {
-          setRoomData(null)
-        } else {
-          const docData = querySnapshot.docs[0]
-          setRoomData({
-            ...docData.data(),
-            docId: docData.id
-          })
-        }
-        hasRequested.current = true
-      })
-      .catch((error) => {
-        console.error("Error getting documents: ", error)
-        toError()
-      })
-  }
-
-  const getAttendedRoomIds = async () => {
-    if (attendedRoomIds !== undefined) { return }
-    const userId = user.uid
-    db.collection("users").doc(userId).get().then((doc) => {
-      if (doc.exists) {
-        const roomIds = doc.data().attendedRooms
-        setAttendedRoomIds(roomIds)
-      } else {
-        setAttendedRoomIds([])
-      }
-    }).catch((error) => {
-      console.error("Error getting documents: ", error)
-      toError()
-    })
-  }
-
   const toRoom = () => {
-    router.push("/room")
+    router.push({
+      pathname: "/room",
+      query: { q: enteredTitle }
+    })
   }
 
   const toError = () => {

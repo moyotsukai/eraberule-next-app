@@ -28,7 +28,6 @@ const VotePage: React.FC = () => {
 
   useEffect(() => {
     console.log("roomData", roomData)
-
     return () => {
       setPersonalRank([])
     }
@@ -53,7 +52,6 @@ const VotePage: React.FC = () => {
 
     sendRoomData().then(() => {
       sendAttendance().then(() => {
-        console.log("attended room ids", attendedRoomIds)
         toResult()
       })
     })
@@ -69,7 +67,6 @@ const VotePage: React.FC = () => {
   }
 
   const sendAttendance = async () => {
-    console.log("sendAttendance")
     const userId = user.uid
     const roomIds = attendedRoomIds
     const newAttendedRoomIds = [

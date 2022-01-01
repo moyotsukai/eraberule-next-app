@@ -2,9 +2,9 @@ import { atom } from 'recoil'
 import { Room } from '../structs/room'
 import { User } from '../structs/user'
 
-export const userState = atom<User | null>({
+export const userState = atom<User | undefined | null>({
   key: "userState",
-  default: null
+  default: undefined
 })
 
 export const roomDataState = atom<Room>({
