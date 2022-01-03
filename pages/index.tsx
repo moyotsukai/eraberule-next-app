@@ -22,11 +22,6 @@ const IndexPage: React.FC = () => {
 
   const handleOnClick = async () => {
     if (!isValidTitle) { return }
-    // getRoomData().then(() => {
-    //   getAttendedRoomIds().then(() => {
-    //     toRoom()
-    //   })
-    // })
     toRoom()
   }
 
@@ -49,6 +44,7 @@ const IndexPage: React.FC = () => {
     })
   }
 
+  //Dev
   // const setTestData = () => {
   //   setRoomData({
   //     explanation: "みんなが好きな季節を投票で決めよう！",
@@ -68,11 +64,21 @@ const IndexPage: React.FC = () => {
   // }
 
   //UI
+  if (user === undefined) {
+    return (
+      <div css={layoutStyle}>
+        <Message isLoading={false}>
+          読み込み中...
+        </Message>
+      </div>
+    )
+  }
+
   if (user === null) {
     return (
       <div css={layoutStyle}>
         <Message isLoading={false}>
-          データベースに接続中
+          データベースに接続できません。
         </Message>
       </div>
     )

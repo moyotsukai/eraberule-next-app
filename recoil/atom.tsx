@@ -1,6 +1,6 @@
 import { atom } from 'recoil'
-import { Room } from '../structs/room'
-import { User } from '../structs/user'
+import { Room } from '../types/Room.type'
+import { User } from '../types/User.type'
 
 export const userState = atom<User | undefined | null>({
   key: "userState",

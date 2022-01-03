@@ -1,18 +1,18 @@
-interface Rule {
+interface RuleSet {
   majorityRule: string
   bordaRule: string
   condorcetRule: string
   majorityJusgement: string
 }
 
-const ruleNames: Rule = {
+const ruleNames: RuleSet = {
   majorityRule: "majorityRule",
   bordaRule: "bordaRule",
   condorcetRule: "condorcetRule",
   majorityJusgement: "majorityJudgement"
 }
 
-const ruleDisplayNames: Rule = {
+const ruleDisplayNames: RuleSet = {
   majorityRule: "多数決",
   bordaRule: "ボルダルール",
   condorcetRule: "コンドルセルール",

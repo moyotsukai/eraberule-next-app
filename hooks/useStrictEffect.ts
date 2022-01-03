@@ -1,11 +1,10 @@
-import { useDidUpdateEffect } from './useDidUpdateEffect';
-import { useRef, EffectCallback, DependencyList } from 'react';
+import { useRef, EffectCallback, DependencyList, useEffect } from 'react';
 
-//一度しか実行されないことを保証するEffect + 初回は実行されないEffect
+//一度しか実行されないことを保証するEffect
 export const useStrictEffect = (fn: EffectCallback, deps: DependencyList) => {
   const didEffectRunRef = useRef(false)
 
-  useDidUpdateEffect(() => {
+  useEffect(() => {
     if (didEffectRunRef.current === false) {
       didEffectRunRef.current = true
 

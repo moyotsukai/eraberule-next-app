@@ -5,22 +5,24 @@ import { useRouter } from 'next/router'
 import Message from '../components/blocks/message'
 import ToVoteCard from '../components/blocks/toVoteCard'
 import queryString from 'query-string'
-import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil'
+import { useSetRecoilState, useRecoilState } from 'recoil'
 import { roomDataState, personalRankState, attendedRoomIdsState } from '../recoil/atom'
 import { useAuthenticate } from '../hooks/auth'
 import { useDidUpdateEffect } from '../hooks/useDidUpdateEffect'
 import { useStrictEffect } from '../hooks/useStrictEffect'
+import { useStrictUpdateEffect } from '../hooks/useStrictUpdateEffect'
 
 const RoomPage: React.FC = () => {
   const user = useAuthenticate()
-  // const roomData = useRecoilValue(roomDataState)
-  const setPersonalRank = useSetRecoilState(personalRankState)
-  const [hasVoted, setHasVoted] = useState(false)
   const router = useRouter()
-  const [roomData, setRoomData] = useRecoilState(roomDataState)
   const [enteredTitle, setEnteredTitle] = useState("")
+  const [roomData, setRoomData] = useRecoilState(roomDataState)
   const [attendedRoomIds, setAttendedRoomIds] = useRecoilState(attendedRoomIdsState)
+  const [hasVoted, setHasVoted] = useState(false)
+  const setPersonalRank = useSetRecoilState(personalRankState)
+  const didSetAttendedRoomsRef = useRef(false)
 
+  //Set enteredTitle
   useLayoutEffect(() => {
     const queryParsed = queryString.parse(router.asPath.split(/\?/)[1])
     if (Object.keys(queryParsed).length === 0) { return }
@@ -28,7 +30,8 @@ const RoomPage: React.FC = () => {
     setEnteredTitle(q)
   }, [])
 
-  useStrictEffect(() => {
+  //Set roomData
+  useStrictUpdateEffect(() => {
     const getRoomData = async (title: string) => {
       db.collection("rooms").where("title", "==", title).limit(1)
         .get()
@@ -52,25 +55,35 @@ const RoomPage: React.FC = () => {
     getRoomData(enteredTitle)
   }, [enteredTitle])
 
-  useStrictEffect(() => {
-    const getAttendedRoomIds = async () => {
-      const userId = user.uid
-      db.collection("users").doc(userId).get().then((doc) => {
-        if (doc.exists) {
-          const roomIds = doc.data().attendedRooms
-          setAttendedRoomIds(roomIds)
-        } else {
-          setAttendedRoomIds([])
+  //Set attendedRoomIds
+  useEffect(() => {
+    if (user) {
+      if (didSetAttendedRoomsRef.current === false) {
+        didSetAttendedRoomsRef.current = true
+
+        const getAttendedRoomIds = async () => {
+          const userId = user.uid
+          db.collection("users").doc(userId).get().then((doc) => {
+            if (doc.exists) {
+              const docData = doc.data()
+              const roomIds = docData.attendedRooms === undefined ? [] : docData.attendedRooms
+              setAttendedRoomIds(roomIds)
+            } else {
+              setAttendedRoomIds([])
+            }
+          }).catch((error) => {
+            console.error("Error getting documents: ", error)
+            // toError()
+          })
         }
-      }).catch((error) => {
-        console.error("Error getting documents: ", error)
-        // toError()
-      })
+
+        getAttendedRoomIds()
+      }
     }
-    getAttendedRoomIds()
   }, [user])
 
-  useDidUpdateEffect(() => {
+  //Set hasVoted
+  useEffect(() => {
     if (roomData === null) { return }
     if (roomData.isPlaceholder === true) { return }
     if (attendedRoomIds === undefined) { return }

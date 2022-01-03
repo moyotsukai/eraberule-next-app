@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { css } from '@emotion/react'
 import { db } from '../../lib/firebase'
 import { useRouter } from 'next/router'
@@ -8,24 +8,27 @@ import VotePageCard from '../../components/blocks/votePageCard'
 import Spacer from '../../components/atoms/spacer'
 import { useRecoilValue, useRecoilState } from 'recoil'
 import { roomDataState, personalRankState, attendedRoomIdsState } from '../../recoil/atom'
-import { ruleNames } from '../../structs/rules'
+import { ruleNames } from '../../types/rules'
 import { useAuthenticate } from '../../hooks/auth'
 
 const VotePage: React.FC = () => {
   const user = useAuthenticate()
+  const router = useRouter()
   const roomData = useRecoilValue(roomDataState)
   const [personalRank, setPersonalRank] = useRecoilState(personalRankState)
-  const router = useRouter()
   const [isEnabled, setIsEnabled] = useState(true)
   const [isClicked, setIsClicked] = useState(false)
   const [attendedRoomIds, setAttendedRoomIds] = useRecoilState(attendedRoomIdsState)
+  const didSendRef = useRef(false)
 
+  //Push router when reloaded
   useEffect(() => {
     if (roomData.isPlaceholder === true) {
       router.push("/")
     }
   }, [])
 
+  //Set personalRank when unmounted
   useEffect(() => {
     console.log("roomData", roomData)
     return () => {
@@ -33,6 +36,7 @@ const VotePage: React.FC = () => {
     }
   }, [])
 
+  //Set isEnabled
   useEffect(() => {
     switch (roomData.rule) {
       case ruleNames.majorityRule:
@@ -47,49 +51,59 @@ const VotePage: React.FC = () => {
   }, [personalRank])
 
   const sendVote = () => {
-    setIsClicked(true)
-    setIsEnabled(false)
+    if (didSendRef.current === false) {
+      didSendRef.current = true
+      setIsClicked(true)
+      setIsEnabled(false)
 
-    sendRoomData().then(() => {
-      sendAttendance().then(() => {
-        toResult()
+      const sendRoomData = async () => {
+        const votesRef = db.collection("rooms").doc(roomData.docId).collection("votes").doc()
+        votesRef.set({
+          personalRank: personalRank,
+          date: new Date()
+        })
+      }
+
+      const sendAttendance = async () => {
+        const userId = user.uid
+        const roomIds = attendedRoomIds === undefined ? [] : attendedRoomIds
+        const newAttendedRoomIds = [
+          roomData.docId,
+          ...roomIds
+        ]
+        console.log("newAttendedRoomIds", newAttendedRoomIds)
+        setAttendedRoomIds(newAttendedRoomIds)
+        const userRef = db.collection("users").doc(userId)
+        userRef.set({
+          attendedRooms: newAttendedRoomIds,
+          createdRooms: [],
+          date: new Date()
+        })
+      }
+
+      sendRoomData().then(() => {
+        sendAttendance().then(() => {
+          toResult()
+        })
       })
-    })
-  }
-
-  const sendRoomData = async () => {
-    console.log("sendRoomData")
-    const votesRef = db.collection("rooms").doc(roomData.docId).collection("votes").doc()
-    votesRef.set({
-      personalRank: personalRank,
-      date: new Date()
-    })
-  }
-
-  const sendAttendance = async () => {
-    const userId = user.uid
-    const roomIds = attendedRoomIds
-    const newAttendedRoomIds = [
-      roomData.docId,
-      ...roomIds
-    ]
-    setAttendedRoomIds(newAttendedRoomIds)
-    db.collection("users").doc(userId).set({
-      attendedRooms: newAttendedRoomIds,
-      createdRooms: [],
-      date: new Date()
-    })
+    }
   }
 
   const toResult = () => {
     router.push("/room/result")
   }
 
-  const toError = () => {
-    router.push("/error")
+  //UI
+  if (user === undefined) {
+    return (
+      <div css={layoutStyle}>
+        <Message isLoading={false}>
+          読み込み中...
+        </Message>
+      </div>
+    )
   }
 
-  //UI
   if (user === null) {
     return (
       <div css={layoutStyle}>

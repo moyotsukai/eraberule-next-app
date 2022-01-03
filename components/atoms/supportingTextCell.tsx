@@ -15,7 +15,7 @@ const SupportingTextCell: React.FC<Props> = (props) => {
     )
   } else {
     return (
-      <div css={layoutStyle}>
+      <div css={() => layoutStyle(false)}>
         {props.children}
       </div>
     )

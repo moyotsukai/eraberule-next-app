@@ -3,10 +3,10 @@ import Card from '../atoms/card'
 import TextCell from '../atoms/textCell'
 import SupportingTextCell from '../atoms/supportingTextCell'
 import Spacer from '../atoms/spacer'
-import { ruleDisplayNames } from '../../structs/rules'
+import { ruleDisplayNames } from '../../types/rules'
 import { useRecoilValue } from 'recoil'
 import { roomDataState } from '../../recoil/atom'
-import { ruleNames } from '../../structs/rules'
+import { ruleNames } from '../../types/rules'
 import SingleSelectionTable from '../blocks/singleSelectionTable'
 import RankSelectionTable from './rankSelectionTable'
 import MjSelectionTable from './mjSelectionTable'
@@ -34,7 +34,7 @@ const VotePageCard: React.FC<Props> = (props) => {
 
   //RETURN
   return (
-    <Card isAccordion={false}>
+    <Card>
       <SupportingTextCell shouldAlignLeft={true}>
         タイトル
       </SupportingTextCell>

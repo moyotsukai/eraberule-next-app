@@ -26,7 +26,7 @@ const tabStyle = (isSelected) => css`
   text-align: center;
   margin: 0 2px;
   cursor: pointer;
-  padding: 8px 0;
+  padding: 20px 0;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   ${isSelected ? "border-bottom: 2px solid " + primaryColor + ";" : ""}
 `

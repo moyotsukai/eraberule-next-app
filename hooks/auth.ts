@@ -17,7 +17,7 @@ export const useAuthenticate = () => {
       .catch((error) => {
         console.error(error.code)
         console.error(error.message)
-      });
+      })
 
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
