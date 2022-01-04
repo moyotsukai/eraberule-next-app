@@ -8,7 +8,8 @@ const LoadingCircle: React.FC = () => {
     <motion.div
       animate={{ rotate: 360 }}
       transition={{ ease: "easeInOut", duration: 1.5, repeat: Infinity }}
-      css={circleStyle} />
+      css={circleStyle}
+    />
   )
 }
 

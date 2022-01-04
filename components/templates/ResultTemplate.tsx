@@ -8,6 +8,8 @@ import SupportingTextCell from '../atoms/supportingTextCell'
 import Card from '../atoms/card'
 import TextCell from '../atoms/textCell'
 import RankResultTable from '../blocks/rankResultTable'
+import LiveIndicator from '../atoms/LiveIndicator'
+import SpacerInline from '../atoms/SpacerInline'
 import { ruleDisplayNames } from '../../types/rules'
 
 type Props = {
@@ -50,7 +52,11 @@ const ResultTemplate: React.FC<Props> = (props) => {
   return (
     <div css={layoutStyle}>
       <SupportingTextCell shouldAlignLeft={false}>
-        ・ライブ
+        <div css={liveIndicatorContainerStyle}>
+          <LiveIndicator />
+          <SpacerInline x="5px" />
+          ライブ
+        </div>
       </SupportingTextCell>
 
       <Card>
@@ -96,6 +102,11 @@ const ResultTemplate: React.FC<Props> = (props) => {
 const layoutStyle = css`
   min-height: 100vh;
   text-align: center;
+`
+const liveIndicatorContainerStyle = css`
+  display: flex;
+  justify-content: right;
+  align-items: center;
 `
 
 export default ResultTemplate
