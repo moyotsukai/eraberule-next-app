@@ -7,14 +7,20 @@ import Spacer from '../atoms/spacer'
 
 type Props = {
   roomTitle: string
-  hasVoted: boolean
+  hasVoted: boolean | undefined
   onClick: (event: React.MouseEvent<HTMLInputElement>) => void
 }
 
 const ToVoteCard: React.FC<Props> = (props) => {
+  let text = "読み込み中"
+  if (props.hasVoted === true) {
+    text = "結果を見る"
+  } else if (props.hasVoted === false) {
+    text = "投票する"
+  }
 
   return (
-    <Card isAccordion={false}>
+    <Card>
       <SupportingTextCell shouldAlignLeft={true}>
         タイトル
       </SupportingTextCell>
@@ -24,13 +30,10 @@ const ToVoteCard: React.FC<Props> = (props) => {
       <Spacer y="20px" />
       <Button
         onClick={props.onClick}
-        isEnabled={true}
-        isLoading={false}
+        isEnabled={props.hasVoted !== undefined}
+        isLoading={props.hasVoted === undefined}
       >
-        {props.hasVoted
-          ? "結果を見る"
-          : "投票する"
-        }
+        {text}
       </Button>
     </Card>
   )

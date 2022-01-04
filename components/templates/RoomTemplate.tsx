@@ -8,7 +8,7 @@ import { Room } from '../../types/Room.type'
 type Props = {
   user: User | undefined | null
   roomData: Room | null
-  hasVoted: boolean
+  hasVoted: boolean | undefined
   handleOnClick: () => void
 }
 

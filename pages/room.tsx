@@ -14,7 +14,7 @@ const RoomPage: React.FC = () => {
   const [enteredTitle, setEnteredTitle] = useState("")
   const [roomData, setRoomData] = useRecoilState(roomDataState)
   const [attendedRoomIds, setAttendedRoomIds] = useRecoilState(attendedRoomIdsState)
-  const [hasVoted, setHasVoted] = useState(false)
+  const [hasVoted, setHasVoted] = useState(undefined)
   const setPersonalRank = useSetRecoilState(personalRankState)
   const didSetAttendedRoomsRef = useRef(false)
 
@@ -86,6 +86,8 @@ const RoomPage: React.FC = () => {
 
     if (attendedRoomIds.includes(roomData.docId)) {
       setHasVoted(true)
+    } else {
+      setHasVoted(false)
     }
   }, [roomData, attendedRoomIds])
 
