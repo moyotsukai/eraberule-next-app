@@ -16,10 +16,9 @@ type Props = {
 }
 
 const VotePageCard: React.FC<Props> = (props) => {
-  //STATE
   const roomData = useRecoilValue(roomDataState)
 
-  //COMPONENTS
+  //UI
   const Table = () => {
     switch (roomData.rule) {
       case ruleNames.majorityRule:
@@ -27,12 +26,11 @@ const VotePageCard: React.FC<Props> = (props) => {
       case ruleNames.bordaRule:
       case ruleNames.condorcetRule:
         return <RankSelectionTable isEnabled={props.isEnabled} />
-      case ruleNames.majorityJusgement:
+      case ruleNames.majorityJudgement:
         return <MjSelectionTable isEnabled={props.isEnabled} />
     }
   }
 
-  //RETURN
   return (
     <Card>
       <SupportingTextCell shouldAlignLeft={true}>

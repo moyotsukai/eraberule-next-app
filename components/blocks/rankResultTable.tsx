@@ -18,6 +18,7 @@ type Props = {
 const RankResultTable: React.FC<Props> = (props) => {
   const [resultRanks, setResultRanks] = useState<RankResults[] | undefined>(undefined)
 
+  //Set rank results
   useEffect(() => {
     switch (props.roomData.rule) {
       case ruleNames.majorityRule:
@@ -50,13 +51,18 @@ const RankResultTable: React.FC<Props> = (props) => {
     return (
       <ul css={tableStyle}>
         {resultRanks[0].map((result, index) => (
-          <li key={index} css={cellStyle}>
-            <span css={rankStyle}>{result.rank}</span>
-            <span css={mjBlockStyle}>
-              <p>{result.name}</p>
-              <p>{result.score}</p>
-            </span>
-          </li>
+          <React.Fragment key={index}>
+            <li css={mjCellStyle}>
+              <span css={rankStyle}>{result.rank}</span>
+              <span css={mjBlockStyle}>
+                <p>{result.name}</p>
+                <p>{result.score}</p>
+              </span>
+            </li>
+            {index !== resultRanks[0].length &&
+              <Spacer y="10px" />
+            }
+          </React.Fragment>
         ))}
       </ul>
     )
@@ -125,6 +131,11 @@ const nameStyle = css`
 const scoreStyle = css`
   min-width: 60px;
   text-align: right;
+`
+const mjCellStyle = css`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `
 const mjBlockStyle = css`
   min-width: 260px;

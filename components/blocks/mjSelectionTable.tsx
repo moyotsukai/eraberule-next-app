@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { css } from '@emotion/react'
 import { useRecoilValue, useRecoilState } from 'recoil'
 import { roomDataState, personalRankState } from '../../recoil/atom'
-import SingleSelectionCell from '../atoms/singleSelectionCell'
 import TextCell from '../atoms/textCell'
+import SingleSelectionCell from '../atoms/singleSelectionCell'
 import Spacer from '../atoms/spacer'
 
 type Props = {
@@ -11,11 +11,9 @@ type Props = {
 }
 
 const MjSelectionTable: React.FC<Props> = (props) => {
-  //RECOIL
   const roomData = useRecoilValue(roomDataState)
   const [personalRank, setPersonalRank] = useRecoilState(personalRankState)
 
-  //USER INTERATION
   const handleSelection = (optionIndex, languageIndex) => {
     if (!props.isEnabled) { return }
     let rank = [...personalRank]
@@ -26,16 +24,20 @@ const MjSelectionTable: React.FC<Props> = (props) => {
       rank[optionIndex] = languageIndex + 1
     }
 
-    console.log("personalRank", rank)
     setPersonalRank(rank)
   }
 
-  //RETURN
+  //DEV
+  useEffect(() => {
+    console.log("personalRank", personalRank)
+  }, [personalRank])
+
+  //UI
   return (
     <div css={tableStyle}>
       {roomData.options.map((option, optionIndex) => (
-        <React.Fragment>
-          <TextCell key={optionIndex}>
+        <React.Fragment key={optionIndex}>
+          <TextCell>
             {option}
           </TextCell>
 

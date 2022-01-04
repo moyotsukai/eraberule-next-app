@@ -12,7 +12,6 @@ const SingleSelectionTable: React.FC<Props> = (props) => {
   const roomData = useRecoilValue(roomDataState)
   const [personalRank, setPersonalRank] = useRecoilState(personalRankState)
 
-  //USER INTERATION
   const handleSelection = (index) => {
     if (!props.isEnabled) { return }
     const rank = [...personalRank]
@@ -32,7 +31,7 @@ const SingleSelectionTable: React.FC<Props> = (props) => {
     console.log("personalRank", rank)
   }
 
-  //RETURN
+  //UI
   return (
     <div css={tableStyle}>
       {roomData.options.map((option, index) => (
@@ -40,7 +39,8 @@ const SingleSelectionTable: React.FC<Props> = (props) => {
           text={option}
           onClick={() => handleSelection(index)}
           isSelected={personalRank[index] !== 0}
-          key={index} />
+          key={index}
+        />
       ))}
     </div>
   )
