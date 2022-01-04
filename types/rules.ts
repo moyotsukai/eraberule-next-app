@@ -2,21 +2,21 @@ interface RuleSet {
   majorityRule: string
   bordaRule: string
   condorcetRule: string
-  majorityJusgement: string
+  majorityJudgement: string
 }
 
 const ruleNames: RuleSet = {
   majorityRule: "majorityRule",
   bordaRule: "bordaRule",
   condorcetRule: "condorcetRule",
-  majorityJusgement: "majorityJudgement"
+  majorityJudgement: "majorityJudgement"
 }
 
 const ruleDisplayNames: RuleSet = {
   majorityRule: "多数決",
   bordaRule: "ボルダルール",
   condorcetRule: "コンドルセルール",
-  majorityJusgement: "Majority Judgement"
+  majorityJudgement: "Majority Judgement"
 }
 
 export { ruleNames, ruleDisplayNames }

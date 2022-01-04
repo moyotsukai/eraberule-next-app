@@ -44,7 +44,7 @@ const VotePage: React.FC = () => {
         break
       case ruleNames.bordaRule:
       case ruleNames.condorcetRule:
-      case ruleNames.majorityJusgement:
+      case ruleNames.majorityJudgement:
         setIsEnabled(personalRank.indexOf(0) === -1)
         break
     }

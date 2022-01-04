@@ -32,7 +32,7 @@ const RankResultTable: React.FC<Props> = (props) => {
         const cResult = condorcetRule(props.roomData, props.personalRanks)
         setResultRanks(cResult)
         break
-      case ruleNames.majorityJusgement:
+      case ruleNames.majorityJudgement:
         const mjResult = majorityJudgement(props.roomData, props.personalRanks)
         setResultRanks(mjResult)
         break
@@ -43,6 +43,22 @@ const RankResultTable: React.FC<Props> = (props) => {
   if (resultRanks === undefined) {
     return (
       <div />
+    )
+  }
+
+  if (props.roomData.rule === ruleNames.majorityJudgement) {
+    return (
+      <ul css={tableStyle}>
+        {resultRanks[0].map((result, index) => (
+          <li key={index} css={cellStyle}>
+            <span css={rankStyle}>{result.rank}</span>
+            <span css={mjBlockStyle}>
+              <p>{result.name}</p>
+              <p>{result.score}</p>
+            </span>
+          </li>
+        ))}
+      </ul>
     )
   }
 
@@ -109,6 +125,10 @@ const nameStyle = css`
 const scoreStyle = css`
   min-width: 60px;
   text-align: right;
+`
+const mjBlockStyle = css`
+  min-width: 260px;
+  text-align: left;
 `
 
 export default RankResultTable
