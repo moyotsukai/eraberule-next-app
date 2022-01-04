@@ -1,10 +1,10 @@
 import React from 'react'
-import { css } from '@emotion/react'
-import Button from '../components/atoms/button'
 import { useRouter } from 'next/router'
-import Message from '../components/blocks/message'
+import CreateTemplate from '../components/templates/CreateTemplate'
+import { useAuthenticate } from '../hooks/auth'
 
 const CreatePage: React.FC = () => {
+  const user = useAuthenticate()
   const router = useRouter()
 
   const toNewRoom = () => {
@@ -12,24 +12,11 @@ const CreatePage: React.FC = () => {
   }
 
   return (
-    <div css={layoutStyle}>
-      <Message isLoading={false}>
-        新しい投票ルームを作成
-      </Message>
-      <Button
-        onClick={toNewRoom}
-        isEnabled={true}
-        isLoading={false}
-      >
-        作成
-      </Button>
-    </div>
+    <CreateTemplate
+      user={user}
+      toNewRoom={toNewRoom}
+    />
   )
 }
-
-const layoutStyle = css`
-  min-height: 100vh;
-  text-align: center;
-`
 
 export default CreatePage

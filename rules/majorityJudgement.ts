@@ -30,7 +30,7 @@ export const majorityJudgement = (roomData: Room, personalRanks: number[][]): Ra
     tieBreakingEvaluations.push(atLeastMedianEvaluations.length)
   }
 
-  //Tie Break
+  //Tie break
   for (let j = 0; j < results.length; j++) {
     if (j === 0) { continue }
     for (let i = 0; i < j; i++) {
@@ -47,7 +47,6 @@ export const majorityJudgement = (roomData: Room, personalRanks: number[][]): Ra
     }
   }
 
-  //Tie break
   const tieBreakedResults = results.map((result) => (
     {
       name: result.name,
@@ -70,7 +69,7 @@ export const majorityJudgement = (roomData: Room, personalRanks: number[][]): Ra
 
   //To string
   const TieBreakedResultsString = tieBreakedResults.map((result) => {
-    const score = evaluationLanguage(result, roomData)
+    const score = evaluationVocabulary(result, roomData)
 
     return {
       name: result.name,
@@ -88,7 +87,7 @@ const swapAt = (array, i, j) => {
   return newArray
 }
 
-const evaluationLanguage = (result, roomData) => {
+const evaluationVocabulary = (result, roomData) => {
   if (roomData.commonLanguage) {
     return roomData.commonLanguage[result.score - 1]
   } else {

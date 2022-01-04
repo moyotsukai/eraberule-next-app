@@ -1,16 +1,12 @@
 import React, { useState, useEffect, useLayoutEffect, useRef } from 'react'
-import { css } from '@emotion/react'
 import { db } from '../lib/firebase'
 import { useRouter } from 'next/router'
-import Message from '../components/blocks/message'
-import ToVoteCard from '../components/blocks/toVoteCard'
 import queryString from 'query-string'
 import { useSetRecoilState, useRecoilState } from 'recoil'
 import { roomDataState, personalRankState, attendedRoomIdsState } from '../recoil/atom'
 import { useAuthenticate } from '../hooks/auth'
-import { useDidUpdateEffect } from '../hooks/useDidUpdateEffect'
-import { useStrictEffect } from '../hooks/useStrictEffect'
 import { useStrictUpdateEffect } from '../hooks/useStrictUpdateEffect'
+import RoomTemplate from '../components/templates/RoomTemplate'
 
 const RoomPage: React.FC = () => {
   const user = useAuthenticate()
@@ -112,59 +108,14 @@ const RoomPage: React.FC = () => {
   }
 
   //UI
-  if (user === undefined) {
-    return (
-      <div css={layoutStyle}>
-        <Message isLoading={false}>
-          読み込み中...
-        </Message>
-      </div>
-    )
-  }
-
-  if (user === null) {
-    return (
-      <div css={layoutStyle}>
-        <Message isLoading={false}>
-          データベースに接続できません。
-        </Message>
-      </div>
-    )
-  }
-
-  if (roomData === null) {
-    return (
-      <div css={layoutStyle}>
-        <Message isLoading={false}>
-          検索結果がありません。
-        </Message>
-      </div>
-    )
-  }
-
-  if (roomData.state === "closed") {
-    return (
-      <div css={layoutStyle}>
-        <Message isLoading={false}>
-          このルームは非公開です。
-        </Message>
-      </div>
-    )
-  }
-
   return (
-    <div css={layoutStyle}>
-      <ToVoteCard
-        roomTitle={roomData.title}
-        hasVoted={hasVoted}
-        onClick={handleOnClick}
-      />
-    </div>
+    <RoomTemplate
+      user={user}
+      roomData={roomData}
+      hasVoted={hasVoted}
+      handleOnClick={handleOnClick}
+    />
   )
 }
-
-const layoutStyle = css`
-  min-height: 100vh;
-`
 
 export default RoomPage

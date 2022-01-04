@@ -1,20 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { css } from '@emotion/react'
-import Message from '../components/blocks/message'
-import SearchBox from '../components/blocks/searchBox'
+import React, { useState } from 'react'
 import { useRouter } from 'next/router'
-import queryString from 'query-string'
-import { db } from '../lib/firebase'
-import { roomDataState, attendedRoomIdsState } from '../recoil/atom'
-import { useRecoilState } from 'recoil'
 import { useAuthenticate } from '../hooks/auth'
+import IndexTemplate from '../components/templates/IndexTemplate'
 
 const IndexPage: React.FC = () => {
   const user = useAuthenticate()
   const router = useRouter()
   const [enteredTitle, setEnteredTitle] = useState("")
-  const [roomData, setRoomData] = useRecoilState(roomDataState)
-  const [attendedRoomIds, setAttendedRoomIds] = useRecoilState(attendedRoomIdsState)
 
   const handleTitleChange = (event) => {
     setEnteredTitle(event.target.value)
@@ -27,7 +19,6 @@ const IndexPage: React.FC = () => {
 
   const isValidTitle = () => {
     if (enteredTitle === "") { return false }
-    if (roomData.title === enteredTitle) { return false }
     return true
   }
 
@@ -64,38 +55,14 @@ const IndexPage: React.FC = () => {
   // }
 
   //UI
-  if (user === undefined) {
-    return (
-      <div css={layoutStyle}>
-        <Message isLoading={false}>
-          読み込み中...
-        </Message>
-      </div>
-    )
-  }
-
-  if (user === null) {
-    return (
-      <div css={layoutStyle}>
-        <Message isLoading={false}>
-          データベースに接続できません。
-        </Message>
-      </div>
-    )
-  }
-
   return (
-    <div css={layoutStyle}>
-      <Message isLoading={false}>
-        ルーム名を検索して投票に参加
-      </Message>
-      <SearchBox value={enteredTitle} placeholder="ルーム名を入力" onChange={handleTitleChange} onEnterKey={handleOnClick} />
-    </div>
+    <IndexTemplate
+      user={user}
+      enteredTitle={enteredTitle}
+      handleTitleChange={handleTitleChange}
+      handleOnClick={handleOnClick}
+    />
   )
 }
-
-const layoutStyle = css`
-  min-height: 100vh;
-`
 
 export default IndexPage
