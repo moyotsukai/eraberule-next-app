@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react'
 import { db } from '../../lib/firebase'
 import { useRouter } from 'next/router'
 import { useRecoilValue, useRecoilState } from 'recoil'
-import { roomDataState, personalRankState, attendedRoomIdsState } from '../../recoil/atom'
+import { roomDataState, personalRankState, attendedRoomIdsState, hasNoUserDocState } from '../../recoil/atom'
 import { ruleNames } from '../../types/rules'
 import { useAuthenticate } from '../../hooks/auth'
 import VoteTemplate from '../../components/templates/VoteTemplate'
@@ -14,6 +14,7 @@ const VotePage: React.FC = () => {
   const [personalRank, setPersonalRank] = useRecoilState(personalRankState)
   const [isEnabled, setIsEnabled] = useState(true)
   const [isClicked, setIsClicked] = useState(false)
+  const hasNoUserDoc = useRecoilValue(hasNoUserDocState)
   const [attendedRoomIds, setAttendedRoomIds] = useRecoilState(attendedRoomIdsState)
   const didSendRef = useRef(false)
 
@@ -33,7 +34,7 @@ const VotePage: React.FC = () => {
   }, [])
 
   //Set isEnabled
-  useEffect(() => {
+  useLayoutEffect(() => {
     switch (roomData.rule) {
       case ruleNames.majorityRule:
         setIsEnabled(personalRank.indexOf(1) !== -1)
@@ -46,7 +47,7 @@ const VotePage: React.FC = () => {
     }
   }, [personalRank])
 
-  const sendVote = () => {
+  const onSend = () => {
     if (didSendRef.current === false) {
       didSendRef.current = true
       setIsClicked(true)
@@ -67,14 +68,20 @@ const VotePage: React.FC = () => {
           roomData.docId,
           ...roomIds
         ]
-        console.log("newAttendedRoomIds", newAttendedRoomIds)
         setAttendedRoomIds(newAttendedRoomIds)
         const userRef = db.collection("users").doc(userId)
-        userRef.set({
-          attendedRooms: newAttendedRoomIds,
-          createdRooms: [],
-          date: new Date()
-        })
+        if (hasNoUserDoc) {
+          userRef.set({
+            attendedRooms: newAttendedRoomIds,
+            createdRooms: [],
+            date: new Date()
+          })
+        } else {
+          userRef.update({
+            attendedRooms: newAttendedRoomIds,
+            date: new Date()
+          })
+        }
       }
 
       sendRoomData().then(() => {
@@ -96,7 +103,7 @@ const VotePage: React.FC = () => {
       roomData={roomData}
       isClicked={isClicked}
       isEnabled={isEnabled}
-      sendVote={sendVote}
+      sendVote={onSend}
     />)
 }
 

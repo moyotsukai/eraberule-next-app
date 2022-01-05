@@ -3,7 +3,7 @@ import { db } from '../lib/firebase'
 import { useRouter } from 'next/router'
 import queryString from 'query-string'
 import { useSetRecoilState, useRecoilState } from 'recoil'
-import { roomDataState, personalRankState, attendedRoomIdsState } from '../recoil/atom'
+import { roomDataState, personalRankState, attendedRoomIdsState, hasNoUserDocState } from '../recoil/atom'
 import { useAuthenticate } from '../hooks/auth'
 import { useStrictUpdateEffect } from '../hooks/useStrictUpdateEffect'
 import RoomTemplate from '../components/templates/RoomTemplate'
@@ -13,10 +13,11 @@ const RoomPage: React.FC = () => {
   const router = useRouter()
   const [enteredTitle, setEnteredTitle] = useState("")
   const [roomData, setRoomData] = useRecoilState(roomDataState)
+  const setHasNoUserDoc = useSetRecoilState(hasNoUserDocState)
+  const didSetAttendedRoomsRef = useRef(false)
   const [attendedRoomIds, setAttendedRoomIds] = useRecoilState(attendedRoomIdsState)
   const [hasVoted, setHasVoted] = useState(undefined)
   const setPersonalRank = useSetRecoilState(personalRankState)
-  const didSetAttendedRoomsRef = useRef(false)
 
   //Set enteredTitle
   useLayoutEffect(() => {
@@ -64,8 +65,10 @@ const RoomPage: React.FC = () => {
               const docData = doc.data()
               const roomIds = docData.attendedRooms === undefined ? [] : docData.attendedRooms
               setAttendedRoomIds(roomIds)
+              setHasNoUserDoc(false)
             } else {
               setAttendedRoomIds([])
+              setHasNoUserDoc(true)
             }
           }).catch((error) => {
             console.error("Error getting documents: ", error)

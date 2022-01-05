@@ -20,8 +20,18 @@ export const roomDataState = atom<Room>({
   }
 })
 
+export const hasNoUserDocState = atom<boolean>({
+  key: "hasNoUserDoc",
+  default: true
+})
+
 export const attendedRoomIdsState = atom<string[] | undefined>({
   key: "attendedRoomIds",
+  default: undefined
+})
+
+export const createdRoomIdsState = atom<string[] | undefined>({
+  key: "createdRoomIds",
   default: undefined
 })
 

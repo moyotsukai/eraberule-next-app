@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { css } from '@emotion/react'
 import { useRouter } from 'next/router'
 import Button from '../../components/atoms/button'
@@ -7,6 +7,9 @@ import NewPageCard from '../../components/blocks/NewPageCard'
 import { useAuthenticate } from '../../hooks/auth'
 import { defaultCoommonLanguage, ruleNames } from '../../types/rules'
 import { Room } from '../../types/Room.type'
+import { db } from '../../lib/firebase'
+import { useRecoilState } from 'recoil'
+import { createdRoomIdsState, hasNoUserDocState } from '../../recoil/atom'
 
 const NewPage: React.FC = () => {
   const user = useAuthenticate()
@@ -14,6 +17,7 @@ const NewPage: React.FC = () => {
   const [isSendEnabled, setIsSendEnabled] = useState<boolean>(false)
   const [isSendClicked, setIsSendClicked] = useState<boolean>(false)
   const [title, setTitle] = useState<string>("")
+  const [shouldChangeTitle, setShouldChangeTitle] = useState<boolean>(false)
   const [hasAddedExplanation, setHasAddedExplanation] = useState<boolean>(false)
   const [explanation, setExplanation] = useState<string>("")
   const [isAddOptionEnabled, setIsAddOptionEnabled] = useState<boolean>(true)
@@ -21,6 +25,39 @@ const NewPage: React.FC = () => {
   const [selectedRule, setSelectedRule] = useState<string>("")
   const [isAddEvaluationVocabularyEnabled, setIsAddEvaluationVocabularyEnabled] = useState<boolean>(true)
   const [commonLanguage, setCommonLanguage] = useState<string[]>(defaultCoommonLanguage)
+  const [hasNoUserDoc, setHasNoUserDoc] = useRecoilState(hasNoUserDocState)
+  const [createdRoomIds, setCreatedRoomIds] = useRecoilState(createdRoomIdsState)
+  const didSetCreatedRoomsRef = useRef(false)
+  const didSendRef = useRef(false)
+
+  //Set attendedRoomIds
+  useEffect(() => {
+    if (user) {
+      if (didSetCreatedRoomsRef.current === false) {
+        didSetCreatedRoomsRef.current = true
+
+        const getCreatedRoomIds = async () => {
+          const userId = user.uid
+          db.collection("users").doc(userId).get().then((doc) => {
+            if (doc.exists) {
+              const docData = doc.data()
+              const roomIds = docData.createdRooms === undefined ? [] : docData.createdRooms
+              setCreatedRoomIds(roomIds)
+              setHasNoUserDoc(false)
+            } else {
+              setCreatedRoomIds([])
+              setHasNoUserDoc(true)
+            }
+          }).catch((error) => {
+            console.error("Error getting documents: ", error)
+            // toError()
+          })
+        }
+
+        getCreatedRoomIds()
+      }
+    }
+  }, [user])
 
   //Set isSendEnabled
   useLayoutEffect(() => {
@@ -108,11 +145,16 @@ const NewPage: React.FC = () => {
     setCommonLanguage(newCommonLanguage)
   }
 
-  const sendRoom = () => {
+  const disableUi = () => {
     setIsSendClicked(true)
     setIsSendEnabled(false)
+  }
+
+  const generateRoomData = () => {
     const validOptions = validArray(options)
     const validCommonLanguage = validArray(commonLanguage)
+    setOptions(validOptions)
+    setCommonLanguage(validCommonLanguage)
 
     const roomData: Room = {
       title: title,
@@ -126,8 +168,76 @@ const NewPage: React.FC = () => {
     if (selectedRule === ruleNames.majorityJudgement) {
       roomData["commonLanguage"] = validCommonLanguage
     }
-    console.log(roomData)
-    // toShare()
+
+    return roomData
+  }
+
+  const onSend = () => {
+    if (didSendRef.current === false) {
+      disableUi()
+
+      const roomData = generateRoomData()
+      const docRef = db.collection("rooms").doc()
+
+      const sendRoomData = async (docRef, roomData) => {
+        docRef.set(roomData)
+      }
+
+      const sendCreation = async (docRef) => {
+        const newRoomId = docRef.id
+        const userId = user.uid
+        const roomIds = createdRoomIds === undefined ? [] : createdRoomIds
+        const newCreatedRoomIds = [
+          newRoomId,
+          ...roomIds
+        ]
+        setCreatedRoomIds(newCreatedRoomIds)
+
+        const userRef = db.collection("users").doc(userId)
+        if (hasNoUserDoc) {
+          userRef.set({
+            attendedRooms: [],
+            createdRooms: newCreatedRoomIds,
+            date: new Date()
+          })
+        } else {
+          userRef.update({
+            createdRooms: newCreatedRoomIds,
+            date: new Date()
+          })
+        }
+      }
+
+      const sendData = async () => {
+        db.collection("rooms").where("title", "==", title).limit(1)
+          .get()
+          .then((querySnapshot) => {
+            if (querySnapshot.size === 0) {
+              didSendRef.current = true
+              setShouldChangeTitle(false)
+              sendRoomData(docRef, roomData).then(() => {
+                sendCreation(docRef).then(() => {
+                  console.log("To share")
+                  //TODO
+                  // toShare()
+                })
+              })
+            } else {
+              setShouldChangeTitle(true)
+              setIsSendClicked(false)
+              setIsSendEnabled(true)
+              //TODO
+              console.log("Title is used")
+            }
+          })
+          .catch((error) => {
+            console.error("Error getting documents: ", error)
+            // toError()
+          })
+      }
+
+      sendData()
+    }
   }
 
   const validArray = (array) => {
@@ -162,7 +272,7 @@ const NewPage: React.FC = () => {
       />
 
       <Button
-        onClick={sendRoom}
+        onClick={onSend}
         isEnabled={isSendEnabled}
         isLoading={isSendClicked}
       >

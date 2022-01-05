@@ -35,25 +35,6 @@ const IndexPage: React.FC = () => {
     })
   }
 
-  //Dev
-  // const setTestData = () => {
-  //   setRoomData({
-  //     explanation: "みんなが好きな季節を投票で決めよう！",
-  //     options: [
-  //       "春",
-  //       "夏",
-  //       "秋",
-  //       "冬"
-  //     ],
-  //     rule: "majorityJusgement",
-  //     commonLanguage: ["非常に良い", "良い", "まずまず", "容認", "不十分", "失格"],
-  //     senderId: "r2beUc7wMraEc7YAcM5tK9X7Rtn1",
-  //     state: "ongoing",
-  //     title: "好きな季節投票",
-  //     docId: "zJjBNEVkCx3M7ztJiKpX"
-  //   })
-  // }
-
   //UI
   return (
     <IndexTemplate
