@@ -15,6 +15,7 @@ import SingleSelectionCell from '../atoms/singleSelectionCell'
 type Props = {
   title: string
   onTitleChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+  shouldChangeTitle: boolean
   hasAddedExplanation: boolean
   onAddExplanation: () => void
   explanation: string
@@ -44,6 +45,11 @@ const NewPageCard: React.FC<Props> = (props) => {
         placeholder="タイトルを入力"
         onChange={props.onTitleChange}
       />
+      {props.shouldChangeTitle &&
+        <SupportingTextCell shouldAlignLeft={true} isError={true}>
+          すでに使われているタイトルです。末尾に数字をつけるなどしてみてください。
+        </SupportingTextCell>
+      }
       <Spacer y="15px" />
 
       <SupportingTextCell shouldAlignLeft={true}>

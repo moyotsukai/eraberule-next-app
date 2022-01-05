@@ -6,25 +6,15 @@ type Props = {
   value: string
   placeholder?: string
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
-  // onEnterKey: () => void
 }
 
 const Input: React.FC<Props> = (props) => {
-  // const onEnterKey: () => void = props.onEnterKey
-
-  // const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-  //   if (event.keyCode === 13) {
-  //     onEnterKey()
-  //   }
-  // }
-
   return (
     <div css={containerStyle}>
       <input
         value={props.value}
         placeholder={props.placeholder}
         onChange={props.onChange}
-        // onKeyDown={handleKeyDown}
         css={inputStyle}
       />
     </div>

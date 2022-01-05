@@ -217,17 +217,14 @@ const NewPage: React.FC = () => {
               setShouldChangeTitle(false)
               sendRoomData(docRef, roomData).then(() => {
                 sendCreation(docRef).then(() => {
-                  console.log("To share")
-                  //TODO
-                  // toShare()
+                  toShare()
                 })
               })
             } else {
               setShouldChangeTitle(true)
               setIsSendClicked(false)
               setIsSendEnabled(true)
-              //TODO
-              console.log("Title is used")
+              scrollToTop()
             }
           })
           .catch((error) => {
@@ -244,6 +241,13 @@ const NewPage: React.FC = () => {
     return array.filter((item) => (item !== ""))
   }
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    })
+  }
+
   const toShare = () => {
     router.push("/create/share")
   }
@@ -253,6 +257,7 @@ const NewPage: React.FC = () => {
       <NewPageCard
         title={title}
         onTitleChange={onTitleChange}
+        shouldChangeTitle={shouldChangeTitle}
         hasAddedExplanation={hasAddedExplanation}
         onAddExplanation={onAddExplanation}
         explanation={explanation}
