@@ -37,7 +37,12 @@ const IndexTemplate: React.FC<Props> = (props) => {
       <Message isLoading={false}>
         ルーム名を検索して投票に参加
       </Message>
-      <SearchBox value={props.enteredTitle} placeholder="ルーム名を入力" onChange={props.handleTitleChange} onEnterKey={props.handleOnClick} />
+      <SearchBox
+        value={props.enteredTitle}
+        placeholder="ルーム名を入力"
+        onChange={props.handleTitleChange}
+        onEnterKey={props.handleOnClick}
+      />
     </div>
   )
 }

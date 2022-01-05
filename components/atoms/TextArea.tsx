@@ -5,45 +5,38 @@ import { primaryColor } from '../../styles/colors'
 type Props = {
   value: string
   placeholder?: string
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
-  onEnterKey: () => void
+  onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void
+  // onEnterKey: () => void
 }
 
-const InputSearch: React.FC<Props> = (props) => {
-  const onEnterKey: () => void = props.onEnterKey
+const TextArea: React.FC<Props> = (props) => {
+  // const onEnterKey: () => void = props.onEnterKey
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.keyCode === 13) {
-      onEnterKey()
-    }
-  }
+  // const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  //   if (event.keyCode === 13) {
+  //     onEnterKey()
+  //   }
+  // }
 
   return (
-    <div css={inputContainerStyle}>
-      <input
-        inputMode="search"
+    <div css={containerStyle}>
+      <textarea
         value={props.value}
         placeholder={props.placeholder}
+        rows={4}
         onChange={props.onChange}
-        onKeyDown={handleKeyDown}
-        css={inputStyle}
+        // onKeyDown={handleKeyDown}
+        css={textAreaStyle}
       />
     </div>
   )
 }
-
-const inputContainerStyle = css`
-  display: inline-block;
-  height: 45px;
-  min-width: 240px;
-  width: 86vw;
-  max-width: 400px;
-  position: relative;
+const containerStyle = css`
+  padding: 0 10px;
 `
-
-const inputStyle = css`
+const textAreaStyle = css`
+  resize: none;
   width: 100%;
-  height: 100%;
   background-color: #fff;
   font-size: 16px;
   padding: 5px;
@@ -61,4 +54,4 @@ const inputStyle = css`
   }
 `
 
-export default InputSearch
+export default TextArea

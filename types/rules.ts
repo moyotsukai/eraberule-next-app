@@ -26,4 +26,13 @@ const ruleExplanations: RuleSet = {
   majorityJudgement: "各選択肢に対して絶対評価で投票し、中央値をその候補の評価とします。"
 }
 
-export { ruleNames, ruleDisplayNames, ruleExplanations }
+const defaultCoommonLanguage: string[] = [
+  "非常に良い",
+  "良い",
+  "まずまず",
+  "容認",
+  "不十分",
+  "失格"
+]
+
+export { ruleNames, ruleDisplayNames, ruleExplanations, defaultCoommonLanguage }

@@ -2,7 +2,6 @@ import React from 'react'
 import { css } from '@emotion/react'
 import { motion } from 'framer-motion'
 import { primaryColor, primarySelectedColor } from '../../styles/colors'
-import Spacer from '../atoms/spacer'
 import RadioIcon from '../icons/radioIcon'
 
 type Props = {
@@ -22,11 +21,13 @@ const SingleSelectionCell: React.FC<Props> = (props) => {
       }}
       css={() => layoutStyle(props.isSelected)}
     >
-      <span>
+      <div>
         <RadioIcon isChecked={props.isSelected} color={primaryColor} />
-      </span>
-      <Spacer x="6px" />
-      <span css={textStyle}>{props.text}</span>
+      </div>
+      <div>
+        <p css={textStyle}>{props.text}</p>
+        {props.children}
+      </div>
     </motion.button>
   )
 }
@@ -41,6 +42,7 @@ const layoutStyle = (isSelected: boolean) => css`
   cursor: pointer;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   display: flex;
+  align-items: center;
   border: 1px solid transparent;
   box-sizing: border-box;
   &:focus {

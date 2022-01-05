@@ -1,5 +1,6 @@
 import React from 'react'
 import { css } from '@emotion/react'
+import { supportingTextColor } from '../../styles/colors'
 
 type Props = {
   shouldAlignLeft: boolean
@@ -26,7 +27,7 @@ const layoutStyle = (shouldAlignLeft) => css`
   text-align: ${shouldAlignLeft ? "left" : "right"};
   font-family: 'Noto Sans JP', sans-serif;
   font-size: 10pt;
-  color: #666;
+  color: ${supportingTextColor};
   margin: 5px 10px;
 `
 
