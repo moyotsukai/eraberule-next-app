@@ -217,7 +217,7 @@ const NewPage: React.FC = () => {
               setShouldChangeTitle(false)
               sendRoomData(docRef, roomData).then(() => {
                 sendCreation(docRef).then(() => {
-                  toShare()
+                  toShare(roomData)
                 })
               })
             } else {
@@ -248,8 +248,11 @@ const NewPage: React.FC = () => {
     })
   }
 
-  const toShare = () => {
-    router.push("/create/share")
+  const toShare = (roomData: Room) => {
+    router.push({
+      pathname: "/create/share",
+      query: { title: roomData.title }
+    })
   }
 
   return (

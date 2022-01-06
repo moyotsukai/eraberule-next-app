@@ -7,11 +7,11 @@ import { roomDataState, personalRankState, attendedRoomIdsState, hasNoUserDocSta
 import { useAuthenticate } from '../hooks/auth'
 import { useStrictUpdateEffect } from '../hooks/useStrictUpdateEffect'
 import RoomTemplate from '../components/templates/RoomTemplate'
+import { useQuery } from '../hooks/useQuery'
 
 const RoomPage: React.FC = () => {
   const user = useAuthenticate()
   const router = useRouter()
-  const [enteredTitle, setEnteredTitle] = useState("")
   const [roomData, setRoomData] = useRecoilState(roomDataState)
   const setHasNoUserDoc = useSetRecoilState(hasNoUserDocState)
   const didSetAttendedRoomsRef = useRef(false)
@@ -20,12 +20,7 @@ const RoomPage: React.FC = () => {
   const setPersonalRank = useSetRecoilState(personalRankState)
 
   //Set enteredTitle
-  useLayoutEffect(() => {
-    const queryParsed = queryString.parse(router.asPath.split(/\?/)[1])
-    if (Object.keys(queryParsed).length === 0) { return }
-    const q = queryParsed.q as string
-    setEnteredTitle(q)
-  }, [])
+  const enteredTitle = useQuery("q")
 
   //Set roomData
   useStrictUpdateEffect(() => {
