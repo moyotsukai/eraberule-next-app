@@ -10,7 +10,8 @@ import TextCell from '../atoms/textCell'
 import RankResultTable from '../blocks/rankResultTable'
 import LiveIndicator from '../atoms/LiveIndicator'
 import SpacerInline from '../atoms/SpacerInline'
-import { ruleDisplayNames } from '../../types/rules'
+import { ruleDisplayNames, ruleNames } from '../../types/rules'
+import Accordion from '../atoms/Accordion'
 
 type Props = {
   user: User | undefined | null
@@ -84,17 +85,19 @@ const ResultTemplate: React.FC<Props> = (props) => {
         </SupportingTextCell>
       </Card>
 
-      <Card>
-        <SupportingTextCell shouldAlignLeft={true}>
-          詳細
-        </SupportingTextCell>
-      </Card>
+      {props.roomData.rule === ruleNames.majorityJudgement &&
+        <Accordion title="詳細" >
+          <TextCell>
+            あいうえお
+          </TextCell>
+        </Accordion>
+      }
 
-      <Card>
-        <SupportingTextCell shouldAlignLeft={true}>
-          もし〇〇だったら
-        </SupportingTextCell>
-      </Card>
+      <Accordion title="もし〇〇だったら" >
+        <TextCell>
+          あいうえお
+        </TextCell>
+      </Accordion>
     </div>
   )
 }
@@ -102,6 +105,7 @@ const ResultTemplate: React.FC<Props> = (props) => {
 const layoutStyle = css`
   min-height: 100vh;
   text-align: center;
+  padding: 0 15px;
 `
 const liveIndicatorContainerStyle = css`
   display: flex;

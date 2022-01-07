@@ -8,20 +8,14 @@ import Spacer from '../../components/atoms/spacer'
 import QRCode from 'qrcode.react'
 
 const SharePage: React.FC = () => {
-  const [url, setUrl] = useState<string>("")
-
-  //Set room title
   const title = useQuery("title")
+  const [url, setUrl] = useState<string | null>(null)
 
   useEffect(() => {
     if (title !== "") {
       setUrl(`https://app.eraberule.com/room?q=${title}`)
     }
   }, [title])
-
-  useEffect(() => {
-    console.log("url", url)
-  }, [url])
 
   return (
     <div css={layoutStyle}>
@@ -49,10 +43,20 @@ const SharePage: React.FC = () => {
         <SupportingTextCell shouldAlignLeft={true}>
           QRコード
         </SupportingTextCell>
-        {url !== "" &&
+        {url &&
           <div>
-            <QRCode value={url} />
+            <QRCode value={url} id="rqCode" />
           </div>
+        }
+        <Spacer y="15px" />
+
+        <SupportingTextCell shouldAlignLeft={true}>
+          リンク
+        </SupportingTextCell>
+        {url &&
+          <TextCell>
+            {url}
+          </TextCell>
         }
       </Card>
     </div>
@@ -61,6 +65,7 @@ const SharePage: React.FC = () => {
 
 const layoutStyle = css`
   min-height: 100vh;
+  padding: 0 15px;
 `
 const textStyle = css`
   text-align: center;

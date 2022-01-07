@@ -25,6 +25,7 @@ type Props = {
   options: string[]
   onOptionsChange: (event: React.ChangeEvent<HTMLInputElement>, index: number) => void
   onRemoveOption: (number) => void
+  isOptionsExceed: boolean
   onRuleSelection: (string) => void
   selectedRule: string
   isAddEvaluationBocaburalyEnabled: boolean
@@ -101,6 +102,9 @@ const NewPageCard: React.FC<Props> = (props) => {
           </TextButton>
         </div>
       }
+      <SupportingTextCell shouldAlignLeft={true} isError={props.isOptionsExceed}>
+        {ruleDisplayNames.bordaRule}と{ruleDisplayNames.condorcetRule}で入力できる候補の数は10までです。
+      </SupportingTextCell>
       <Spacer y="15px" />
 
       <SupportingTextCell shouldAlignLeft={true}>

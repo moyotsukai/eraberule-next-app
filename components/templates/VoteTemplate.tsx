@@ -55,6 +55,6 @@ const VoteTemplate: React.FC<Props> = (props) => {
 const layoutStyle = css`
   min-height: 100vh;
   text-align: center;
-`
+  padding: 0 15px;`
 
 export default VoteTemplate

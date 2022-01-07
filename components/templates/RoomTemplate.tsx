@@ -66,6 +66,7 @@ const RoomTemplate: React.FC<Props> = (props) => {
 
 const layoutStyle = css`
   min-height: 100vh;
+  padding: 0 15px;
 `
 
 export default RoomTemplate

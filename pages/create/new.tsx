@@ -22,6 +22,7 @@ const NewPage: React.FC = () => {
   const [explanation, setExplanation] = useState<string>("")
   const [isAddOptionEnabled, setIsAddOptionEnabled] = useState<boolean>(true)
   const [options, setOptions] = useState<string[]>([""])
+  const [isOptionsExceed, setIsOptionsExceed] = useState<boolean>(false)
   const [selectedRule, setSelectedRule] = useState<string>("")
   const [isAddEvaluationVocabularyEnabled, setIsAddEvaluationVocabularyEnabled] = useState<boolean>(true)
   const [commonLanguage, setCommonLanguage] = useState<string[]>(defaultCoommonLanguage)
@@ -64,10 +65,11 @@ const NewPage: React.FC = () => {
     setIsSendEnabled(false)
     if (title === "") { return }
     if (validArray(options).length === 0) { return }
+    if (isOptionsExceed) { return }
     if (selectedRule === "") { return }
     if (validArray(commonLanguage).length === 0) { return }
     setIsSendEnabled(true)
-  }, [title, explanation, options, selectedRule, commonLanguage])
+  }, [title, explanation, options, isOptionsExceed, selectedRule, commonLanguage])
 
   //Set isAddOptionEnabled
   useLayoutEffect(() => {
@@ -77,6 +79,19 @@ const NewPage: React.FC = () => {
       setIsAddOptionEnabled(true)
     }
   }, [options])
+
+  //Set isOptionsExceed
+  useLayoutEffect(() => {
+    setIsOptionsExceed(false)
+    if (options.length > 10) {
+      if (selectedRule === ruleNames.bordaRule) {
+        setIsOptionsExceed(true)
+      }
+      if (selectedRule === ruleNames.condorcetRule) {
+        setIsOptionsExceed(true)
+      }
+    }
+  }, [options, selectedRule])
 
   //Set isAddEvaluationVocabularyEnabled
   useLayoutEffect(() => {
@@ -270,6 +285,7 @@ const NewPage: React.FC = () => {
         options={options}
         onOptionsChange={onOptionsChange}
         onRemoveOption={onRemoveOption}
+        isOptionsExceed={isOptionsExceed}
         onRuleSelection={onRuleSelection}
         selectedRule={selectedRule}
         isAddEvaluationBocaburalyEnabled={isAddEvaluationVocabularyEnabled}
@@ -297,6 +313,7 @@ const NewPage: React.FC = () => {
 const layoutStyle = css`
   min-height: 100vh;
   text-align: center;
+  padding: 0 15px;
 `
 
 export default NewPage

@@ -15,7 +15,8 @@ const Card: React.FC<Props> = (props) => {
 
 const cardStyle = css`
   background-color: #fff;
-  margin: 25px 15px;
+  margin: 25px auto;
+  max-width: 600px;
   padding: 15px 5px;
   border-radius: 12px;
   text-align: center;
