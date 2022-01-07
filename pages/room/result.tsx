@@ -9,14 +9,10 @@ import ResultTemplate from '../../components/templates/ResultTemplate'
 
 const ResultPage: React.FC = () => {
   const user = useAuthenticate()
-  //PROD
   const roomData = useRecoilValue(roomDataState)
-  //DEV
-  // const [roomData, setRoomData] = useRecoilState(roomDataState)
   const router = useRouter()
   const [personalRanks, setPersonalRanks] = useState([])
 
-  //PROD
   //Push router when reloaded
   useEffect(() => {
     if (roomData.isPlaceholder === true) {
@@ -24,7 +20,6 @@ const ResultPage: React.FC = () => {
     }
   }, [])
 
-  //PROD
   // Set personalRanks
   useStrictEffect(() => {
     const unsubscribe = db.collection("rooms").doc(roomData.docId).collection("votes")
@@ -44,34 +39,6 @@ const ResultPage: React.FC = () => {
       unsubscribe()
     }
   }, [])
-
-  // DEV
-  // useEffect(() => {
-  //   setRoomData({
-  //     explanation: "みんなが好きな季節を投票で決めよう!",
-  //     options: [
-  //       "春",
-  //       "夏",
-  //       "秋",
-  //       "冬"
-  //     ],
-  //     rule: "condorcetRule",
-  //     senderId: "r2beUc7wMraEc7YAcM5tK9X7Rtn1",
-  //     state: "ongoing",
-  //     title: "好きな季節投票",
-  //     docId: "zJjBNEVkCx3M7ztJiKpX"
-  //   })
-  //   setPersonalRanks(
-  //     [
-  //       [1, 2, 3, 4],
-  //       [2, 1, 3, 4],
-  //       [3, 4, 1, 2],
-  //       [3, 2, 1, 4],
-  //       [1, 2, 3, 4],
-  //       [2, 1, 3, 4]
-  //     ]
-  //   )
-  // }, [])
 
   //DEV
   useEffect(() => {

@@ -86,11 +86,11 @@ const RankResultTable: React.FC<Props> = (props) => {
     return (
       <div>
         {resultRanks.map((results, index) => (
-          <React.Fragment>
+          <React.Fragment key={index} >
             <SupportingTextCell shouldAlignLeft={true}>
               {index + 1}つ目の可能性
             </SupportingTextCell>
-            <ul key={index} css={tableStyle}>
+            <ul css={tableStyle}>
               {results.map((result, index) => (
                 <li key={index} css={cellStyle}>
                   <span css={rankStyle}>{result.rank}</span>

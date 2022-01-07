@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { css } from '@emotion/react'
 import { User } from '../../types/User.type'
 import Message from '../blocks/message'
@@ -12,6 +12,8 @@ import LiveIndicator from '../atoms/LiveIndicator'
 import SpacerInline from '../atoms/SpacerInline'
 import { ruleDisplayNames, ruleNames } from '../../types/rules'
 import Accordion from '../atoms/Accordion'
+import { mjDetails } from '../../rules/mjDetails'
+import MjDetails from '../blocks/MjDetails'
 
 type Props = {
   user: User | undefined | null
@@ -87,9 +89,7 @@ const ResultTemplate: React.FC<Props> = (props) => {
 
       {props.roomData.rule === ruleNames.majorityJudgement &&
         <Accordion title="詳細" >
-          <TextCell>
-            あいうえお
-          </TextCell>
+          <MjDetails roomData={props.roomData} personalRanks={props.personalRanks} />
         </Accordion>
       }
 

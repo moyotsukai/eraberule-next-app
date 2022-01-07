@@ -1,6 +1,6 @@
 import { Room } from '../types/Room.type'
 
-export const mjDetail = (roomData: Room, personalRanks: number[][]): number[][] => {
+export const mjDetails = (roomData: Room, personalRanks: number[][]): number[][] => {
   //Array which has all evaluations in each candidate
   const allEvaluationsInEachOption = roomData.options.map((_, index) => {
     const allEvaluations = personalRanks.map((personalRank) => (personalRank[index]))
