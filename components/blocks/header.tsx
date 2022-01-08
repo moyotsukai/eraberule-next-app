@@ -8,7 +8,7 @@ const Header: React.FC = () => {
 
   return (
     <div css={headerStyle}>
-      <Link href="/">
+      <Link href="/" passHref>
         <div css={linkStyle}>
           <Image src={Logo} alt="logo" />
         </div>

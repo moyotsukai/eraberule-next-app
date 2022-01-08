@@ -3,7 +3,6 @@ import { css } from '@emotion/react'
 import { motion } from 'framer-motion'
 import { primaryColor, primarySelectedColor } from '../../styles/colors'
 import CheckIcon from '../icons/checkIcon'
-import Spacer from '../atoms/spacer'
 
 type Props = {
   text: string
@@ -19,7 +18,6 @@ const RankSelectionCell: React.FC<Props> = (props) => {
       css={() => layoutStyle(props.isSelected)}
     >
       <span><CheckIcon isChecked={props.isSelected} color={primaryColor} /></span>
-      <Spacer x="6px" />
       <span css={textStyle}>{props.text}</span>
       <span css={() => rankStyle(props.isSelected)}>{props.rank}</span>
     </motion.button>

@@ -40,11 +40,6 @@ const ResultPage: React.FC = () => {
     }
   }, [])
 
-  //DEV
-  useEffect(() => {
-    console.log("personalRanks", personalRanks)
-  }, [personalRanks])
-
   const toError = () => {
     router.push("/error")
   }

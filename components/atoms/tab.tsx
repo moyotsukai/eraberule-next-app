@@ -11,7 +11,7 @@ type Props = {
 
 const Tab: React.FC<Props> = (props) => {
   return (
-    <Link href={props.path}>
+    <Link href={props.path} passHref>
       <div css={() => tabStyle(props.isSelected)}>
         <a css={() => textStyle(props.isSelected)}>{props.text}</a>
       </div>

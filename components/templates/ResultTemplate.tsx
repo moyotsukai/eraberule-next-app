@@ -58,10 +58,6 @@ const ResultTemplate: React.FC<Props> = (props) => {
     }
   }, [props.personalRanks])
 
-  //DEV
-  useEffect(() => {
-    console.log("otherResults", otherResults)
-  }, [otherResults])
 
   if (props.user === undefined) {
     return (
