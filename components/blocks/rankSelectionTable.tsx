@@ -29,7 +29,6 @@ const RankSelectionTable: React.FC<Props> = (props) => {
       })
       rank[index] = 0
     }
-    console.log("personalRank", rank)
     setPersonalRank(rank)
   }
 

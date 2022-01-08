@@ -1,15 +1,12 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { css } from '@emotion/react'
 import { useRouter } from 'next/router'
-import Button from '../../components/atoms/button'
-import Spacer from '../../components/atoms/spacer'
-import NewPageCard from '../../components/blocks/NewPageCard'
 import { useAuthenticate } from '../../hooks/auth'
 import { defaultCoommonLanguage, ruleNames } from '../../types/rules'
 import { Room } from '../../types/Room.type'
 import { db } from '../../lib/firebase'
 import { useRecoilState } from 'recoil'
 import { createdRoomIdsState, hasNoUserDocState } from '../../recoil/atom'
+import NewTemplate from '../../components/templates/NewTemplate'
 
 const NewPage: React.FC = () => {
   const user = useAuthenticate()
@@ -271,49 +268,32 @@ const NewPage: React.FC = () => {
   }
 
   return (
-    <div css={layoutStyle}>
-      <NewPageCard
-        title={title}
-        onTitleChange={onTitleChange}
-        shouldChangeTitle={shouldChangeTitle}
-        hasAddedExplanation={hasAddedExplanation}
-        onAddExplanation={onAddExplanation}
-        explanation={explanation}
-        onExplanationChange={onExplanationChange}
-        isAddOptionEnabled={isAddOptionEnabled}
-        onAddOption={onAddOption}
-        options={options}
-        onOptionsChange={onOptionsChange}
-        onRemoveOption={onRemoveOption}
-        isOptionsExceed={isOptionsExceed}
-        onRuleSelection={onRuleSelection}
-        selectedRule={selectedRule}
-        isAddEvaluationBocaburalyEnabled={isAddEvaluationVocabularyEnabled}
-        onAddEvaluationVocabulary={onAddEvaluationVocabulary}
-        commonLanguage={commonLanguage}
-        onCommonLanguageChange={onCommonLanguageChange}
-        onRemoveEvaluationVocabulary={onRemoveEvaluationVocabulary}
-      />
-
-      <Button
-        onClick={onSend}
-        isEnabled={isSendEnabled}
-        isLoading={isSendClicked}
-      >
-        {isSendClicked
-          ? "送信中"
-          : "公開"
-        }
-      </Button>
-      <Spacer y="35px" />
-    </div>
+    <NewTemplate
+      title={title}
+      onTitleChange={onTitleChange}
+      shouldChangeTitle={shouldChangeTitle}
+      hasAddedExplanation={hasAddedExplanation}
+      onAddExplanation={onAddExplanation}
+      explanation={explanation}
+      onExplanationChange={onExplanationChange}
+      isAddOptionEnabled={isAddOptionEnabled}
+      onAddOption={onAddOption}
+      options={options}
+      onOptionsChange={onOptionsChange}
+      onRemoveOption={onRemoveOption}
+      isOptionsExceed={isOptionsExceed}
+      onRuleSelection={onRuleSelection}
+      selectedRule={selectedRule}
+      isAddEvaluationVocabularyEnabled={isAddEvaluationVocabularyEnabled}
+      onAddEvaluationVocabulary={onAddEvaluationVocabulary}
+      commonLanguage={commonLanguage}
+      onCommonLanguageChange={onCommonLanguageChange}
+      onRemoveEvaluationVocabulary={onRemoveEvaluationVocabulary}
+      onSend={onSend}
+      isSendEnabled={isSendEnabled}
+      isSendClicked={isSendClicked}
+    />
   )
 }
-
-const layoutStyle = css`
-  min-height: 100vh;
-  text-align: center;
-  padding: 0 15px;
-`
 
 export default NewPage

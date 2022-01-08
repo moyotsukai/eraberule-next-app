@@ -12,7 +12,7 @@ export const useAuthenticate = () => {
 
     firebase.auth().signInAnonymously()
       .then(() => {
-        console.log("signed in")
+        console.log("Signed in")
       })
       .catch((error) => {
         console.error(error.code)
@@ -22,7 +22,6 @@ export const useAuthenticate = () => {
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         setUser({ uid: user.uid, isAnonymous: user.isAnonymous })
-        console.log("uid", user.uid)
       } else {
         setUser(null)
       }

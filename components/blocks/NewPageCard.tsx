@@ -28,7 +28,7 @@ type Props = {
   isOptionsExceed: boolean
   onRuleSelection: (string) => void
   selectedRule: string
-  isAddEvaluationBocaburalyEnabled: boolean
+  isAddEvaluationVocabularyEnabled: boolean
   onAddEvaluationVocabulary: () => void
   commonLanguage: string[]
   onCommonLanguageChange: (event: React.ChangeEvent<HTMLInputElement>, index: number) => void
@@ -151,7 +151,7 @@ const NewPageCard: React.FC<Props> = (props) => {
               }
             </React.Fragment>
           ))}
-          {props.isAddEvaluationBocaburalyEnabled &&
+          {props.isAddEvaluationVocabularyEnabled &&
             <div css={textButtonContainerStyle}>
               <TextButton onClick={props.onAddEvaluationVocabulary} >
                 評価の語彙を追加

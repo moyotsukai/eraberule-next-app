@@ -27,11 +27,6 @@ const MjSelectionTable: React.FC<Props> = (props) => {
     setPersonalRank(rank)
   }
 
-  //DEV
-  useEffect(() => {
-    console.log("personalRank", personalRank)
-  }, [personalRank])
-
   //UI
   return (
     <div css={tableStyle}>

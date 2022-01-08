@@ -28,7 +28,6 @@ const SingleSelectionTable: React.FC<Props> = (props) => {
       }
     }
     setPersonalRank(rank)
-    console.log("personalRank", rank)
   }
 
   //UI
