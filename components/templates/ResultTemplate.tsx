@@ -7,12 +7,16 @@ import Spacer from '../atoms/spacer'
 import SupportingTextCell from '../atoms/supportingTextCell'
 import Card from '../atoms/card'
 import TextCell from '../atoms/textCell'
-import RankResultTable from '../blocks/rankResultTable'
+import ResultTable from '../blocks/ResultTable'
 import LiveIndicator from '../atoms/LiveIndicator'
 import SpacerInline from '../atoms/SpacerInline'
 import { ruleDisplayNames, ruleNames } from '../../types/rules'
+import { bordaRule } from '../../rules/bordaRule'
+import { RankResults } from '../../types/RankResults.type'
+import { majorityRule } from '../../rules/majorityRule'
+import { condorcetRule } from '../../rules/condorcetRule'
+import { majorityJudgement } from '../../rules/majorityJudgement'
 import Accordion from '../atoms/Accordion'
-import { mjDetails } from '../../rules/mjDetails'
 import MjDetails from '../blocks/MjDetails'
 
 type Props = {
@@ -22,6 +26,30 @@ type Props = {
 }
 
 const ResultTemplate: React.FC<Props> = (props) => {
+  const [resultRanks, setResultRanks] = useState<RankResults[] | undefined>(undefined)
+
+  //Set rank results
+  useEffect(() => {
+    switch (props.roomData.rule) {
+      case ruleNames.majorityRule:
+        const mResult = majorityRule(props.roomData, props.personalRanks)
+        setResultRanks(mResult)
+        break
+      case ruleNames.bordaRule:
+        const bResult = bordaRule(props.roomData, props.personalRanks)
+        setResultRanks(bResult)
+        break
+      case ruleNames.condorcetRule:
+        const cResult = condorcetRule(props.roomData, props.personalRanks)
+        setResultRanks(cResult)
+        break
+      case ruleNames.majorityJudgement:
+        const mjResult = majorityJudgement(props.roomData, props.personalRanks)
+        setResultRanks(mjResult)
+        break
+    }
+  }, [props.personalRanks])
+
   if (props.user === undefined) {
     return (
       <div css={layoutStyle}>
@@ -75,7 +103,10 @@ const ResultTemplate: React.FC<Props> = (props) => {
           結果
         </SupportingTextCell>
 
-        <RankResultTable roomData={props.roomData} personalRanks={props.personalRanks} />
+        <ResultTable
+          resultRanks={resultRanks}
+          roomData={props.roomData}
+        />
 
         <SupportingTextCell shouldAlignLeft={false}>
           {props.personalRanks.length}人が投票済み

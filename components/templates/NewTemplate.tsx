@@ -1,6 +1,5 @@
 import React from 'react'
 import { css } from '@emotion/react'
-import { User } from '../../types/User.type'
 import NewPageCard from '../blocks/NewPageCard'
 import Button from '../atoms/button'
 import Spacer from '../atoms/spacer'
