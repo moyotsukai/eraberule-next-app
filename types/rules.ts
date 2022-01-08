@@ -15,7 +15,7 @@ const ruleNames: RuleSet = {
 const ruleDisplayNames: RuleSet = {
   majorityRule: "多数決",
   bordaRule: "ボルダルール",
-  condorcetRule: "コンドルセルール",
+  condorcetRule: "コンドルセ・ヤングの最尤法",
   majorityJudgement: "Majority Judgement"
 }
 

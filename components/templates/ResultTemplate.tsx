@@ -18,6 +18,7 @@ import { condorcetRule } from '../../rules/condorcetRule'
 import { majorityJudgement } from '../../rules/majorityJudgement'
 import Accordion from '../atoms/Accordion'
 import MjDetails from '../blocks/MjDetails'
+import OtherResultsTable from '../blocks/OtherResultsTable'
 
 type Props = {
   user: User | undefined | null
@@ -27,28 +28,40 @@ type Props = {
 
 const ResultTemplate: React.FC<Props> = (props) => {
   const [resultRanks, setResultRanks] = useState<RankResults[] | undefined>(undefined)
+  const [otherResults, setOtherResults] = useState<RankResults[][] | undefined | null>(undefined)
 
   //Set rank results
   useEffect(() => {
-    switch (props.roomData.rule) {
-      case ruleNames.majorityRule:
-        const mResult = majorityRule(props.roomData, props.personalRanks)
-        setResultRanks(mResult)
-        break
-      case ruleNames.bordaRule:
-        const bResult = bordaRule(props.roomData, props.personalRanks)
-        setResultRanks(bResult)
-        break
-      case ruleNames.condorcetRule:
-        const cResult = condorcetRule(props.roomData, props.personalRanks)
-        setResultRanks(cResult)
-        break
-      case ruleNames.majorityJudgement:
-        const mjResult = majorityJudgement(props.roomData, props.personalRanks)
-        setResultRanks(mjResult)
-        break
+    if (props.roomData.rule === ruleNames.majorityRule) {
+      const mResult = majorityRule(props.roomData, props.personalRanks)
+      setResultRanks(mResult)
+      setOtherResults(null)
+    }
+    if (props.roomData.rule === ruleNames.bordaRule) {
+      const mResult = majorityRule(props.roomData, props.personalRanks)
+      const bResult = bordaRule(props.roomData, props.personalRanks)
+      const cResult = condorcetRule(props.roomData, props.personalRanks)
+      setResultRanks(bResult)
+      setOtherResults([mResult, null, cResult, null])
+    }
+    if (props.roomData.rule === ruleNames.condorcetRule) {
+      const mResult = majorityRule(props.roomData, props.personalRanks)
+      const bResult = bordaRule(props.roomData, props.personalRanks)
+      const cResult = condorcetRule(props.roomData, props.personalRanks)
+      setResultRanks(cResult)
+      setOtherResults([mResult, bResult, null, null])
+    }
+    if (props.roomData.rule === ruleNames.majorityJudgement) {
+      const mjResult = majorityJudgement(props.roomData, props.personalRanks)
+      setResultRanks(mjResult)
+      setOtherResults(null)
     }
   }, [props.personalRanks])
+
+  //DEV
+  useEffect(() => {
+    console.log("otherResults", otherResults)
+  }, [otherResults])
 
   if (props.user === undefined) {
     return (
@@ -124,11 +137,10 @@ const ResultTemplate: React.FC<Props> = (props) => {
         </Accordion>
       }
 
-      <Accordion title="もし〇〇だったら" >
-        <TextCell>
-          あいうえお
-        </TextCell>
-      </Accordion>
+      <OtherResultsTable
+        otherResults={otherResults}
+        roomData={props.roomData}
+      />
     </div>
   )
 }

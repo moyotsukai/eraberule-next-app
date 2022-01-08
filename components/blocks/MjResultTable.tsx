@@ -19,7 +19,7 @@ const MjResultTable: React.FC<Props> = (props) => {
               <p>{result.score}</p>
             </span>
           </li>
-          {index !== props.resultRanks[0].length &&
+          {index !== props.resultRanks[0].length - 1 &&
             <Spacer y="10px" />
           }
         </React.Fragment>

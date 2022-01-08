@@ -10,7 +10,7 @@ type Props = {
   roomData: Room
 }
 
-const RankResultTable: React.FC<Props> = (props) => {
+const ResultTable: React.FC<Props> = (props) => {
   if (!props.resultRanks) {
     return (
       <div />
@@ -31,4 +31,4 @@ const RankResultTable: React.FC<Props> = (props) => {
   }
 }
 
-export default RankResultTable
+export default ResultTable

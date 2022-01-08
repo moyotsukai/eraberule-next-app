@@ -2,8 +2,6 @@ import { RankResults } from '../types/RankResults.type'
 import { Room } from '../types/Room.type'
 
 export const condorcetRule = (roomData: Room, personalRanks: number[][]): RankResults[] => {
-  let numOfOptions = roomData.options.length
-
   //Setup results
   const results = roomData.options.map((option, index) => (
     {
@@ -14,6 +12,7 @@ export const condorcetRule = (roomData: Room, personalRanks: number[][]): RankRe
   ))
 
   //Setup nArray
+  const numOfOptions = roomData.options.length
   const nArrayLength = (2 * numOfOptions * (numOfOptions - 1)) / 2
   const nArray = Array(nArrayLength).fill(0)
 

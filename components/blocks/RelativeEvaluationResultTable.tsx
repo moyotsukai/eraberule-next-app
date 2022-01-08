@@ -50,6 +50,10 @@ const RelativeEvaluationReultTable: React.FC<Props> = (props) => {
       </div>
     )
   }
+
+  return (
+    <div />
+  )
 }
 
 const tableStyle = css`

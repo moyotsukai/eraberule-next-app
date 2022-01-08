@@ -23,7 +23,7 @@ const ShareTemplate: React.FC<Props> = (props) => {
 
       <Card>
         <SupportingTextCell shouldAlignLeft={true}>
-          ルームのタイトルを検索、またはQRコードを読み取ることで投票に参加できます。
+          ルームのタイトルを検索する、QRコードを読み取る、またはリンクのURLにアクセスすることで投票に参加できます。
         </SupportingTextCell>
         <Spacer y="15px" />
 
