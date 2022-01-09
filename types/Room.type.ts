@@ -8,5 +8,4 @@ export type Room = {
   senderId: string
   date?: Date
   docId?: string
-  isPlaceholder?: boolean
 }

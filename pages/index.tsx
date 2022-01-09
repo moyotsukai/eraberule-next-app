@@ -29,12 +29,6 @@ const IndexPage: React.FC = () => {
     })
   }
 
-  const toError = () => {
-    router.push({
-      pathname: "/error"
-    })
-  }
-
   //UI
   return (
     <IndexTemplate

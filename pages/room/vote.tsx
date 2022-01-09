@@ -14,20 +14,19 @@ const VotePage: React.FC = () => {
   const [personalRank, setPersonalRank] = useRecoilState(personalRankState)
   const [isEnabled, setIsEnabled] = useState(true)
   const [isClicked, setIsClicked] = useState(false)
-  const hasNoUserDoc = useRecoilValue(hasNoUserDocState)
+  const [hasNoUserDoc, setHasNoUserDoc] = useRecoilState(hasNoUserDocState)
   const [attendedRoomIds, setAttendedRoomIds] = useRecoilState(attendedRoomIdsState)
   const didSendRef = useRef(false)
 
   //Push router when reloaded
   useEffect(() => {
-    if (roomData.isPlaceholder === true) {
+    if (!roomData.title) {
       router.push("/")
     }
   }, [])
 
   //Set personalRank when unmounted
   useEffect(() => {
-    console.log("roomData", roomData)
     return () => {
       setPersonalRank([])
     }
@@ -76,6 +75,7 @@ const VotePage: React.FC = () => {
             createdRooms: [],
             date: new Date()
           })
+          setHasNoUserDoc(false)
         } else {
           userRef.update({
             attendedRooms: newAttendedRoomIds,

@@ -15,7 +15,7 @@ const ResultPage: React.FC = () => {
 
   //Push router when reloaded
   useEffect(() => {
-    if (roomData.isPlaceholder === true) {
+    if (!roomData.title) {
       router.push("/")
     }
   }, [])
@@ -32,7 +32,7 @@ const ResultPage: React.FC = () => {
         setPersonalRanks(newRanks)
       }, (error) => {
         console.error("Error getting documents: ", error)
-        // toError()
+        toError()
       })
 
     return () => {

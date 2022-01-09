@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useLayoutEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { db } from '../lib/firebase'
 import { useRouter } from 'next/router'
-import queryString from 'query-string'
 import { useSetRecoilState, useRecoilState } from 'recoil'
 import { roomDataState, personalRankState, attendedRoomIdsState, hasNoUserDocState } from '../recoil/atom'
 import { useAuthenticate } from '../hooks/auth'
@@ -25,6 +24,10 @@ const RoomPage: React.FC = () => {
   //Set roomData
   useStrictUpdateEffect(() => {
     const getRoomData = async (title: string) => {
+      if (!title) {
+        router.push("/")
+        return
+      }
       db.collection("rooms").where("title", "==", title).limit(1)
         .get()
         .then((querySnapshot) => {
@@ -40,7 +43,7 @@ const RoomPage: React.FC = () => {
         })
         .catch((error) => {
           console.error("Error getting documents: ", error)
-          // toError()
+          toError()
         })
     }
 
@@ -67,7 +70,7 @@ const RoomPage: React.FC = () => {
             }
           }).catch((error) => {
             console.error("Error getting documents: ", error)
-            // toError()
+            toError()
           })
         }
 
@@ -79,7 +82,7 @@ const RoomPage: React.FC = () => {
   //Set hasVoted
   useEffect(() => {
     if (roomData === null) { return }
-    if (roomData.isPlaceholder === true) { return }
+    if (!roomData.title) { return }
     if (attendedRoomIds === undefined) { return }
 
     if (attendedRoomIds.includes(roomData.docId)) {
@@ -105,6 +108,12 @@ const RoomPage: React.FC = () => {
 
   const toResult = () => {
     router.push("/room/result")
+  }
+
+  const toError = () => {
+    router.push({
+      pathname: "/error"
+    })
   }
 
   //UI

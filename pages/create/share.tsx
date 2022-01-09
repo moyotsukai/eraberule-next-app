@@ -3,9 +3,12 @@ import { useQuery } from '../../hooks/useQuery'
 import ShareTemplate from '../../components/templates/ShareTemplate'
 
 const SharePage: React.FC = () => {
-  const title = useQuery("title")
   const [url, setUrl] = useState<string | null>(null)
 
+  //Set title
+  const title = useQuery("title")
+
+  //Set url
   useEffect(() => {
     if (title !== "") {
       setUrl(`https://app.eraberule.com/room?q=${title}`)

@@ -15,8 +15,7 @@ export const roomDataState = atom<Room>({
     options: [],
     rule: "",
     state: "ongoing",
-    senderId: "",
-    isPlaceholder: true
+    senderId: ""
   }
 })
 
