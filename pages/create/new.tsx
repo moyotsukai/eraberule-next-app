@@ -4,8 +4,8 @@ import { useAuthenticate } from '../../hooks/auth'
 import { defaultCoommonLanguage, ruleNames } from '../../types/rules'
 import { Room } from '../../types/Room.type'
 import { db } from '../../lib/firebase'
-import { useRecoilState } from 'recoil'
-import { createdRoomIdsState, hasNoUserDocState } from '../../recoil/atom'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { createdRoomIdsState, hasNoUserDocState, recentlyCreatedRoomTitleState } from '../../recoil/atom'
 import NewTemplate from '../../components/templates/NewTemplate'
 
 const NewPage: React.FC = () => {
@@ -27,33 +27,35 @@ const NewPage: React.FC = () => {
   const [createdRoomIds, setCreatedRoomIds] = useRecoilState(createdRoomIdsState)
   const didSetCreatedRoomsRef = useRef(false)
   const didSendRef = useRef(false)
+  const setRecentlyCreatedRoomTitle = useSetRecoilState(recentlyCreatedRoomTitleState)
 
-  //Set attendedRoomIds
+  //Set createdRoomIds, hasNoUserDoc, recentlyCreatedRoomTitle
   useEffect(() => {
-    if (user) {
-      if (didSetCreatedRoomsRef.current === false) {
-        didSetCreatedRoomsRef.current = true
+    if (!user) { return }
+    if (createdRoomIds !== undefined) { return }
+    if (didSetCreatedRoomsRef.current === false) {
+      didSetCreatedRoomsRef.current = true
 
-        const getCreatedRoomIds = async () => {
-          const userId = user.uid
-          db.collection("users").doc(userId).get().then((doc) => {
-            if (doc.exists) {
-              const docData = doc.data()
-              const roomIds = docData.createdRooms === undefined ? [] : docData.createdRooms
-              setCreatedRoomIds(roomIds)
-              setHasNoUserDoc(false)
-            } else {
-              setCreatedRoomIds([])
-              setHasNoUserDoc(true)
-            }
-          }).catch((error) => {
-            console.error("Error getting documents: ", error)
-            // toError()
-          })
-        }
-
-        getCreatedRoomIds()
+      const getCreatedRoomIds = async () => {
+        const userId = user.uid
+        db.collection("users").doc(userId).get().then((doc) => {
+          if (doc.exists) {
+            const docData = doc.data()
+            const roomIds = docData.createdRooms === undefined ? [] : docData.createdRooms
+            setCreatedRoomIds(roomIds)
+            setHasNoUserDoc(false)
+          } else {
+            setCreatedRoomIds([])
+            setHasNoUserDoc(true)
+            setRecentlyCreatedRoomTitle(null)
+          }
+        }).catch((error) => {
+          console.error("Error getting documents: ", error)
+          toError()
+        })
       }
+
+      getCreatedRoomIds()
     }
   }, [user])
 
@@ -203,7 +205,6 @@ const NewPage: React.FC = () => {
           newRoomId,
           ...roomIds
         ]
-        setCreatedRoomIds(newCreatedRoomIds)
 
         const userRef = db.collection("users").doc(userId)
         if (hasNoUserDoc) {
@@ -218,6 +219,8 @@ const NewPage: React.FC = () => {
             date: new Date()
           })
         }
+        setCreatedRoomIds(newCreatedRoomIds)
+        setRecentlyCreatedRoomTitle(roomData.title)
       }
 
       const sendData = async () => {
@@ -264,6 +267,12 @@ const NewPage: React.FC = () => {
     router.push({
       pathname: "/create/share",
       query: { title: roomData.title }
+    })
+  }
+
+  const toError = () => {
+    router.push({
+      pathname: "/error"
     })
   }
 

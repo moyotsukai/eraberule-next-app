@@ -34,6 +34,11 @@ export const createdRoomIdsState = atom<string[] | undefined>({
   default: undefined
 })
 
+export const recentlyCreatedRoomTitleState = atom<string | undefined | null>({
+  key: "recentlyCreatedRoomTitle",
+  default: undefined
+})
+
 export const personalRankState = atom<number[]>({
   key: "personalRankState",
   default: []

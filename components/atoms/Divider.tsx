@@ -1,6 +1,6 @@
 import React from 'react'
 import { css } from '@emotion/react'
-import { supportingTextColor } from '../../styles/colors'
+import { dividerColor } from '../../styles/colors'
 
 const Divider: React.FC = () => {
   return (
@@ -9,7 +9,7 @@ const Divider: React.FC = () => {
 }
 const dividerStyle = css`
   margin: 0 8px;
-  border-bottom: solid 1px #ccc;
+  border-bottom: solid 1px ${dividerColor};
 `
 
 export default Divider

@@ -3,10 +3,16 @@ import { css } from '@emotion/react'
 import { User } from '../../types/User.type'
 import Message from '../blocks/message'
 import Button from '../atoms/button'
+import SupportingTextCell from '../atoms/supportingTextCell'
+import TextCell from '../atoms/textCell'
+import Spacer from '../atoms/spacer'
+import CardButton from '../atoms/CardButton'
 
 type Props = {
   user: User | undefined | null
   toNewRoom: () => void
+  recentlyCreatedRoomTitle: string | undefined | null
+  toRecentlyCreatedRoom: () => void
 }
 
 const CreateTemplate: React.FC<Props> = (props) => {
@@ -42,6 +48,18 @@ const CreateTemplate: React.FC<Props> = (props) => {
       >
         作成
       </Button>
+      <Spacer y="25px" />
+
+      {props.recentlyCreatedRoomTitle &&
+        <div css={recentlyCreatedRoomContainerStyle}>
+          <SupportingTextCell shouldAlignLeft={true}>
+            最近作成したルーム
+          </SupportingTextCell>
+          <CardButton onClick={props.toRecentlyCreatedRoom}>
+            {props.recentlyCreatedRoomTitle}
+          </CardButton>
+        </div>
+      }
     </div>
   )
 }
@@ -49,6 +67,16 @@ const CreateTemplate: React.FC<Props> = (props) => {
 const layoutStyle = css`
   min-height: 100vh;
   text-align: center;
+  padding: 0 15px;
+`
+const recentlyCreatedRoomContainerStyle = css`
+  margin: 25px auto;
+  max-width: 600px;
+  padding: 15px 5px;
+
+  @media(min-width: 500px) {
+    padding: 15px 10px;
+  }
 `
 
 export default CreateTemplate

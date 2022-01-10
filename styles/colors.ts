@@ -5,5 +5,6 @@ const primarySelectedColor = "rgba(61, 100, 242, 0.12)"
 const supportingTextColor = "#666"
 const errorColor = "rgb(176, 0, 32)"
 const errorDisabledColor = "rgba(176, 0, 32, 0.38)"
+const dividerColor = "#ccc"
 
-export { primaryColor, primaryShadowColor, primaryDisabledColor, primarySelectedColor, supportingTextColor, errorColor, errorDisabledColor }
+export { primaryColor, primaryShadowColor, primaryDisabledColor, primarySelectedColor, supportingTextColor, errorColor, errorDisabledColor, dividerColor }
