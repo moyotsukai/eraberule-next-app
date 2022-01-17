@@ -1,6 +1,6 @@
 import React from 'react'
 import { css } from '@emotion/react'
-import { primaryColor } from '../../styles/colors'
+import { primaryColor, primarySelectedColor } from '../../styles/colors'
 
 type Props = {
   onClick: (event: React.MouseEvent<HTMLInputElement>) => void
@@ -20,7 +20,9 @@ const TextButton: React.FC<Props> = (props) => {
 
 const buttonStyle = () => css`
   min-width: 95px;
-  min-height: 42px;
+  min-height: 36px;
+  margin: 3px auto;
+  padding: 0 5px;
   font-family: 'Noto Sans JP', sans-serif;
   font-size: 12pt;
   background-color: rgba(0,0,0,0);
@@ -30,8 +32,10 @@ const buttonStyle = () => css`
   cursor: pointer;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   text-align: center;
-  margin: 0 auto;
-  padding: 0 5px;
+
+  &:hover {
+    background-color: ${primarySelectedColor};
+  }
 
   &:focus {
     outline: none;

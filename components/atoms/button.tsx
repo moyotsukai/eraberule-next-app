@@ -17,8 +17,8 @@ const Button: React.FC<Props> = (props) => {
     return (
       <motion.button
         onClick={props.onClick}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
         css={() => buttonStyle(props.isEnabled)}
       >
         {props.children}
@@ -65,6 +65,10 @@ const buttonStyle = (isEnabled) => css`
   text-align: center;
   margin: 0 auto;
   padding: 0 12px;
+
+  &:hover {
+    box-shadow: ${isEnabled ? `0 6px 9px 0 ${primaryShadowColor}` : `0 2px 3px 0 ${primaryShadowColor}`}
+  }
 
   &:focus {
     outline: none;

@@ -48,17 +48,19 @@ const CreateTemplate: React.FC<Props> = (props) => {
       >
         作成
       </Button>
-      <Spacer y="25px" />
 
       {props.recentlyCreatedRoomTitle &&
-        <div css={recentlyCreatedRoomContainerStyle}>
-          <SupportingTextCell shouldAlignLeft={true}>
-            最近作成したルーム
-          </SupportingTextCell>
-          <CardButton onClick={props.toRecentlyCreatedRoom}>
-            {props.recentlyCreatedRoomTitle}
-          </CardButton>
-        </div>
+        <React.Fragment>
+          <div css={spaerStyle} />
+          <div css={recentlyCreatedRoomContainerStyle}>
+            <SupportingTextCell shouldAlignLeft={true}>
+              最近作成したルーム
+            </SupportingTextCell>
+            <CardButton onClick={props.toRecentlyCreatedRoom}>
+              {props.recentlyCreatedRoomTitle}
+            </CardButton>
+          </div>
+        </React.Fragment>
       }
     </div>
   )
@@ -70,13 +72,16 @@ const layoutStyle = css`
   padding: 0 15px;
 `
 const recentlyCreatedRoomContainerStyle = css`
-  margin: 25px auto;
+  margin: 0 auto;
   max-width: 600px;
-  padding: 15px 5px;
+  padding: 0 5px;
 
   @media(min-width: 500px) {
     padding: 15px 10px;
   }
+`
+const spaerStyle = css`
+  height: 40vh;
 `
 
 export default CreateTemplate
