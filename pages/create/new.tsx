@@ -5,7 +5,7 @@ import { defaultCoommonLanguage, ruleNames } from '../../types/rules'
 import { Room } from '../../types/Room.type'
 import { db } from '../../lib/firebase'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { createdRoomIdsState, hasNoUserDocState, recentlyCreatedRoomTitleState } from '../../recoil/atom'
+import { createdRoomIdsState, hasNoUserDocState, recentlyCreatedRoomTitleState } from '../../states/atoms'
 import NewTemplate from '../../components/templates/NewTemplate'
 
 const NewPage: React.FC = () => {

@@ -1,8 +1,8 @@
 import React from 'react'
 import { css } from '@emotion/react'
-import SingleSelectionCell from '../../components/atoms/singleSelectionCell'
+import SingleSelectionCell from '../ui/SingleSelectionCell'
 import { useRecoilValue, useRecoilState } from 'recoil'
-import { roomDataState, personalRankState } from '../../recoil/atom'
+import { roomDataState, personalRankState } from '../../states/atoms'
 
 type Props = {
   isEnabled: boolean

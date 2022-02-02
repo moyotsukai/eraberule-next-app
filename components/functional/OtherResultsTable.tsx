@@ -2,10 +2,10 @@ import React from 'react'
 import { Room } from '../../types/Room.type'
 import { ruleDisplayNames, ruleNames } from '../../types/rules'
 import { RankResults } from '../../types/RankResults.type'
-import Accordion from '../atoms/Accordion'
-import TextCell from '../atoms/textCell'
+import Accordion from '../ui/Accordion'
+import TextCell from '../ui/TextCell'
 import ResultTable from './ResultTable'
-import Spacer from '../atoms/spacer'
+import Spacer from '../ui/Spacer'
 
 type Props = {
   otherResults: RankResults[][] | undefined | null

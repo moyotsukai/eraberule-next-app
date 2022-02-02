@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { css } from '@emotion/react'
-import SupportingTextCell from './supportingTextCell'
+import SupportingTextCell from './SupportingTextCell'
 import { motion } from 'framer-motion'
 import Divider from './Divider'
 import ArrowIcon from '../icons/ArrowIcon'

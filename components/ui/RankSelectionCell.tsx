@@ -2,32 +2,24 @@ import React from 'react'
 import { css } from '@emotion/react'
 import { motion } from 'framer-motion'
 import { primaryColor, primarySelectedColor } from '../../styles/colors'
-import RadioIcon from '../icons/radioIcon'
+import CheckIcon from '../icons/CheckIcon'
 
 type Props = {
   text: string
-  onClick: () => void
+  rank: string
+  onClick: (event: React.MouseEvent<HTMLInputElement>) => void
   isSelected: boolean
-  children?: React.ReactNode
 }
 
-const SingleSelectionCell: React.FC<Props> = (props) => {
+const RankSelectionCell: React.FC<Props> = (props) => {
   return (
     <motion.button
       onClick={props.onClick}
-      whileHover={{
-        borderColor: primaryColor,
-        transition: { duration: 0.3 }
-      }}
       css={() => layoutStyle(props.isSelected)}
     >
-      <div>
-        <RadioIcon isChecked={props.isSelected} color={primaryColor} />
-      </div>
-      <div>
-        <p css={textStyle}>{props.text}</p>
-        {props.children}
-      </div>
+      <span><CheckIcon isChecked={props.isSelected} color={primaryColor} /></span>
+      <span css={textStyle}>{props.text}</span>
+      <span css={() => rankStyle(props.isSelected)}>{props.rank}</span>
     </motion.button>
   )
 }
@@ -35,24 +27,32 @@ const SingleSelectionCell: React.FC<Props> = (props) => {
 const layoutStyle = (isSelected: boolean) => css`
   width: 100%;
   margin: 3px 0;
-  padding: 5px;
+  padding: 6px;
   border: none;
   border-radius: 6px;
   background-color: ${isSelected ? primarySelectedColor : "transparent"};
   cursor: pointer;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   display: flex;
-  align-items: center;
-  border: 1px solid transparent;
-  box-sizing: border-box;
   &:focus {
     outline: none;
   }
 `
+
 const textStyle = css`
+  color: #000;
   font-family: 'Noto Sans JP', sans-serif;
   font-size: 12pt;
   text-align: left;
+  flex: 8 1 80%;
 `
 
-export default SingleSelectionCell
+const rankStyle = (isSelected: boolean) => css`
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 12pt;
+  text-align: right;
+  flex: 1 2 10%;
+  color: ${isSelected ? primaryColor : ""};
+`
+
+export default RankSelectionCell

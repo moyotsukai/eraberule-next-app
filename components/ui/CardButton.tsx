@@ -23,7 +23,7 @@ const CardButton: React.FC<Props> = (props) => {
 
 const buttonStyle = css`
   width: 100%;
-  min-height: 50px;
+  min-height: 55px;
   text-align: left;
   font-family: 'Noto Sans JP', sans-serif;
   font-size: 12pt;

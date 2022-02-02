@@ -14,6 +14,7 @@ const LiveIndicator: React.FC = () => {
     </div>
   )
 }
+
 const smallCircleStyle = css`
   width: 6px;
   height: 6px;

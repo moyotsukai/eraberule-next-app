@@ -2,17 +2,20 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import { useAuthenticate } from '../hooks/auth'
 import IndexTemplate from '../components/templates/IndexTemplate'
+import { useSetRecoilState } from 'recoil'
+import { roomDataState } from '../states/atoms'
 
 const IndexPage: React.FC = () => {
   const user = useAuthenticate()
   const router = useRouter()
   const [enteredTitle, setEnteredTitle] = useState("")
+  const setRoomData = useSetRecoilState(roomDataState)
 
   const handleTitleChange = (event) => {
     setEnteredTitle(event.target.value)
   }
 
-  const handleOnClick = async () => {
+  const handleOnClick = () => {
     if (!isValidTitle) { return }
     toRoom()
   }
@@ -23,6 +26,8 @@ const IndexPage: React.FC = () => {
   }
 
   const toRoom = () => {
+    setRoomData(undefined)
+
     router.push({
       pathname: "/room",
       query: { q: enteredTitle }

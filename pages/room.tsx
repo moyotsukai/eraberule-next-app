@@ -2,11 +2,11 @@ import React, { useState, useEffect, useRef } from 'react'
 import { db } from '../lib/firebase'
 import { useRouter } from 'next/router'
 import { useSetRecoilState, useRecoilState } from 'recoil'
-import { roomDataState, personalRankState, attendedRoomIdsState, hasNoUserDocState } from '../recoil/atom'
+import { roomDataState, personalRankState, attendedRoomIdsState, hasNoUserDocState } from '../states/atoms'
 import { useAuthenticate } from '../hooks/auth'
 import { useStrictUpdateEffect } from '../hooks/useStrictUpdateEffect'
 import RoomTemplate from '../components/templates/RoomTemplate'
-import { useQuery } from '../hooks/useQuery'
+import { useQyeryParameter } from '../hooks/useQueryParameter'
 
 const RoomPage: React.FC = () => {
   const user = useAuthenticate()
@@ -19,15 +19,17 @@ const RoomPage: React.FC = () => {
   const setPersonalRank = useSetRecoilState(personalRankState)
 
   //Set enteredTitle
-  const enteredTitle = useQuery("q")
+  const enteredTitle = useQyeryParameter("q")
 
   //Set roomData
   useStrictUpdateEffect(() => {
+    if (enteredTitle === "") {
+      setRoomData(null)
+      router.push("/")
+      return
+    }
+
     const getRoomData = async (title: string) => {
-      if (!title) {
-        router.push("/")
-        return
-      }
       db.collection("rooms").where("title", "==", title).limit(1)
         .get()
         .then((querySnapshot) => {
@@ -61,7 +63,7 @@ const RoomPage: React.FC = () => {
           db.collection("users").doc(userId).get().then((doc) => {
             if (doc.exists) {
               const docData = doc.data()
-              const roomIds = docData.attendedRooms === undefined ? [] : docData.attendedRooms
+              const roomIds = docData.attendedRooms ?? []
               setAttendedRoomIds(roomIds)
               setHasNoUserDoc(false)
             } else {
@@ -81,7 +83,7 @@ const RoomPage: React.FC = () => {
 
   //Set hasVoted
   useEffect(() => {
-    if (roomData === null) { return }
+    if (!roomData) { return }
     if (!roomData.title) { return }
     if (attendedRoomIds === undefined) { return }
 

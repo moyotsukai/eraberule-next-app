@@ -1,5 +1,5 @@
 import React from 'react'
-import Tab from '../atoms/tab'
+import Tab from '../ui/Tab'
 import { css } from '@emotion/react'
 import { primaryShadowColor } from '../../styles/colors'
 

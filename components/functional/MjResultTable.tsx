@@ -1,6 +1,6 @@
 import React from 'react'
 import { css } from '@emotion/react'
-import Spacer from '../atoms/spacer'
+import Spacer from '../ui/Spacer'
 import { RankResults } from '../../types/RankResults.type'
 
 type Props = {

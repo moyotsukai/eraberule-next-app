@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { useQuery } from '../../hooks/useQuery'
+import { useQyeryParameter } from '../../hooks/useQueryParameter'
 import ShareTemplate from '../../components/templates/ShareTemplate'
 
 const SharePage: React.FC = () => {
   const [url, setUrl] = useState<string | null>(null)
 
   //Set title
-  const title = useQuery("title")
+  const title = useQyeryParameter("title")
 
   //Set url
   useEffect(() => {

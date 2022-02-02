@@ -1,6 +1,6 @@
 import React from 'react'
 import { css } from '@emotion/react'
-import LoadingCircle from '../atoms/loadingCircle'
+import LoadingCircle from './LoadingCircle'
 
 type Props = {
   isLoading: boolean

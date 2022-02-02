@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useLayoutEffect } from 'react'
 import { db } from '../../lib/firebase'
 import { useRouter } from 'next/router'
 import { useRecoilValue, useRecoilState } from 'recoil'
-import { roomDataState, personalRankState, attendedRoomIdsState, hasNoUserDocState } from '../../recoil/atom'
+import { roomDataState, personalRankState, attendedRoomIdsState, hasNoUserDocState } from '../../states/atoms'
 import { ruleNames } from '../../types/rules'
 import { useAuthenticate } from '../../hooks/auth'
 import VoteTemplate from '../../components/templates/VoteTemplate'
@@ -62,7 +62,7 @@ const VotePage: React.FC = () => {
 
       const sendAttendance = async () => {
         const userId = user.uid
-        const roomIds = attendedRoomIds === undefined ? [] : attendedRoomIds
+        const roomIds = attendedRoomIds ?? []
         const newAttendedRoomIds = [
           roomData.docId,
           ...roomIds

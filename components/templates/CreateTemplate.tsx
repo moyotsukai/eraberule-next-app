@@ -1,12 +1,12 @@
 import React from 'react'
 import { css } from '@emotion/react'
 import { User } from '../../types/User.type'
-import Message from '../blocks/message'
-import Button from '../atoms/button'
-import SupportingTextCell from '../atoms/supportingTextCell'
-import TextCell from '../atoms/textCell'
-import Spacer from '../atoms/spacer'
-import CardButton from '../atoms/CardButton'
+import Message from '../ui/Message'
+import Button from '../ui/Button'
+import SupportingTextCell from '../ui/SupportingTextCell'
+import TextCell from '../ui/TextCell'
+import Spacer from '../ui/Spacer'
+import CardButton from '../ui/CardButton'
 
 type Props = {
   user: User | undefined | null
@@ -81,7 +81,7 @@ const recentlyCreatedRoomContainerStyle = css`
   }
 `
 const spaerStyle = css`
-  height: 40vh;
+  height: 38vh;
 `
 
 export default CreateTemplate

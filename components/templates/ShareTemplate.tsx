@@ -1,9 +1,9 @@
 import React from 'react'
 import { css } from '@emotion/react'
-import Card from '../../components/atoms/card'
-import SupportingTextCell from '../../components/atoms/supportingTextCell'
-import TextCell from '../../components/atoms/textCell'
-import Spacer from '../../components/atoms/spacer'
+import Card from '../ui/Card'
+import SupportingTextCell from '../ui/SupportingTextCell'
+import TextCell from '../ui/TextCell'
+import Spacer from '../ui/Spacer'
 import QRCode from 'qrcode.react'
 
 type Props = {

@@ -1,7 +1,8 @@
 import { useEffect } from 'react'
-import { userState } from './../recoil/atom'
+import { userState } from '../states/atoms'
 import { useRecoilState } from 'recoil'
 import { firebase } from '../lib/firebase'
+import { log } from '../utils/log'
 
 export const useAuthenticate = () => {
   const [user, setUser] = useRecoilState(userState)
@@ -12,7 +13,7 @@ export const useAuthenticate = () => {
 
     firebase.auth().signInAnonymously()
       .then(() => {
-        console.log("Signed in")
+        log("Signed in")
       })
       .catch((error) => {
         console.error(error.code)

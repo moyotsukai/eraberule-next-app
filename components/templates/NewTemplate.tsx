@@ -1,8 +1,8 @@
 import React from 'react'
 import { css } from '@emotion/react'
-import NewPageCard from '../blocks/NewPageCard'
-import Button from '../atoms/button'
-import Spacer from '../atoms/spacer'
+import NewPageCard from '../functional/NewPageCard'
+import Button from '../ui/Button'
+import Spacer from '../ui/Spacer'
 
 type Props = {
   title: string

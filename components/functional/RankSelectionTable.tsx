@@ -1,8 +1,8 @@
 import React from 'react'
 import { css } from '@emotion/react'
 import { useRecoilValue, useRecoilState } from 'recoil'
-import { roomDataState, personalRankState } from '../../recoil/atom'
-import RankSelectionCell from '../atoms/rankSelectionCell'
+import { roomDataState, personalRankState } from '../../states/atoms'
+import RankSelectionCell from '../ui/RankSelectionCell'
 
 type Props = {
   isEnabled: boolean

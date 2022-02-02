@@ -1,8 +1,8 @@
 import React from 'react'
 import { css } from '@emotion/react'
 import { User } from '../../types/User.type'
-import Message from '../blocks/message'
-import ToVoteCard from '../blocks/toVoteCard'
+import Message from '../ui/Message'
+import ToVoteCard from '../functional/ToVoteCard'
 import { Room } from '../../types/Room.type'
 
 type Props = {
@@ -13,7 +13,7 @@ type Props = {
 }
 
 const RoomTemplate: React.FC<Props> = (props) => {
-  if (props.user === undefined) {
+  if (props.user === undefined || props.roomData === undefined) {
     return (
       <div css={layoutStyle}>
         <Message isLoading={false}>

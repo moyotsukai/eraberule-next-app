@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
-import Header from '../components/blocks/header'
-import TabBar from '../components/blocks/tabBar'
-import Footer from '../components/blocks/footer'
+import Header from '../components/common/Header'
+import TabBar from '../components/common/TabBar'
+import Footer from '../components/common/Footer'
 import '../styles/global.css'
 import { RecoilRoot } from 'recoil'
 

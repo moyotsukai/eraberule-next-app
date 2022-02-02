@@ -4,7 +4,7 @@ import { db } from '../lib/firebase'
 import CreateTemplate from '../components/templates/CreateTemplate'
 import { useAuthenticate } from '../hooks/auth'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { createdRoomIdsState, hasNoUserDocState, recentlyCreatedRoomTitleState } from '../recoil/atom'
+import { createdRoomIdsState, hasNoUserDocState, recentlyCreatedRoomTitleState } from '../states/atoms'
 
 const CreatePage: React.FC = () => {
   const user = useAuthenticate()
@@ -27,7 +27,7 @@ const CreatePage: React.FC = () => {
         db.collection("users").doc(userId).get().then((doc) => {
           if (doc.exists) {
             const docData = doc.data()
-            const roomIds = docData.createdRooms === undefined ? [] : docData.createdRooms
+            const roomIds = docData.createdRooms ?? []
             setCreatedRoomIds(roomIds)
             setHasNoUserDoc(false)
           } else {

@@ -1,9 +1,9 @@
 import React from 'react'
-import Card from '../atoms/card'
-import TextCell from '../atoms/textCell'
-import SupportingTextCell from '../atoms/supportingTextCell'
-import Button from '../atoms/button'
-import Spacer from '../atoms/spacer'
+import Card from '../ui/Card'
+import TextCell from '../ui/TextCell'
+import SupportingTextCell from '../ui/SupportingTextCell'
+import Button from '../ui/Button'
+import Spacer from '../ui/Spacer'
 
 type Props = {
   roomTitle: string

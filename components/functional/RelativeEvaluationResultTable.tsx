@@ -1,8 +1,8 @@
 import React from 'react'
 import { css } from '@emotion/react'
 import { Room } from '../../types/Room.type'
-import SupportingTextCell from '../atoms/supportingTextCell'
-import Spacer from '../atoms/spacer'
+import SupportingTextCell from '../ui/SupportingTextCell'
+import Spacer from '../ui/Spacer'
 import { RankResults } from '../../types/RankResults.type'
 
 type Props = {

@@ -1,11 +1,11 @@
 import React from 'react'
 import { css } from '@emotion/react'
 import { User } from '../../types/User.type'
-import Message from '../blocks/message'
+import Message from '../ui/Message'
 import { Room } from '../../types/Room.type'
-import VotePageCard from '../blocks/votePageCard'
-import Button from '../atoms/button'
-import Spacer from '../atoms/spacer'
+import VotePageCard from '../functional/VotePageCard'
+import Button from '../ui/Button'
+import Spacer from '../ui/Spacer'
 
 type Props = {
   user: User | undefined | null

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { db } from '../../lib/firebase'
 import { useRecoilValue } from 'recoil'
-import { roomDataState } from '../../recoil/atom'
+import { roomDataState } from '../../states/atoms'
 import { useRouter } from 'next/router'
 import { useStrictEffect } from '../../hooks/useStrictEffect'
 import { useAuthenticate } from '../../hooks/auth'

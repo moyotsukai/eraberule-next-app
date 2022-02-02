@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { css } from '@emotion/react'
-import SearchIcon from '../icons/searchIcon'
+import SearchIcon from '../icons/SearchIcon'
 import { primaryColor } from '../../styles/colors'
-import InputSearch from '../atoms/inputSearch'
-import CircleButton from '../atoms/circleButton'
+import InputSearch from '../ui/InputSearch'
+import CircleButton from '../ui/CircleButton'
 
 type Props = {
   value: string
@@ -36,7 +36,7 @@ const SearchBox: React.FC<Props> = (props) => {
           isEnabled={!isClicked}
           isLoading={isClicked}
         >
-          {isClicked ? "" : <SearchIcon color="#fff" />}
+          {isClicked ? "" : <SearchIcon color={primaryColor} />}
         </CircleButton>
       </div>
     </div >
@@ -46,7 +46,6 @@ const SearchBox: React.FC<Props> = (props) => {
 const layoutStyle = css`
   text-align: center;
 `
-
 const inputContainerStyle = css`
   display: inline-block;
   height: 45px;
@@ -55,7 +54,6 @@ const inputContainerStyle = css`
   max-width: 400px;
   position: relative;
 `
-
 const inputStyle = css`
   width: 100%;
   height: 100%;
@@ -71,28 +69,6 @@ const inputStyle = css`
 
   &:focus {
     border: solid 1px ${primaryColor};
-    outline: none;
-  }
-`
-
-const buttonStyle = css`
-  width: 36px;
-  height: 36px;
-  border-radius: 18px;
-  background-color: ${primaryColor};
-  border: none;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  right: 5px;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
-
-  &:focus {
     outline: none;
   }
 `

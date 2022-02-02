@@ -1,6 +1,6 @@
 import React from 'react'
 import { css } from '@emotion/react'
-import Message from '../components/blocks/message'
+import Message from '../components/ui/Message'
 
 const NotFoundPage: React.FC = () => {
   return (

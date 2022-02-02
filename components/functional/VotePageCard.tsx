@@ -1,15 +1,15 @@
 import React from 'react'
-import Card from '../atoms/card'
-import TextCell from '../atoms/textCell'
-import SupportingTextCell from '../atoms/supportingTextCell'
-import Spacer from '../atoms/spacer'
+import Card from '../ui/Card'
+import TextCell from '../ui/TextCell'
+import SupportingTextCell from '../ui/SupportingTextCell'
+import Spacer from '../ui/Spacer'
 import { ruleDisplayNames } from '../../types/rules'
 import { useRecoilValue } from 'recoil'
-import { roomDataState } from '../../recoil/atom'
+import { roomDataState } from '../../states/atoms'
 import { ruleNames } from '../../types/rules'
-import SingleSelectionTable from '../blocks/singleSelectionTable'
-import RankSelectionTable from './rankSelectionTable'
-import MjSelectionTable from './mjSelectionTable'
+import SingleSelectionTable from './SingleSelectionTable'
+import RankSelectionTable from './RankSelectionTable'
+import MjSelectionTable from './MjSelectionTable'
 
 type Props = {
   isEnabled: boolean

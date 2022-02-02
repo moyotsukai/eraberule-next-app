@@ -1,8 +1,8 @@
 import React from 'react'
 import { css } from '@emotion/react'
 import { User } from '../../types/User.type'
-import Message from '../blocks/message'
-import SearchBox from '../blocks/searchBox'
+import Message from '../ui/Message'
+import SearchBox from '../functional/SearchBox'
 
 type Props = {
   user: User | undefined | null

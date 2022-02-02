@@ -2,7 +2,7 @@ import React from 'react'
 import { css } from '@emotion/react'
 import { primaryColor, primaryShadowColor, primaryDisabledColor } from '../../styles/colors'
 import { motion } from "framer-motion"
-import LoadingCircle from "../atoms/loadingCircle"
+import LoadingCircle from "./LoadingCircle"
 import SpacerInline from './SpacerInline'
 
 type Props = {

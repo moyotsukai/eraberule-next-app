@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import { css } from '@emotion/react'
 import { useRecoilValue, useRecoilState } from 'recoil'
-import { roomDataState, personalRankState } from '../../recoil/atom'
-import TextCell from '../atoms/textCell'
-import SingleSelectionCell from '../atoms/singleSelectionCell'
-import Spacer from '../atoms/spacer'
+import { roomDataState, personalRankState } from '../../states/atoms'
+import TextCell from '../ui/TextCell'
+import SingleSelectionCell from '../ui/SingleSelectionCell'
+import Spacer from '../ui/Spacer'
 
 type Props = {
   isEnabled: boolean

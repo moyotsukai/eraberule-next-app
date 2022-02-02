@@ -2,7 +2,7 @@ import React from 'react'
 import { css } from '@emotion/react'
 import { primaryColor, primaryDisabledColor } from '../../styles/colors'
 import { motion } from "framer-motion"
-import LoadingCircle from "../atoms/loadingCircle"
+import LoadingCircle from "./LoadingCircle"
 
 type Props = {
   onClick: (event: React.MouseEvent<HTMLInputElement>) => void
@@ -50,12 +50,12 @@ const CircleButton: React.FC<Props> = (props) => {
   }
 }
 
-const buttonStyle = (isEnabled) => css`
+const buttonStyle = (isEnabled: boolean) => css`
   width: 36px;
   height: 36px;
   border-radius: 18px;
   border: none;
-  background-color: ${isEnabled ? primaryColor : primaryDisabledColor};
+  background-color: transparent;
   cursor: ${isEnabled ? "pointer" : "default"};
   display: flex;
   justify-content: center;
@@ -77,7 +77,7 @@ const buttonLoadingStyle = css`
   height: 36px;
   border-radius: 18px;
   border: none;
-  background-color: ${primaryDisabledColor};
+  background-color: transparent;
   cursor: default;
   display: flex;
   justify-content: center;
