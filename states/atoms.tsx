@@ -7,7 +7,7 @@ export const userState = atom<User | undefined | null>({
   default: undefined
 })
 
-export const roomDataState = atom<Room | null>({
+export const roomDataState = atom<Room | undefined | null>({
   key: "roomDataState",
   default: {
     title: "",
