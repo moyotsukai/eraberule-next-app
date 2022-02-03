@@ -8,11 +8,11 @@ const Header: React.FC = () => {
 
   return (
     <div css={headerStyle}>
-      <Link href="/" passHref>
+      <a href="https://eraberule.com">
         <div css={linkStyle}>
           <Image src={Logo} alt="logo" />
         </div>
-      </Link>
+      </a>
     </div>
   )
 }
