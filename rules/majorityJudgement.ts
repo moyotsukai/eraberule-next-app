@@ -82,7 +82,7 @@ export const majorityJudgement = (roomData: Room, personalRanks: number[][]): Ra
 }
 
 const swapAt = (array, i, j) => {
-  const newArray = array.sclice();
+  const newArray = [...array];
   [newArray[i], newArray[j]] = [newArray[j], newArray[i]]
   return newArray
 }
