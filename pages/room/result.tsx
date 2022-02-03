@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import { useStrictEffect } from '../../hooks/useStrictEffect'
 import { useAuthenticate } from '../../hooks/auth'
 import ResultTemplate from '../../components/templates/ResultTemplate'
+import { log } from '../../utils/log'
 
 const ResultPage: React.FC = () => {
   const user = useAuthenticate()
@@ -24,12 +25,11 @@ const ResultPage: React.FC = () => {
   useStrictEffect(() => {
     const unsubscribe = db.collection("rooms").doc(roomData.docId).collection("votes")
       .onSnapshot((snapshot) => {
-        const newRanks = snapshot.docChanges().map((change) => {
-          if (change.type === "added") {
-            return change.doc.data().personalRank
-          }
+        let ranks = []
+        snapshot.forEach((doc) => {
+          ranks.push(doc.data().personalRank)
         })
-        setPersonalRanks(newRanks)
+        setPersonalRanks(ranks)
       }, (error) => {
         console.error("Error getting documents: ", error)
         toError()
