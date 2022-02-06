@@ -19,6 +19,8 @@ import { majorityJudgement } from '../../rules/majorityJudgement'
 import Accordion from '../ui/Accordion'
 import MjDetails from '../functional/MjDetails'
 import OtherResultsTable from '../functional/OtherResultsTable'
+import { supportingTextColor } from '../../styles/colors'
+import TextButton from '../ui/TextButton'
 
 type Props = {
   user: User | undefined | null
@@ -57,6 +59,10 @@ const ResultTemplate: React.FC<Props> = (props) => {
       setOtherResults(null)
     }
   }, [props.personalRanks])
+
+  const onReadAboutRulesClick = () => {
+    window.open("https://www.eraberule.com/details", "_blank", "noreferrer")
+  }
 
 
   if (props.user === undefined) {
@@ -137,6 +143,12 @@ const ResultTemplate: React.FC<Props> = (props) => {
         otherResults={otherResults}
         roomData={props.roomData}
       />
+
+      <div css={buttonContainerStyle}>
+        <TextButton onClick={onReadAboutRulesClick}>
+          各投票ルールの詳細を読む
+        </TextButton>
+      </div>
     </div>
   )
 }
@@ -150,6 +162,18 @@ const liveIndicatorContainerStyle = css`
   display: flex;
   justify-content: right;
   align-items: center;
+`
+const buttonContainerStyle = css`
+  margin: 0 auto;
+  margin-bottom: 25px;
+  max-width: 600px;
+  padding: 0 5px;
+  border-radius: 12px;
+  text-align: left;
+
+  @media(min-width: 500px) {
+    padding: 15px 10px;
+  }
 `
 
 export default ResultTemplate
