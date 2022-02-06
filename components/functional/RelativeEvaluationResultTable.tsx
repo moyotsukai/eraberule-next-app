@@ -30,7 +30,7 @@ const RelativeEvaluationReultTable: React.FC<Props> = (props) => {
       <div>
         {props.resultRanks.map((results, index) => (
           <React.Fragment key={index} >
-            <SupportingTextCell shouldAlignLeft={true}>
+            <SupportingTextCell textAlign="left">
               {index + 1}つ目の可能性
             </SupportingTextCell>
             <ul css={tableStyle}>

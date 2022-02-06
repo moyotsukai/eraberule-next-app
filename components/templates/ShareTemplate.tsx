@@ -22,12 +22,12 @@ const ShareTemplate: React.FC<Props> = (props) => {
       </TextCell>
 
       <Card>
-        <SupportingTextCell shouldAlignLeft={true}>
+        <SupportingTextCell textAlign="left">
           ルームのタイトルを検索する、QRコードを読み取る、またはリンクのURLにアクセスすることで投票に参加できます。
         </SupportingTextCell>
         <Spacer y="15px" />
 
-        <SupportingTextCell shouldAlignLeft={true}>
+        <SupportingTextCell textAlign="left">
           タイトル
         </SupportingTextCell>
         <TextCell>
@@ -35,7 +35,7 @@ const ShareTemplate: React.FC<Props> = (props) => {
         </TextCell>
         <Spacer y="15px" />
 
-        <SupportingTextCell shouldAlignLeft={true}>
+        <SupportingTextCell textAlign="left">
           QRコード
         </SupportingTextCell>
         {props.url &&
@@ -45,7 +45,7 @@ const ShareTemplate: React.FC<Props> = (props) => {
         }
         <Spacer y="15px" />
 
-        <SupportingTextCell shouldAlignLeft={true}>
+        <SupportingTextCell textAlign="left">
           リンク
         </SupportingTextCell>
         {props.url &&

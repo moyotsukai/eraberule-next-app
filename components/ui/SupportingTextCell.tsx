@@ -3,7 +3,7 @@ import { css } from '@emotion/react'
 import { errorColor, supportingTextColor } from '../../styles/colors'
 
 type Props = {
-  shouldAlignLeft: boolean
+  textAlign: "left" | "right" | "center"
   isError?: boolean
   children?: React.ReactNode
 }
@@ -11,24 +11,16 @@ type Props = {
 const SupportingTextCell: React.FC<Props> = (props) => {
   const isError = props.isError || false
 
-  if (props.shouldAlignLeft) {
-    return (
-      <div css={() => layoutStyle(isError, true)}>
-        {props.children}
-      </div>
-    )
-  } else {
-    return (
-      <div css={() => layoutStyle(isError, false)}>
-        {props.children}
-      </div>
-    )
-  }
+  return (
+    <div css={() => layoutStyle(isError, props.textAlign)}>
+      {props.children}
+    </div>
+  )
 }
 
-const layoutStyle = (isError, shouldAlignLeft) => css`
+const layoutStyle = (isError: boolean, textAlign: string) => css`
   color: ${isError ? errorColor : supportingTextColor};
-  text-align: ${shouldAlignLeft ? "left" : "right"};
+  text-align: ${textAlign};
   font-family: 'Noto Sans JP', sans-serif;
   font-size: 10pt;
   margin: 5px 10px;

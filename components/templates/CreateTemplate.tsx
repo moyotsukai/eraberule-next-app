@@ -51,9 +51,9 @@ const CreateTemplate: React.FC<Props> = (props) => {
 
       {props.recentlyCreatedRoomTitle &&
         <React.Fragment>
-          <div css={spaerStyle} />
+          <div css={spacerStyle} />
           <div css={recentlyCreatedRoomContainerStyle}>
-            <SupportingTextCell shouldAlignLeft={true}>
+            <SupportingTextCell textAlign="left">
               最近作成したルーム
             </SupportingTextCell>
             <CardButton onClick={props.toRecentlyCreatedRoom}>
@@ -80,7 +80,7 @@ const recentlyCreatedRoomContainerStyle = css`
     padding: 15px 10px;
   }
 `
-const spaerStyle = css`
+const spacerStyle = css`
   height: 38vh;
 `
 

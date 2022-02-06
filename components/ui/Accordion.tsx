@@ -43,7 +43,7 @@ const Accordion: React.FC<Props> = (props) => {
         css={summaryContainerStyle}
       >
         <div css={titleContainerStyle}>
-          <SupportingTextCell shouldAlignLeft={true}>
+          <SupportingTextCell textAlign="left">
             {props.title}
           </SupportingTextCell>
         </div>

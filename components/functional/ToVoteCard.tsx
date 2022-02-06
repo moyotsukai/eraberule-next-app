@@ -21,7 +21,7 @@ const ToVoteCard: React.FC<Props> = (props) => {
 
   return (
     <Card>
-      <SupportingTextCell shouldAlignLeft={true}>
+      <SupportingTextCell textAlign="left">
         タイトル
       </SupportingTextCell>
       <TextCell>

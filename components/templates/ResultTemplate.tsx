@@ -91,7 +91,7 @@ const ResultTemplate: React.FC<Props> = (props) => {
 
   return (
     <div css={layoutStyle}>
-      <SupportingTextCell shouldAlignLeft={false}>
+      <SupportingTextCell textAlign="right">
         <div css={liveIndicatorContainerStyle}>
           <LiveIndicator />
           <SpacerInline x="5px" />
@@ -100,7 +100,7 @@ const ResultTemplate: React.FC<Props> = (props) => {
       </SupportingTextCell>
 
       <Card>
-        <SupportingTextCell shouldAlignLeft={true}>
+        <SupportingTextCell textAlign="left">
           タイトル
         </SupportingTextCell>
         <TextCell>
@@ -108,7 +108,7 @@ const ResultTemplate: React.FC<Props> = (props) => {
         </TextCell>
         <Spacer y="15px" />
 
-        <SupportingTextCell shouldAlignLeft={true}>
+        <SupportingTextCell textAlign="left">
           結果
         </SupportingTextCell>
 
@@ -117,12 +117,12 @@ const ResultTemplate: React.FC<Props> = (props) => {
           roomData={props.roomData}
         />
 
-        <SupportingTextCell shouldAlignLeft={false}>
+        <SupportingTextCell textAlign="right">
           {props.personalRanks.length}人が投票済み
         </SupportingTextCell>
         <Spacer y="15px" />
 
-        <SupportingTextCell shouldAlignLeft={true}>
+        <SupportingTextCell textAlign="left">
           この投票は{ruleDisplayNames[props.roomData.rule]}で集計されました。
         </SupportingTextCell>
       </Card>

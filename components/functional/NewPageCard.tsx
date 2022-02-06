@@ -38,7 +38,7 @@ type Props = {
 const NewPageCard: React.FC<Props> = (props) => {
   return (
     <Card>
-      <SupportingTextCell shouldAlignLeft={true}>
+      <SupportingTextCell textAlign="left">
         タイトル
       </SupportingTextCell>
       <Input
@@ -47,13 +47,13 @@ const NewPageCard: React.FC<Props> = (props) => {
         onChange={props.onTitleChange}
       />
       {props.shouldChangeTitle &&
-        <SupportingTextCell shouldAlignLeft={true} isError={true}>
+        <SupportingTextCell textAlign="left" isError={true}>
           すでに使われているタイトルです。末尾に数字をつけるなどしてみてください。
         </SupportingTextCell>
       }
       <Spacer y="15px" />
 
-      <SupportingTextCell shouldAlignLeft={true}>
+      <SupportingTextCell textAlign="left">
         説明
       </SupportingTextCell>
       {props.hasAddedExplanation
@@ -72,7 +72,7 @@ const NewPageCard: React.FC<Props> = (props) => {
       }
       <Spacer y="15px" />
 
-      <SupportingTextCell shouldAlignLeft={true}>
+      <SupportingTextCell textAlign="left">
         候補
       </SupportingTextCell>
       {props.options.map((option, index) => (
@@ -102,12 +102,12 @@ const NewPageCard: React.FC<Props> = (props) => {
           </TextButton>
         </div>
       }
-      <SupportingTextCell shouldAlignLeft={true} isError={props.isOptionsExceed}>
+      <SupportingTextCell textAlign="left" isError={props.isOptionsExceed}>
         {ruleDisplayNames.bordaRule}と{ruleDisplayNames.condorcetRule}で入力できる候補の数は10までです。
       </SupportingTextCell>
       <Spacer y="15px" />
 
-      <SupportingTextCell shouldAlignLeft={true}>
+      <SupportingTextCell textAlign="left">
         投票のルール
       </SupportingTextCell>
       {Object.values(ruleNames).map((ruleName, index) => (
@@ -128,7 +128,7 @@ const NewPageCard: React.FC<Props> = (props) => {
       {props.selectedRule === ruleNames.majorityJudgement &&
         <React.Fragment>
           <Spacer y="15px" />
-          <SupportingTextCell shouldAlignLeft={true}>
+          <SupportingTextCell textAlign="left">
             評価の語彙(良い方から順に入力)
           </SupportingTextCell>
           {props.commonLanguage.map((evaluation, index) => (

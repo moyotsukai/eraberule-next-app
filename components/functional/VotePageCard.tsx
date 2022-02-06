@@ -33,7 +33,7 @@ const VotePageCard: React.FC<Props> = (props) => {
 
   return (
     <Card>
-      <SupportingTextCell shouldAlignLeft={true}>
+      <SupportingTextCell textAlign="left">
         タイトル
       </SupportingTextCell>
       <TextCell>
@@ -43,7 +43,7 @@ const VotePageCard: React.FC<Props> = (props) => {
 
       {roomData.explanation !== "" &&
         <React.Fragment>
-          <SupportingTextCell shouldAlignLeft={true}>
+          <SupportingTextCell textAlign="left">
             説明
           </SupportingTextCell>
           <TextCell>
@@ -53,14 +53,14 @@ const VotePageCard: React.FC<Props> = (props) => {
         </React.Fragment>
       }
 
-      <SupportingTextCell shouldAlignLeft={true}>
+      <SupportingTextCell textAlign="left">
         候補
       </SupportingTextCell>
 
       <Table />
       <Spacer y="15px" />
 
-      <SupportingTextCell shouldAlignLeft={true}>
+      <SupportingTextCell textAlign="left">
         この投票は{ruleDisplayNames[roomData.rule]}で集計されます。
       </SupportingTextCell>
     </Card>

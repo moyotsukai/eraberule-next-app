@@ -3,6 +3,9 @@ import { css } from '@emotion/react'
 import { User } from '../../types/User.type'
 import Message from '../ui/Message'
 import SearchBox from '../functional/SearchBox'
+import SupportingTextCell from '../ui/SupportingTextCell'
+import { supportingTextColor } from '../../styles/colors'
+import Spacer from '../ui/Spacer'
 
 type Props = {
   user: User | undefined | null
@@ -43,12 +46,32 @@ const IndexTemplate: React.FC<Props> = (props) => {
         onChange={props.handleTitleChange}
         onEnterKey={props.handleOnClick}
       />
+      <div css={spacerStyle} />
+      <SupportingTextCell textAlign="center">
+        アプリの利用を開始することで
+        <a
+          href="https://www.eraberule.com/terms"
+          target="_blank"
+          rel="noopener noreferrer"
+          css={linkStyle}
+        >
+          利用規約
+        </a>
+        に同意したものとみなされます。
+      </SupportingTextCell>
     </div>
   )
 }
 
 const layoutStyle = css`
   min-height: 100vh;
+`
+const spacerStyle = css`
+  height: 38vh;
+`
+const linkStyle = css`
+  color: ${supportingTextColor};
+  text-decoration: underline;
 `
 
 export default IndexTemplate

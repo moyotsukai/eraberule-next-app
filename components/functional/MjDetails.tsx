@@ -2,10 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { css } from '@emotion/react'
 import { Room } from '../../types/Room.type'
 import { ruleNames } from '../../types/rules'
-import { bordaRule } from '../../rules/bordaRule'
 import { RankResults } from '../../types/RankResults.type'
-import { majorityRule } from '../../rules/majorityRule'
-import { condorcetRule } from '../../rules/condorcetRule'
 import { majorityJudgement } from '../../rules/majorityJudgement'
 import SupportingTextCell from '../ui/SupportingTextCell'
 import Spacer from '../ui/Spacer'
@@ -43,7 +40,7 @@ const MjDetails: React.FC<Props> = (props) => {
       <div>
         {mjDetailData.map((evaluations, optionIndex) => (
           <React.Fragment key={optionIndex}>
-            <SupportingTextCell shouldAlignLeft={true}>
+            <SupportingTextCell textAlign="left">
               {props.roomData.options[optionIndex]}
             </SupportingTextCell>
             <ul css={tableStyle}>
