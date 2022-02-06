@@ -5,7 +5,6 @@ import Message from '../ui/Message'
 import SearchBox from '../functional/SearchBox'
 import SupportingTextCell from '../ui/SupportingTextCell'
 import { supportingTextColor } from '../../styles/colors'
-import Spacer from '../ui/Spacer'
 
 type Props = {
   user: User | undefined | null
@@ -48,7 +47,6 @@ const IndexTemplate: React.FC<Props> = (props) => {
       />
       <div css={spacerStyle} />
       <SupportingTextCell textAlign="center">
-        アプリの利用を開始することで
         <a
           href="https://www.eraberule.com/terms"
           target="_blank"
@@ -57,7 +55,7 @@ const IndexTemplate: React.FC<Props> = (props) => {
         >
           利用規約
         </a>
-        に同意したものとみなされます。
+        に同意した上でアプリの利用を開始してください。
       </SupportingTextCell>
     </div>
   )

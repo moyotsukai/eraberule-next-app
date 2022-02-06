@@ -4,8 +4,6 @@ import { User } from '../../types/User.type'
 import Message from '../ui/Message'
 import Button from '../ui/Button'
 import SupportingTextCell from '../ui/SupportingTextCell'
-import TextCell from '../ui/TextCell'
-import Spacer from '../ui/Spacer'
 import CardButton from '../ui/CardButton'
 
 type Props = {
