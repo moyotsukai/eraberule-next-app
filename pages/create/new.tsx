@@ -4,13 +4,14 @@ import { useAuthenticate } from '../../hooks/auth'
 import { defaultCoommonLanguage, ruleNames } from '../../types/rules'
 import { Room } from '../../types/Room.type'
 import { db } from '../../lib/firebase'
-import { useRecoilState, useSetRecoilState } from 'recoil'
-import { createdRoomIdsState, hasNoUserDocState, recentlyCreatedRoomTitleState } from '../../states/atoms'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { createdRoomIdsState, hasNoUserDocState, recentlyCreatedRoomTitleState, suggestedRuleState } from '../../states/atoms'
 import NewTemplate from '../../components/templates/NewTemplate'
 
 const NewPage: React.FC = () => {
   const user = useAuthenticate()
   const router = useRouter()
+  const suggestedRule = useRecoilValue(suggestedRuleState)
   const [isSendEnabled, setIsSendEnabled] = useState<boolean>(false)
   const [isSendClicked, setIsSendClicked] = useState<boolean>(false)
   const [title, setTitle] = useState<string>("")
@@ -58,6 +59,13 @@ const NewPage: React.FC = () => {
       getCreatedRoomIds()
     }
   }, [user])
+
+  //Set initial selectedRule
+  useEffect(() => {
+    if (suggestedRule !== null) {
+      setSelectedRule(suggestedRule)
+    }
+  }, [])
 
   //Set isSendEnabled
   useLayoutEffect(() => {

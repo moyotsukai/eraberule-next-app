@@ -4,7 +4,7 @@ import { db } from '../lib/firebase'
 import CreateTemplate from '../components/templates/CreateTemplate'
 import { useAuthenticate } from '../hooks/auth'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { createdRoomIdsState, hasNoUserDocState, recentlyCreatedRoomTitleState } from '../states/atoms'
+import { createdRoomIdsState, hasNoUserDocState, recentlyCreatedRoomTitleState, suggestedRuleState } from '../states/atoms'
 
 const CreatePage: React.FC = () => {
   const user = useAuthenticate()
@@ -14,6 +14,7 @@ const CreatePage: React.FC = () => {
   const [createdRoomIds, setCreatedRoomIds] = useRecoilState(createdRoomIdsState)
   const didSetRecentlyCreatedRoomTitleRef = useRef(false)
   const [recentlyCreatedRoomTitle, setRecentlyCreatedRoomTitle] = useRecoilState(recentlyCreatedRoomTitleState)
+  const setSuggestedRule = useSetRecoilState(suggestedRuleState)
 
   //Set createdRoomIds, hasNoUserDoc
   useEffect(() => {
@@ -71,7 +72,8 @@ const CreatePage: React.FC = () => {
   }, [createdRoomIds])
 
   const toNewRoom = () => {
-    router.push("/create/new")
+    setSuggestedRule(null)
+    router.push("/create/suggest")
   }
 
   const toRecentlyCreatedRoom = () => {

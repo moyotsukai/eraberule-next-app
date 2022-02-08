@@ -22,7 +22,7 @@ const tabs: Tabs[] = [
   {
     text: "作成",
     path: "/create",
-    match: ["/create", "/create/new", "/create/share"],
+    match: ["/create", "/create/new", "/create/suggest", "/create/share"],
   }
 ]
 

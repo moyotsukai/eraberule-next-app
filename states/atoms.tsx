@@ -43,3 +43,8 @@ export const personalRankState = atom<number[]>({
   key: "personalRankState",
   default: []
 })
+
+export const suggestedRuleState = atom<string | null>({
+  key: "suggestedRule",
+  default: null
+})

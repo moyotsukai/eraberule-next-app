@@ -19,7 +19,6 @@ import { majorityJudgement } from '../../rules/majorityJudgement'
 import Accordion from '../ui/Accordion'
 import MjDetails from '../functional/MjDetails'
 import OtherResultsTable from '../functional/OtherResultsTable'
-import { supportingTextColor } from '../../styles/colors'
 import TextButton from '../ui/TextButton'
 
 type Props = {

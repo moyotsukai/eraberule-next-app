@@ -26,6 +26,13 @@ const ruleExplanations: RuleSet = {
   majorityJudgement: "各候補に対して絶対評価で投票し、中央値をその候補の評価とします。"
 }
 
+const ruleSuggestions: RuleSet = {
+  majorityRule: "一部の人から熱狂的に支持されている候補を選びたい",
+  bordaRule: "できるだけ満場一致に近い候補を選びたい",
+  condorcetRule: "勝者が他の候補との１対１の比較で優位であることを保証したい",
+  majorityJudgement: "わざと極端な評価をするような票に左右されにくい決め方にしたい"
+}
+
 const defaultCoommonLanguage: string[] = [
   "非常に良い",
   "良い",
@@ -35,4 +42,4 @@ const defaultCoommonLanguage: string[] = [
   "失格"
 ]
 
-export { ruleNames, ruleDisplayNames, ruleExplanations, defaultCoommonLanguage }
+export { ruleNames, ruleDisplayNames, ruleExplanations, ruleSuggestions, defaultCoommonLanguage }
