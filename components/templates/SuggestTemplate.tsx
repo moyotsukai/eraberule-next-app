@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { css } from '@emotion/react'
 import Card from '../ui/Card'
 import SupportingTextCell from '../ui/SupportingTextCell'
@@ -15,6 +15,11 @@ import SingleSelectionCell from '../ui/SingleSelectionCell'
 const SuggestTemplate: React.FC = () => {
   const router = useRouter()
   const [suggestedRule, setSuggestedRule] = useRecoilState(suggestedRuleState)
+  const bottomElementRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    bottomElementRef?.current?.scrollIntoView()
+  }, [suggestedRule])
 
   const handleSelection = (ruleName: string) => {
     if (suggestedRule === null) {
@@ -46,6 +51,9 @@ const SuggestTemplate: React.FC = () => {
         </div>
       </TextCell>
       <div css={skipButtonContainerStyle}>
+        <SupportingTextCell textAlign="center">
+          この機能は暫定的なものです。
+        </SupportingTextCell>
         <TextButton onClick={toNewRoomWithoutRule}>
           この工程をスキップ
         </TextButton>
@@ -70,26 +78,28 @@ const SuggestTemplate: React.FC = () => {
       </Card>
 
       {suggestedRule &&
-        <Card>
-          <SupportingTextCell textAlign="left">
-            おすすめの投票ルール
-          </SupportingTextCell>
-          <TextCell>
-            {ruleDisplayNames[suggestedRule]}
-          </TextCell>
-          <Spacer y="15px" />
-          <div css={buttonGroupStyle}>
-            <div css={buttonSpacerStyle} />
-            <Button onClick={toNewRoomWithRule} isEnabled={true} isLoading={false}>
-              この決め方で投票を作成
-            </Button>
-            <div css={textButtonContainerStyle}>
-              <TextButton onClick={toNewRoomWithoutRule}>
-                決め方を保留にして投票を作成
-              </TextButton>
+        <div ref={bottomElementRef}>
+          <Card>
+            <SupportingTextCell textAlign="left">
+              おすすめの投票ルール
+            </SupportingTextCell>
+            <TextCell>
+              {ruleDisplayNames[suggestedRule]}
+            </TextCell>
+            <Spacer y="15px" />
+            <div css={buttonGroupStyle}>
+              <div css={buttonSpacerStyle} />
+              <Button onClick={toNewRoomWithRule} isEnabled={true} isLoading={false}>
+                この決め方で投票を作成
+              </Button>
+              <div css={textButtonContainerStyle}>
+                <TextButton onClick={toNewRoomWithoutRule}>
+                  決め方を保留にして投票を作成
+                </TextButton>
+              </div>
             </div>
-          </div>
-        </Card>
+          </Card>
+        </div>
       }
     </div>
   )
