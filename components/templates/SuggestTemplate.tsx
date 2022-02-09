@@ -51,9 +51,6 @@ const SuggestTemplate: React.FC = () => {
         </div>
       </TextCell>
       <div css={skipButtonContainerStyle}>
-        <SupportingTextCell textAlign="center">
-          この機能は暫定的なものです。
-        </SupportingTextCell>
         <TextButton onClick={toNewRoomWithoutRule}>
           この工程をスキップ
         </TextButton>
