@@ -18,9 +18,13 @@ const SuggestTemplate: React.FC = () => {
   const [suggestedRule, setSuggestedRule] = useRecoilState(suggestedRuleState)
   const bottomElementRef = useRef<HTMLDivElement>(null)
 
+  //Setup scroll behavior
   useEffect(() => {
     smoothscroll.polyfill()
+  }, [])
 
+  //Scroll when selected
+  useEffect(() => {
     bottomElementRef?.current?.scrollIntoView({
       behavior: "smooth"
     })
