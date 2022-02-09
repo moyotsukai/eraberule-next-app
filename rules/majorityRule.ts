@@ -7,6 +7,7 @@ export const majorityRule = (roomData: Room, personalRanks: number[][]): RankRes
     {
       name: option,
       score: 0,
+      obtained: 0,
       rank: 0
     }
   ))
@@ -34,12 +35,18 @@ export const majorityRule = (roomData: Room, personalRanks: number[][]): RankRes
     }
   }
 
+  //Percentage of votes obtained
+  for (let i = 0; i < results.length; i++) {
+    const result = results[i]
+    result.obtained = Math.round(result.score / personalRanks.length * 100)
+  }
+
   //To string
   const resultsString: RankResults = results.map((result) => (
     {
       name: result.name,
-      score: result.score.toString() + "票",
-      rank: result.rank.toString() + "位"
+      score: `${result.score.toString()}票(${result.obtained}%)`,
+      rank: `${result.rank.toString()}位`
     }
   ))
 
