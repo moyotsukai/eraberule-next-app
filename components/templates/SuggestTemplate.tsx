@@ -18,7 +18,9 @@ const SuggestTemplate: React.FC = () => {
   const bottomElementRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    bottomElementRef?.current?.scrollIntoView()
+    bottomElementRef?.current?.scrollIntoView({
+      behavior: "smooth"
+    })
   }, [suggestedRule])
 
   const handleSelection = (ruleName: string) => {
