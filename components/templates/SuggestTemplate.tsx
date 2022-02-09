@@ -11,6 +11,7 @@ import { suggestedRuleState } from '../../states/atoms'
 import { ruleDisplayNames, ruleNames, ruleSuggestions } from '../../types/rules'
 import Button from '../ui/Button'
 import SingleSelectionCell from '../ui/SingleSelectionCell'
+import smoothscroll from 'smoothscroll-polyfill'
 
 const SuggestTemplate: React.FC = () => {
   const router = useRouter()
@@ -18,6 +19,8 @@ const SuggestTemplate: React.FC = () => {
   const bottomElementRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    smoothscroll.polyfill()
+
     bottomElementRef?.current?.scrollIntoView({
       behavior: "smooth"
     })
