@@ -34,7 +34,7 @@ const PreferenceProfilesTable: React.FC<Props> = (props) => {
             <th css={rankOrderingLabelStyle}>選好順序</th>
           </tr>
           {preferenceProfiles.map((profile, index) => (
-            <tr key={index}>
+            <tr key={index} css={() => rowStyle(index % 2 !== 0)}>
               <td css={obtainedStyle}>{profile.obtained}人</td>
               <td css={rankOrderingStyle}>{profile.rankOrdering}</td>
             </tr>
@@ -51,18 +51,22 @@ const containerStyle = css`
 const tableStyle = css`
   width: 100%;
   border-collapse: collapse;
+  font-size: 16px;
 `
 const obtainedLabelStyle = css`
-  background-color: #FAFBFF;
+  background-color: #f2f5ff;
   width: 70px;
   text-align: center;
   border: solid 1px ${dividerColor};
 `
 const rankOrderingLabelStyle = css`
-  background-color: #FAFBFF;
+  background-color: #f2f5ff;
   min-width: 200px;
   text-align: center;
   border: solid 1px ${dividerColor};
+`
+const rowStyle = (hasColor: boolean) => css`
+  background-color: ${hasColor ? "#fafbff" : "transparent"};
 `
 const obtainedStyle = css`
   width: 70px;
