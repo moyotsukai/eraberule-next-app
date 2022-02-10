@@ -20,6 +20,9 @@ import Accordion from '../ui/Accordion'
 import MjDetails from '../functional/MjDetails'
 import OtherResultsTable from '../functional/OtherResultsTable'
 import TextButton from '../ui/TextButton'
+import { PreferenceProfilesFormatted } from '../../types/PreferenceProfiles.type'
+import { preferenceProfilesAssumption, preferenceProfilesFormatted } from '../../rules/preferenceProfiles'
+import PreferenceProfilesTable from '../functional/PreferenceProfilesTable'
 
 type Props = {
   user: User | undefined | null
@@ -155,7 +158,7 @@ const ResultTemplate: React.FC<Props> = (props) => {
 
       {isPreferenceVoting &&
         <Accordion title="詳細">
-          表を表示
+          <PreferenceProfilesTable roomData={props.roomData} personalRanks={props.personalRanks} />
         </Accordion>
       }
 

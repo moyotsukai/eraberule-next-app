@@ -1,14 +1,5 @@
 import { Room } from '../types/Room.type'
-
-interface PreferenceProfile {
-  rankOrdering: number[],
-  obtained: number
-}
-
-interface PreferenceProfilesFormatted {
-  rankOrdering: string,
-  obtained: number
-}
+import { PreferenceProfile, PreferenceProfilesFormatted } from '../types/PreferenceProfiles.type'
 
 const preferenceProfiles = (roomData: Room, personalRanks: number[][]): PreferenceProfile[] => {
   const numOfOptions = roomData.options.length
@@ -63,7 +54,7 @@ export const preferenceProfilesAssumption = (roomData: Room): string => {
   const assumption = options.map((name, index) => (
     name + "を" + charactors[index]
   ))
-  return assumption.join() + "とする。"
+  return assumption.join("、") + "とする。"
 }
 
 const isEqualRankOrdering = (array1: any[], array2: any[]): boolean => {
