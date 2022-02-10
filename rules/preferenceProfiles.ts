@@ -56,6 +56,16 @@ export const preferenceProfilesFormatted = (roomData: Room, personalRanks: numbe
   return formatted
 }
 
+export const preferenceProfilesAssumption = (roomData: Room): string => {
+  const numOfOptions = roomData.options.length
+  const options = roomData.options
+  const charactors = [...Array(numOfOptions)].map((_, i) => String.fromCodePoint(i + 65))
+  const assumption = options.map((name, index) => (
+    name + "を" + charactors[index]
+  ))
+  return assumption.join() + "とする。"
+}
+
 const isEqualRankOrdering = (array1: any[], array2: any[]): boolean => {
   if (array1.length !== array2.length) { return false }
   for (let i = 0; i < array1.length; i++) {
