@@ -5,7 +5,12 @@ interface PreferenceProfile {
   obtained: number
 }
 
-export const preferenceProfiles = (roomData: Room, personalRanks: number[][]): PreferenceProfile[] => {
+interface PreferenceProfilesFormatted {
+  rankOrdering: string,
+  obtained: number
+}
+
+const preferenceProfiles = (roomData: Room, personalRanks: number[][]): PreferenceProfile[] => {
   const numOfOptions = roomData.options.length
 
   //Setup preference profiles with obtained number of voters as zero
@@ -29,6 +34,26 @@ export const preferenceProfiles = (roomData: Room, personalRanks: number[][]): P
   }
 
   return profiles
+}
+
+export const preferenceProfilesFormatted = (roomData: Room, personalRanks: number[][]): PreferenceProfilesFormatted[] => {
+  const profiles = preferenceProfiles(roomData, personalRanks)
+
+  const formatted: PreferenceProfilesFormatted[] = profiles.map((profile) => {
+    const numOfOptions = roomData.options.length
+    const charactors = [...Array(numOfOptions)].map((_, i) => String.fromCodePoint(i + 65))
+    const rankArray = profile.rankOrdering.map((num) => (
+      charactors[num - 1]
+    ))
+    const rankOrdering = rankArray.join(" > ")
+
+    return {
+      rankOrdering: rankOrdering,
+      obtained: profile.obtained
+    }
+  })
+
+  return formatted
 }
 
 const isEqualRankOrdering = (array1: any[], array2: any[]): boolean => {
@@ -83,15 +108,12 @@ const personalRankToRankOrdering = (personalRank: number[]): number[] => {
       index: index
     }
   ))
-
   rankWithIndex.sort((a, b) => (
     a.rank - b.rank
   ))
-
   const indexArray = rankWithIndex.map((item) => (
     item.index
   ))
-
   const profileArray = indexArray.map((item) => (
     item += 1
   ))

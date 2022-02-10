@@ -30,6 +30,8 @@ type Props = {
 const ResultTemplate: React.FC<Props> = (props) => {
   const [resultRanks, setResultRanks] = useState<RankResults[] | undefined>(undefined)
   const [otherResults, setOtherResults] = useState<RankResults[][] | undefined | null>(undefined)
+  const [isMj, setIsMj] = useState<boolean>(false)
+  const [isPreferenceVoting, setIsPreferenceVoting] = useState<boolean>(false)
 
   //Set rank results
   useEffect(() => {
@@ -58,6 +60,19 @@ const ResultTemplate: React.FC<Props> = (props) => {
       setOtherResults(null)
     }
   }, [props.personalRanks])
+
+  //Set isMj, isPreferenceVoting
+  useEffect(() => {
+    if (props.roomData.rule === ruleNames.majorityJudgement) {
+      setIsMj(true)
+    }
+    if (props.roomData.rule === ruleNames.bordaRule) {
+      setIsPreferenceVoting(true)
+    }
+    if (props.roomData.rule === ruleNames.condorcetRule) {
+      setIsPreferenceVoting(true)
+    }
+  }, [])
 
   const onReadAboutRulesClick = () => {
     window.open("https://www.eraberule.com/details", "_blank", "noreferrer")
@@ -132,9 +147,15 @@ const ResultTemplate: React.FC<Props> = (props) => {
         </SupportingTextCell>
       </Card>
 
-      {props.roomData.rule === ruleNames.majorityJudgement &&
+      {isMj &&
         <Accordion title="詳細" >
           <MjDetails roomData={props.roomData} personalRanks={props.personalRanks} />
+        </Accordion>
+      }
+
+      {isPreferenceVoting &&
+        <Accordion title="詳細">
+          表を表示
         </Accordion>
       }
 
