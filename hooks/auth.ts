@@ -8,7 +8,7 @@ export const useAuthenticate = () => {
   const [user, setUser] = useRecoilState(userState)
 
   useEffect(() => {
-    if (firebase === undefined) { return null }
+    if (firebase === undefined) { return }
     if (user) { return }
 
     firebase.auth().signInAnonymously()
@@ -21,18 +21,14 @@ export const useAuthenticate = () => {
       })
 
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-      if (user === undefined) {
-        setUser(undefined)
-      }
-      if (user === null) {
-        setUser(null)
-      }
-      setUser(
-        {
+      if (user) {
+        setUser({
           uid: user.uid,
           isAnonymous: user.isAnonymous
-        }
-      )
+        })
+      } else {
+        setUser(undefined)
+      }
     })
 
     return unsubscribe
