@@ -21,11 +21,18 @@ export const useAuthenticate = () => {
       })
 
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        setUser({ uid: user.uid, isAnonymous: user.isAnonymous })
-      } else {
+      if (user === undefined) {
+        setUser(undefined)
+      }
+      if (user === null) {
         setUser(null)
       }
+      setUser(
+        {
+          uid: user.uid,
+          isAnonymous: user.isAnonymous
+        }
+      )
     })
 
     return unsubscribe
