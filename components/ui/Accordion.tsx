@@ -3,30 +3,11 @@ import { css } from '@emotion/react'
 import SupportingTextCell from './SupportingTextCell'
 import { motion } from 'framer-motion'
 import Divider from './Divider'
-import ArrowIcon from '../icons/ArrowIcon'
+import ToggleMarker from './ToggleMarker'
 
 type Props = {
   title: string
   children?: React.ReactNode
-}
-type ToggleMarkerProps = {
-  isOpen: boolean
-}
-
-const ToggleMarker: React.FC<ToggleMarkerProps> = (props) => {
-  const variants = {
-    open: { rotate: 0 },
-    closed: { rotate: -180 }
-  }
-
-  return (
-    <motion.div
-      animate={props.isOpen ? "open" : "closed"}
-      variants={variants}
-    >
-      <ArrowIcon />
-    </motion.div>
-  )
 }
 
 const Accordion: React.FC<Props> = (props) => {
@@ -34,6 +15,19 @@ const Accordion: React.FC<Props> = (props) => {
 
   const toggleIsOpen = () => {
     setIsOpen(!isOpen)
+  }
+
+  const variants = {
+    open: {
+      height: "auto",
+      opacity: 1,
+      y: 0
+    },
+    closed: {
+      height: 0,
+      opacity: 0,
+      y: -10
+    }
   }
 
   return (
@@ -50,12 +44,23 @@ const Accordion: React.FC<Props> = (props) => {
         <ToggleMarker isOpen={!isOpen} />
       </motion.button>
 
-      {isOpen &&
-        <div>
-          <Divider />
-          {props.children}
-        </div>
-      }
+      <motion.div
+        initial={{
+          height: 0,
+          opacity: 0
+        }}
+        animate={isOpen ? "open" : "closed"}
+        variants={variants}
+        transition={{
+          type: "tween",
+          duration: 0.2,
+          ease: "easeOut"
+        }}
+        css={detailContainerStyle}
+      >
+        <Divider />
+        {props.children}
+      </motion.div>
     </div>
   )
 }
@@ -87,6 +92,9 @@ const summaryContainerStyle = css`
 `
 const titleContainerStyle = css`
   flex-grow: 1;
+`
+const detailContainerStyle = css`
+  overflow: hidden;
 `
 
 export default Accordion
