@@ -7,6 +7,7 @@ import { useAuthenticate } from '../hooks/auth'
 import { useStrictUpdateEffect } from '../hooks/useStrictUpdateEffect'
 import RoomTemplate from '../components/templates/RoomTemplate'
 import { useQyeryParameter } from '../hooks/useQueryParameter'
+import { log } from '../utils/log'
 
 const RoomPage: React.FC = () => {
   const user = useAuthenticate()
