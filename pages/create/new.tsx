@@ -7,6 +7,8 @@ import { db } from '../../lib/firebase'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { createdRoomIdsState, hasNoUserDocState, recentlyCreatedRoomTitleState, suggestedRuleState } from '../../states/atoms'
 import NewTemplate from '../../components/templates/NewTemplate'
+import { spaceToPlus } from '../../utils/spaceToPlus'
+import { anySpaceToSingleSpace } from '../../utils/anySpaceToSingleSpace'
 
 const NewPage: React.FC = () => {
   const user = useAuthenticate()
@@ -177,9 +179,10 @@ const NewPage: React.FC = () => {
     const validCommonLanguage = validArray(commonLanguage)
     setOptions(validOptions)
     setCommonLanguage(validCommonLanguage)
+    const replacedTitle = anySpaceToSingleSpace(title)
 
     const roomData: Room = {
-      title: title,
+      title: replacedTitle,
       explanation: explanation,
       options: validOptions,
       rule: selectedRule,
@@ -232,7 +235,7 @@ const NewPage: React.FC = () => {
       }
 
       const sendData = async () => {
-        db.collection("rooms").where("title", "==", title).limit(1)
+        db.collection("rooms").where("title", "==", roomData.title).limit(1)
           .get()
           .then((querySnapshot) => {
             if (querySnapshot.size === 0) {
@@ -252,7 +255,7 @@ const NewPage: React.FC = () => {
           })
           .catch((error) => {
             console.error("Error getting documents: ", error)
-            // toError()
+            toError()
           })
       }
 
@@ -274,7 +277,7 @@ const NewPage: React.FC = () => {
   const toShare = (roomData: Room) => {
     router.push({
       pathname: "/create/share",
-      query: { title: roomData.title }
+      query: { title: spaceToPlus(roomData.title) }
     })
   }
 

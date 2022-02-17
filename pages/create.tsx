@@ -5,6 +5,7 @@ import CreateTemplate from '../components/templates/CreateTemplate'
 import { useAuthenticate } from '../hooks/auth'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { createdRoomIdsState, hasNoUserDocState, recentlyCreatedRoomTitleState, suggestedRuleState } from '../states/atoms'
+import { spaceToPlus } from '../utils/spaceToPlus'
 
 const CreatePage: React.FC = () => {
   const user = useAuthenticate()
@@ -79,7 +80,7 @@ const CreatePage: React.FC = () => {
   const toRecentlyCreatedRoom = () => {
     router.push({
       pathname: "/create/share",
-      query: { title: recentlyCreatedRoomTitle }
+      query: { title: spaceToPlus(recentlyCreatedRoomTitle) }
     })
   }
 
