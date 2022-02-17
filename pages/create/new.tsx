@@ -7,7 +7,6 @@ import { db } from '../../lib/firebase'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { createdRoomIdsState, hasNoUserDocState, recentlyCreatedRoomTitleState, suggestedRuleState } from '../../states/atoms'
 import NewTemplate from '../../components/templates/NewTemplate'
-import { spaceToPlus } from '../../utils/spaceToPlus'
 import { anySpaceToSingleSpace } from '../../utils/anySpaceToSingleSpace'
 
 const NewPage: React.FC = () => {
@@ -277,7 +276,7 @@ const NewPage: React.FC = () => {
   const toShare = (roomData: Room) => {
     router.push({
       pathname: "/create/share",
-      query: { title: spaceToPlus(roomData.title) }
+      query: { title: roomData.title }
     })
   }
 

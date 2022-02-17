@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useQyeryParameter } from '../../hooks/useQueryParameter'
 import ShareTemplate from '../../components/templates/ShareTemplate'
+import { spaceToPlus } from '../../utils/spaceToPlus'
 
 const SharePage: React.FC = () => {
   const [url, setUrl] = useState<string | null>(null)
@@ -10,8 +11,9 @@ const SharePage: React.FC = () => {
 
   //Set url
   useEffect(() => {
-    if (title !== "") {
-      setUrl(`https://app.eraberule.com/room?q=${title}`)
+    if (title) {
+      const replacedTitle = spaceToPlus(title)
+      setUrl(`https://app.eraberule.com/room?q=${replacedTitle}`)
     }
   }, [title])
 

@@ -4,6 +4,7 @@ import { useAuthenticate } from '../hooks/auth'
 import IndexTemplate from '../components/templates/IndexTemplate'
 import { useSetRecoilState } from 'recoil'
 import { roomDataState } from '../states/atoms'
+import { anySpaceToSingleSpace } from '../utils/anySpaceToSingleSpace'
 
 const IndexPage: React.FC = () => {
   const user = useAuthenticate()
@@ -30,7 +31,7 @@ const IndexPage: React.FC = () => {
 
     router.push({
       pathname: "/room",
-      query: { q: enteredTitle }
+      query: { q: anySpaceToSingleSpace(enteredTitle) }
     })
   }
 
