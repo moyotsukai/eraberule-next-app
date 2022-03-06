@@ -18,13 +18,13 @@ type Props = {
 const MjDetails: React.FC<Props> = (props) => {
   const [resultRanks, setResultRanks] = useState<RankResults[] | undefined>(undefined)
   const [mjDetailData, setMjDetailData] = useState<number[][] | undefined>(undefined)
-  const { t } = useLocale()
+  const { t, locale } = useLocale()
   const localizedString = t.functional.mjDetails
 
   //Set resultRanks, mjDetails
   useEffect(() => {
     if (props.roomData.rule === ruleNames.majorityJudgement) {
-      const mjResult = majorityJudgement(props.roomData, props.personalRanks)
+      const mjResult = majorityJudgement(props.roomData, props.personalRanks, locale)
       setResultRanks(mjResult)
       const detail = mjDetails(props.roomData, props.personalRanks)
       setMjDetailData(detail)
