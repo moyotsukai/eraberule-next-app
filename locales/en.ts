@@ -32,7 +32,7 @@ const en: Locale = {
     },
     otherResultTable: {
       whatIfAnalysis: "What-if analysis",
-      if: "If ",
+      if: "If: ",
       what: ""
     },
     preferenceProfileTable: {

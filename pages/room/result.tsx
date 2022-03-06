@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import { useStrictEffect } from '../../hooks/useStrictEffect'
 import { useAuthenticate } from '../../hooks/auth'
 import ResultTemplate from '../../components/templates/ResultTemplate'
+import { log } from '../../utils/log'
 
 const ResultPage: React.FC = () => {
   const user = useAuthenticate()
@@ -18,6 +19,7 @@ const ResultPage: React.FC = () => {
     if (!roomData.title) {
       router.push("/")
     }
+    log(roomData)
   }, [])
 
   // Set personalRanks
