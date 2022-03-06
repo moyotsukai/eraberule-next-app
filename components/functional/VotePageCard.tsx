@@ -3,13 +3,13 @@ import Card from '../ui/Card'
 import TextCell from '../ui/TextCell'
 import SupportingTextCell from '../ui/SupportingTextCell'
 import Spacer from '../ui/Spacer'
-import { ruleDisplayNames } from '../../types/rules'
 import { useRecoilValue } from 'recoil'
 import { roomDataState } from '../../states/atoms'
 import { ruleNames } from '../../types/rules'
 import SingleSelectionTable from './SingleSelectionTable'
 import RankSelectionTable from './RankSelectionTable'
 import MjSelectionTable from './MjSelectionTable'
+import { useLocale } from '../../hooks/useLocale'
 
 type Props = {
   isEnabled: boolean
@@ -17,6 +17,8 @@ type Props = {
 
 const VotePageCard: React.FC<Props> = (props) => {
   const roomData = useRecoilValue(roomDataState)
+  const { t } = useLocale()
+  const localizedString = t.functional.votePageCard
 
   //UI
   const Table = () => {
@@ -34,7 +36,7 @@ const VotePageCard: React.FC<Props> = (props) => {
   return (
     <Card>
       <SupportingTextCell textAlign="left">
-        タイトル
+        {localizedString.title}
       </SupportingTextCell>
       <TextCell>
         {roomData.title}
@@ -44,7 +46,7 @@ const VotePageCard: React.FC<Props> = (props) => {
       {roomData.explanation !== "" &&
         <React.Fragment>
           <SupportingTextCell textAlign="left">
-            説明
+            {localizedString.explanation}
           </SupportingTextCell>
           <TextCell>
             {roomData.explanation}
@@ -54,14 +56,14 @@ const VotePageCard: React.FC<Props> = (props) => {
       }
 
       <SupportingTextCell textAlign="left">
-        候補
+        {localizedString.options}
       </SupportingTextCell>
 
       <Table />
       <Spacer y="15px" />
 
       <SupportingTextCell textAlign="left">
-        この投票は{ruleDisplayNames[roomData.rule]}で集計されます。
+        {localizedString.ruleExplanationF + t.ruleDisplayNames[roomData.rule] + localizedString.ruleExplanationB}
       </SupportingTextCell>
     </Card>
   )

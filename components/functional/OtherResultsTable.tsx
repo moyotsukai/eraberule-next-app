@@ -1,11 +1,11 @@
 import React from 'react'
 import { Room } from '../../types/Room.type'
-import { ruleDisplayNames, ruleNames } from '../../types/rules'
 import { RankResults } from '../../types/RankResults.type'
 import Accordion from '../ui/Accordion'
 import TextCell from '../ui/TextCell'
 import ResultTable from './ResultTable'
 import Spacer from '../ui/Spacer'
+import { useLocale } from '../../hooks/useLocale'
 
 type Props = {
   otherResults: RankResults[][] | undefined | null
@@ -13,16 +13,19 @@ type Props = {
 }
 
 const OtherResultsTable: React.FC<Props> = (props) => {
+  const { t } = useLocale()
+  const localizedString = t.functional.otherResultTable
+
   if (!props.otherResults) { return (<div />) }
 
   return (
-    <Accordion title="もし〇〇だったら" >
+    <Accordion title={localizedString.whatIfAnalysis} >
       {props.otherResults.map((result, index) => (
         <React.Fragment key={index}>
           {result &&
             <React.Fragment>
               <TextCell>
-                もし{Object.values(ruleDisplayNames)[index]}だったら
+                {localizedString.if + Object.values(t.ruleDisplayNames)[index] + localizedString.what}
               </TextCell>
               <ResultTable
                 resultRanks={result}

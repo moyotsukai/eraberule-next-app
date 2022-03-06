@@ -5,6 +5,7 @@ import SupportingTextCell from '../ui/SupportingTextCell'
 import TextCell from '../ui/TextCell'
 import Spacer from '../ui/Spacer'
 import QRCode from 'qrcode.react'
+import { useLocale } from '../../hooks/useLocale'
 
 type Props = {
   title: string
@@ -12,23 +13,26 @@ type Props = {
 }
 
 const ShareTemplate: React.FC<Props> = (props) => {
+  const { t } = useLocale()
+  const localizedString = t.templates.shareTemplate
+
   return (
     <div css={layoutStyle}>
       <Spacer y="25px" />
       <TextCell>
         <div css={textStyle}>
-          ルームを作成しました。
+          {localizedString.createdRoom}
         </div>
       </TextCell>
 
       <Card>
         <SupportingTextCell textAlign="left">
-          ルームのタイトルを検索する、QRコードを読み取る、またはリンクのURLにアクセスすることで投票に参加できます。
+          {localizedString.explanation}
         </SupportingTextCell>
         <Spacer y="15px" />
 
         <SupportingTextCell textAlign="left">
-          タイトル
+          {localizedString.title}
         </SupportingTextCell>
         <TextCell>
           {props.title}
@@ -36,7 +40,7 @@ const ShareTemplate: React.FC<Props> = (props) => {
         <Spacer y="15px" />
 
         <SupportingTextCell textAlign="left">
-          QRコード
+          {localizedString.qrCode}
         </SupportingTextCell>
         {props.url &&
           <div>
@@ -46,7 +50,7 @@ const ShareTemplate: React.FC<Props> = (props) => {
         <Spacer y="15px" />
 
         <SupportingTextCell textAlign="left">
-          リンク
+          {localizedString.link}
         </SupportingTextCell>
         {props.url &&
           <TextCell>

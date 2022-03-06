@@ -8,6 +8,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { createdRoomIdsState, hasNoUserDocState, recentlyCreatedRoomTitleState, suggestedRuleState } from '../../states/atoms'
 import NewTemplate from '../../components/templates/NewTemplate'
 import { anySpaceToSingleSpace } from '../../utils/anySpaceToSingleSpace'
+import { useLocale } from '../../hooks/useLocale'
 
 const NewPage: React.FC = () => {
   const user = useAuthenticate()
@@ -30,6 +31,8 @@ const NewPage: React.FC = () => {
   const didSetCreatedRoomsRef = useRef(false)
   const didSendRef = useRef(false)
   const setRecentlyCreatedRoomTitle = useSetRecoilState(recentlyCreatedRoomTitleState)
+  const { t, locale } = useLocale()
+  const localizedString = t.rules
 
   //Set createdRoomIds, hasNoUserDoc, recentlyCreatedRoomTitle
   useEffect(() => {
@@ -67,6 +70,11 @@ const NewPage: React.FC = () => {
       setSelectedRule(suggestedRule)
     }
   }, [])
+
+  //Set initial localized commonLanguage
+  useEffect(() => {
+    setCommonLanguage(localizedString.defaultCommonLanguage)
+  }, [locale])
 
   //Set isSendEnabled
   useLayoutEffect(() => {

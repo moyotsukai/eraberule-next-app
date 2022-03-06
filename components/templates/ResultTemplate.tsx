@@ -10,7 +10,7 @@ import TextCell from '../ui/TextCell'
 import ResultTable from '../functional/ResultTable'
 import LiveIndicator from '../ui/LiveIndicator'
 import SpacerInline from '../ui/SpacerInline'
-import { ruleDisplayNames, ruleNames } from '../../types/rules'
+import { ruleNames } from '../../types/rules'
 import { bordaRule } from '../../rules/bordaRule'
 import { RankResults } from '../../types/RankResults.type'
 import { majorityRule } from '../../rules/majorityRule'
@@ -20,9 +20,8 @@ import Accordion from '../ui/Accordion'
 import MjDetails from '../functional/MjDetails'
 import OtherResultsTable from '../functional/OtherResultsTable'
 import TextButton from '../ui/TextButton'
-import { PreferenceProfilesFormatted } from '../../types/PreferenceProfiles.type'
-import { preferenceProfilesAssumption, preferenceProfilesFormatted } from '../../rules/preferenceProfiles'
 import PreferenceProfilesTable from '../functional/PreferenceProfilesTable'
+import { useLocale } from '../../hooks/useLocale'
 
 type Props = {
   user: User | undefined | null
@@ -35,30 +34,32 @@ const ResultTemplate: React.FC<Props> = (props) => {
   const [otherResults, setOtherResults] = useState<RankResults[][] | undefined | null>(undefined)
   const [isMj, setIsMj] = useState<boolean>(false)
   const [isPreferenceVoting, setIsPreferenceVoting] = useState<boolean>(false)
+  const { t, locale } = useLocale()
+  const localizedString = t.templates.resultTemplate
 
   //Set rank results
   useEffect(() => {
     if (props.roomData.rule === ruleNames.majorityRule) {
-      const mResult = majorityRule(props.roomData, props.personalRanks)
+      const mResult = majorityRule(props.roomData, props.personalRanks, locale)
       setResultRanks(mResult)
       setOtherResults(null)
     }
     if (props.roomData.rule === ruleNames.bordaRule) {
-      const mResult = majorityRule(props.roomData, props.personalRanks)
-      const bResult = bordaRule(props.roomData, props.personalRanks)
-      const cResult = condorcetRule(props.roomData, props.personalRanks)
+      const mResult = majorityRule(props.roomData, props.personalRanks, locale)
+      const bResult = bordaRule(props.roomData, props.personalRanks, locale)
+      const cResult = condorcetRule(props.roomData, props.personalRanks, locale)
       setResultRanks(bResult)
       setOtherResults([mResult, null, cResult, null])
     }
     if (props.roomData.rule === ruleNames.condorcetRule) {
-      const mResult = majorityRule(props.roomData, props.personalRanks)
-      const bResult = bordaRule(props.roomData, props.personalRanks)
-      const cResult = condorcetRule(props.roomData, props.personalRanks)
+      const mResult = majorityRule(props.roomData, props.personalRanks, locale)
+      const bResult = bordaRule(props.roomData, props.personalRanks, locale)
+      const cResult = condorcetRule(props.roomData, props.personalRanks, locale)
       setResultRanks(cResult)
       setOtherResults([mResult, bResult, null, null])
     }
     if (props.roomData.rule === ruleNames.majorityJudgement) {
-      const mjResult = majorityJudgement(props.roomData, props.personalRanks)
+      const mjResult = majorityJudgement(props.roomData, props.personalRanks, locale)
       setResultRanks(mjResult)
       setOtherResults(null)
     }
@@ -81,12 +82,12 @@ const ResultTemplate: React.FC<Props> = (props) => {
     window.open("https://www.eraberule.com/details", "_blank", "noreferrer")
   }
 
-
+  //UI
   if (props.user === undefined) {
     return (
       <div css={layoutStyle}>
         <Message isLoading={false}>
-          読み込み中...
+          {localizedString.loading}
         </Message>
       </div>
     )
@@ -96,7 +97,7 @@ const ResultTemplate: React.FC<Props> = (props) => {
     return (
       <div css={layoutStyle}>
         <Message isLoading={false}>
-          データベースに接続できません。
+          {localizedString.notConnected}
         </Message>
       </div>
     )
@@ -106,7 +107,7 @@ const ResultTemplate: React.FC<Props> = (props) => {
     return (
       <div css={layoutStyle}>
         <Message isLoading={true}>
-          読み込み中...
+          {localizedString.loading}
         </Message>
       </div>
     )
@@ -118,13 +119,13 @@ const ResultTemplate: React.FC<Props> = (props) => {
         <div css={liveIndicatorContainerStyle}>
           <LiveIndicator />
           <SpacerInline x="5px" />
-          ライブ
+          {localizedString.live}
         </div>
       </SupportingTextCell>
 
       <Card>
         <SupportingTextCell textAlign="left">
-          タイトル
+          {localizedString.title}
         </SupportingTextCell>
         <TextCell>
           {props.roomData.title}
@@ -132,7 +133,7 @@ const ResultTemplate: React.FC<Props> = (props) => {
         <Spacer y="15px" />
 
         <SupportingTextCell textAlign="left">
-          結果
+          {localizedString.result}
         </SupportingTextCell>
 
         <ResultTable
@@ -141,23 +142,23 @@ const ResultTemplate: React.FC<Props> = (props) => {
         />
 
         <SupportingTextCell textAlign="right">
-          {props.personalRanks.length}人が投票済み
+          {props.personalRanks.length + localizedString.nPeopleVoted}
         </SupportingTextCell>
         <Spacer y="15px" />
 
         <SupportingTextCell textAlign="left">
-          この投票は{ruleDisplayNames[props.roomData.rule]}で集計されました。
+          {localizedString.ruleExplanationF + t.ruleDisplayNames[props.roomData.rule] + localizedString.ruleExplanationB}
         </SupportingTextCell>
       </Card>
 
       {isMj &&
-        <Accordion title="詳細" >
+        <Accordion title={localizedString.details}>
           <MjDetails roomData={props.roomData} personalRanks={props.personalRanks} />
         </Accordion>
       }
 
       {isPreferenceVoting &&
-        <Accordion title="詳細">
+        <Accordion title={localizedString.details}>
           <PreferenceProfilesTable roomData={props.roomData} personalRanks={props.personalRanks} />
         </Accordion>
       }
@@ -169,7 +170,7 @@ const ResultTemplate: React.FC<Props> = (props) => {
 
       <div css={buttonContainerStyle}>
         <TextButton onClick={onReadAboutRulesClick}>
-          各投票ルールの詳細を読む
+          {localizedString.aboutVotingMethods}
         </TextButton>
       </div>
     </div>

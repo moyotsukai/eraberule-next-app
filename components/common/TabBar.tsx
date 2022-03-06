@@ -2,6 +2,7 @@ import React from 'react'
 import Tab from '../ui/Tab'
 import { css } from '@emotion/react'
 import { primaryShadowColor } from '../../styles/colors'
+import { useLocale } from '../../hooks/useLocale'
 
 type Props = {
   path: string
@@ -13,23 +14,27 @@ interface Tabs {
   match: string[]
 }
 
-const tabs: Tabs[] = [
-  {
-    text: "参加",
-    path: "/",
-    match: ["/", "/room", "/room/vote", "/room/result"],
-  },
-  {
-    text: "作成",
-    path: "/create",
-    match: ["/create", "/create/new", "/create/suggest", "/create/share"],
-  }
-]
+const tabs = (text): Tabs[] => {
+  return [
+    {
+      text: text.vote,
+      path: "/",
+      match: ["/", "/room", "/room/vote", "/room/result"],
+    },
+    {
+      text: text.create,
+      path: "/create",
+      match: ["/create", "/create/new", "/create/suggest", "/create/share"],
+    }
+  ]
+}
 
 const TabBar: React.FC<Props> = (props) => {
+  const { t } = useLocale()
+
   return (
     <div css={tabBarStyle}>
-      {tabs.map((tab, index) => {
+      {tabs(t.common.tabBar).map((tab, index) => {
         const isSelected = (tab.match.indexOf(props.path) !== -1)
 
         return (
@@ -52,7 +57,7 @@ const tabBarStyle = css`
   position: sticky;
   top: 0;
   transform: translate3d(0, 0, 0);
-  z-index: 100;
+  z-index: 999;
 `
 
 export default TabBar

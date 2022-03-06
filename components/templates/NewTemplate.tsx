@@ -3,6 +3,7 @@ import { css } from '@emotion/react'
 import NewPageCard from '../functional/NewPageCard'
 import Button from '../ui/Button'
 import Spacer from '../ui/Spacer'
+import { useLocale } from '../../hooks/useLocale'
 
 type Props = {
   title: string
@@ -31,6 +32,9 @@ type Props = {
 }
 
 const NewTemplate: React.FC<Props> = (props) => {
+  const { t } = useLocale()
+  const localizedString = t.templates.newTemplate
+
   return (
     <div css={layoutStyle}>
       <NewPageCard
@@ -62,8 +66,8 @@ const NewTemplate: React.FC<Props> = (props) => {
         isLoading={props.isSendClicked}
       >
         {props.isSendClicked
-          ? "送信中"
-          : "公開"
+          ? localizedString.sending
+          : localizedString.submit
         }
       </Button>
       <Spacer y="35px" />

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { css } from '@emotion/react'
 import { useRecoilValue, useRecoilState } from 'recoil'
 import { roomDataState, personalRankState } from '../../states/atoms'

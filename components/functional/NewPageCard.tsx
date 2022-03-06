@@ -3,7 +3,6 @@ import { css } from '@emotion/react'
 import Card from '../ui/Card'
 import SupportingTextCell from '../ui/SupportingTextCell'
 import Spacer from '../ui/Spacer'
-import { ruleDisplayNames, ruleExplanations } from '../../types/rules'
 import { ruleNames } from '../../types/rules'
 import Input from '../ui/Input'
 import TextArea from '../ui/TextArea'
@@ -11,6 +10,7 @@ import TextButton from '../ui/TextButton'
 import { supportingTextColor } from '../../styles/colors'
 import RemoveButton from '../ui/RemoveButton'
 import SingleSelectionCell from '../ui/SingleSelectionCell'
+import { useLocale } from '../../hooks/useLocale'
 
 type Props = {
   title: string
@@ -36,44 +36,47 @@ type Props = {
 }
 
 const NewPageCard: React.FC<Props> = (props) => {
+  const { t } = useLocale()
+  const localizedString = t.functional.newPageCard
+
   return (
     <Card>
       <SupportingTextCell textAlign="left">
-        タイトル
+        {localizedString.title}
       </SupportingTextCell>
       <Input
         value={props.title}
-        placeholder="タイトルを入力"
+        placeholder={localizedString.enterTitle}
         onChange={props.onTitleChange}
       />
       {props.shouldChangeTitle &&
         <SupportingTextCell textAlign="left" isError={true}>
-          すでに使われているタイトルです。末尾に数字をつけるなどしてみてください。
+          {localizedString.errorUsedTitle}
         </SupportingTextCell>
       }
       <Spacer y="15px" />
 
       <SupportingTextCell textAlign="left">
-        説明
+        {localizedString.explanation}
       </SupportingTextCell>
       {props.hasAddedExplanation
         ?
         <TextArea
           value={props.explanation}
-          placeholder="説明文を入力"
+          placeholder={localizedString.enterExplanation}
           onChange={props.onExplanationChange}
         />
         :
         <div css={textButtonContainerStyle}>
           <TextButton onClick={props.onAddExplanation}>
-            説明文を追加
+            {localizedString.addExplanation}
           </TextButton>
         </div>
       }
       <Spacer y="15px" />
 
       <SupportingTextCell textAlign="left">
-        候補
+        {localizedString.options}
       </SupportingTextCell>
       {props.options.map((option, index) => (
         <React.Fragment key={index}>
@@ -81,7 +84,7 @@ const NewPageCard: React.FC<Props> = (props) => {
             <div css={inputContainerStyle}>
               <Input
                 value={option}
-                placeholder="候補を入力"
+                placeholder={localizedString.enterOption}
                 onChange={(event) => props.onOptionsChange(event, index)}
               />
             </div>
@@ -98,28 +101,28 @@ const NewPageCard: React.FC<Props> = (props) => {
       {props.isAddOptionEnabled &&
         <div css={textButtonContainerStyle}>
           <TextButton onClick={props.onAddOption} >
-            候補を追加
+            {localizedString.addOption}
           </TextButton>
         </div>
       }
       <SupportingTextCell textAlign="left" isError={props.isOptionsExceed}>
-        {ruleDisplayNames.bordaRule}と{ruleDisplayNames.condorcetRule}で入力できる候補の数は10までです。
+        {localizedString.limitExplanationF + t.ruleDisplayNames.bordaRule + localizedString.and + t.ruleDisplayNames.condorcetRule + localizedString.limitExplanationB + localizedString.period}
       </SupportingTextCell>
       <Spacer y="15px" />
 
       <SupportingTextCell textAlign="left">
-        投票のルール
+        {localizedString.voringMethod}
       </SupportingTextCell>
       {Object.values(ruleNames).map((ruleName, index) => (
         <SingleSelectionCell
-          text={ruleDisplayNames[ruleName]}
+          text={t.ruleDisplayNames[ruleName]}
           onClick={() => props.onRuleSelection(ruleName)}
           isSelected={ruleName === props.selectedRule}
           key={index}
         >
           {ruleName === props.selectedRule &&
             <p css={explanationStyle}>
-              {ruleExplanations[ruleName]}
+              {t.ruleExplanations[ruleName]}
             </p>
           }
         </SingleSelectionCell>
@@ -129,7 +132,7 @@ const NewPageCard: React.FC<Props> = (props) => {
         <React.Fragment>
           <Spacer y="15px" />
           <SupportingTextCell textAlign="left">
-            評価の語彙(良い方から順に入力)
+            {localizedString.measures}
           </SupportingTextCell>
           {props.commonLanguage.map((evaluation, index) => (
             <React.Fragment key={index}>
@@ -137,7 +140,7 @@ const NewPageCard: React.FC<Props> = (props) => {
                 <div css={inputContainerStyle}>
                   <Input
                     value={evaluation}
-                    placeholder="評価の語彙を入力"
+                    placeholder={localizedString.enterMeasure}
                     onChange={(event) => props.onCommonLanguageChange(event, index)}
                   />
                 </div>
@@ -154,7 +157,7 @@ const NewPageCard: React.FC<Props> = (props) => {
           {props.isAddEvaluationVocabularyEnabled &&
             <div css={textButtonContainerStyle}>
               <TextButton onClick={props.onAddEvaluationVocabulary} >
-                評価の語彙を追加
+                {localizedString.addMeasure}
               </TextButton>
             </div>
           }

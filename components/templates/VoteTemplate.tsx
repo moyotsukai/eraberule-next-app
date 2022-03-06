@@ -6,6 +6,7 @@ import { Room } from '../../types/Room.type'
 import VotePageCard from '../functional/VotePageCard'
 import Button from '../ui/Button'
 import Spacer from '../ui/Spacer'
+import { useLocale } from '../../hooks/useLocale'
 
 type Props = {
   user: User | undefined | null
@@ -16,11 +17,14 @@ type Props = {
 }
 
 const VoteTemplate: React.FC<Props> = (props) => {
+  const { t } = useLocale()
+  const localizedString = t.templates.voteTemplate
+
   if (props.user === undefined) {
     return (
       <div css={layoutStyle}>
         <Message isLoading={false}>
-          読み込み中...
+          {localizedString.loading}
         </Message>
       </div>
     )
@@ -30,7 +34,7 @@ const VoteTemplate: React.FC<Props> = (props) => {
     return (
       <div css={layoutStyle}>
         <Message isLoading={false}>
-          データベースに接続できません。
+          {localizedString.notConnected}
         </Message>
       </div>
     )
@@ -45,7 +49,7 @@ const VoteTemplate: React.FC<Props> = (props) => {
         isEnabled={props.isEnabled}
         isLoading={props.isClicked}
       >
-        {props.isClicked ? "送信中" : "送信"}
+        {props.isClicked ? localizedString.sending : localizedString.send}
       </Button>
       <Spacer y="35px" />
     </div>

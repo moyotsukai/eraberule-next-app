@@ -5,6 +5,7 @@ import Message from '../ui/Message'
 import SearchBox from '../functional/SearchBox'
 import SupportingTextCell from '../ui/SupportingTextCell'
 import { supportingTextColor } from '../../styles/colors'
+import { useLocale } from '../../hooks/useLocale'
 
 type Props = {
   user: User | undefined | null
@@ -14,11 +15,14 @@ type Props = {
 }
 
 const IndexTemplate: React.FC<Props> = (props) => {
+  const { t } = useLocale()
+  const localizedString = t.templates.indexTemplate
+
   if (props.user === undefined) {
     return (
       <div css={layoutStyle}>
         <Message isLoading={false}>
-          読み込み中...
+          {localizedString.loading}
         </Message>
       </div>
     )
@@ -28,7 +32,7 @@ const IndexTemplate: React.FC<Props> = (props) => {
     return (
       <div css={layoutStyle}>
         <Message isLoading={false}>
-          データベースに接続できません。
+          {localizedString.notConnected}
         </Message>
       </div>
     )
@@ -37,25 +41,26 @@ const IndexTemplate: React.FC<Props> = (props) => {
   return (
     <div css={layoutStyle}>
       <Message isLoading={false}>
-        ルーム名を検索して投票に参加
+        {localizedString.searchRooms}
       </Message>
       <SearchBox
         value={props.enteredTitle}
-        placeholder="ルーム名を入力"
+        placeholder={localizedString.enterTitle}
         onChange={props.handleTitleChange}
         onEnterKey={props.handleOnClick}
       />
       <div css={spacerStyle} />
       <SupportingTextCell textAlign="center">
+        {localizedString.agreeToTermsF}
         <a
           href="https://www.eraberule.com/terms"
           target="_blank"
           rel="noopener noreferrer"
           css={linkStyle}
         >
-          利用規約
+          {localizedString.terms}
         </a>
-        に同意した上でアプリの利用を開始してください。
+        {localizedString.agreeToTermsB}
       </SupportingTextCell>
     </div>
   )

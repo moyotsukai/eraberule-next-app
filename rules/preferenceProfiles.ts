@@ -52,9 +52,9 @@ export const preferenceProfilesAssumption = (roomData: Room): string => {
   const options = roomData.options
   const charactors = [...Array(numOfOptions)].map((_, i) => String.fromCodePoint(i + 65))
   const assumption = options.map((name, index) => (
-    name + "を" + charactors[index]
+    charactors[index] + ": " + name
   ))
-  return assumption.join("、") + "とする。"
+  return assumption.join(", ") + "."
 }
 
 const isEqualRankOrdering = (array1: any[], array2: any[]): boolean => {

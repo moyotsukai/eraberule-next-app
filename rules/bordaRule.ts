@@ -1,7 +1,10 @@
 import { RankResults } from '../types/RankResults.type'
 import { Room } from '../types/Room.type'
+import { ruleNames } from '../types/rules'
+import { rankingFormatted } from '../utils/rankingFormatted'
+import { scoreLabelString } from '../utils/scoreLabelString'
 
-export const bordaRule = (roomData: Room, personalRanks: number[][]): RankResults[] => {
+export const bordaRule = (roomData: Room, personalRanks: number[][], locale: string): RankResults[] => {
   //Setup
   const results = roomData.options.map((option) => (
     {
@@ -40,8 +43,8 @@ export const bordaRule = (roomData: Room, personalRanks: number[][]): RankResult
   const resultsString: RankResults = results.map((result) => (
     {
       name: result.name,
-      score: result.score.toString() + "点",
-      rank: result.rank.toString() + "位"
+      score: result.score.toString() + scoreLabelString(ruleNames.bordaRule, locale),
+      rank: rankingFormatted(result.rank, locale)
     }
   ))
 

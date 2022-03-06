@@ -4,6 +4,7 @@ import { User } from '../../types/User.type'
 import Message from '../ui/Message'
 import ToVoteCard from '../functional/ToVoteCard'
 import { Room } from '../../types/Room.type'
+import { useLocale } from '../../hooks/useLocale'
 
 type Props = {
   user: User | undefined | null
@@ -13,11 +14,14 @@ type Props = {
 }
 
 const RoomTemplate: React.FC<Props> = (props) => {
+  const { t } = useLocale()
+  const localizedString = t.templates.roomTemplate
+
   if (props.user === undefined || props.roomData === undefined) {
     return (
       <div css={layoutStyle}>
         <Message isLoading={false}>
-          読み込み中...
+          {localizedString.loading}
         </Message>
       </div>
     )
@@ -27,7 +31,7 @@ const RoomTemplate: React.FC<Props> = (props) => {
     return (
       <div css={layoutStyle}>
         <Message isLoading={false}>
-          データベースに接続できません。
+          {localizedString.notConnected}
         </Message>
       </div>
     )
@@ -37,7 +41,7 @@ const RoomTemplate: React.FC<Props> = (props) => {
     return (
       <div css={layoutStyle}>
         <Message isLoading={false}>
-          検索結果がありません。
+          {localizedString.noResults}
         </Message>
       </div>
     )
@@ -47,7 +51,7 @@ const RoomTemplate: React.FC<Props> = (props) => {
     return (
       <div css={layoutStyle}>
         <Message isLoading={false}>
-          このルームは非公開です。
+          {localizedString.closedRoom}
         </Message>
       </div>
     )

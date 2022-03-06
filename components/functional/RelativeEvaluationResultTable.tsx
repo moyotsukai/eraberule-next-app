@@ -4,6 +4,7 @@ import { Room } from '../../types/Room.type'
 import SupportingTextCell from '../ui/SupportingTextCell'
 import Spacer from '../ui/Spacer'
 import { RankResults } from '../../types/RankResults.type'
+import { useLocale } from '../../hooks/useLocale'
 
 type Props = {
   resultRanks: RankResults[] | undefined
@@ -11,6 +12,9 @@ type Props = {
 }
 
 const RelativeEvaluationReultTable: React.FC<Props> = (props) => {
+  const { t } = useLocale()
+  const localizedString = t.functional.relativeEvaluationResultTable
+
   if (props.resultRanks.length === 1) {
     return (
       <ul css={tableStyle}>
@@ -31,7 +35,7 @@ const RelativeEvaluationReultTable: React.FC<Props> = (props) => {
         {props.resultRanks.map((results, index) => (
           <React.Fragment key={index} >
             <SupportingTextCell textAlign="left">
-              {index + 1}つ目の可能性
+              {localizedString.nPossibilityF + (index + 1) + localizedString.nPossibilityB}
             </SupportingTextCell>
             <ul css={tableStyle}>
               {results.map((result, index) => (

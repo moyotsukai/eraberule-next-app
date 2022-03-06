@@ -8,15 +8,18 @@ import TextButton from '../ui/TextButton'
 import { useRouter } from 'next/router'
 import { useRecoilState } from 'recoil'
 import { suggestedRuleState } from '../../states/atoms'
-import { ruleDisplayNames, ruleNames, ruleSuggestions } from '../../types/rules'
+import { ruleNames } from '../../types/rules'
 import Button from '../ui/Button'
 import SingleSelectionCell from '../ui/SingleSelectionCell'
 import smoothscroll from 'smoothscroll-polyfill'
+import { useLocale } from '../../hooks/useLocale'
 
 const SuggestTemplate: React.FC = () => {
   const router = useRouter()
   const [suggestedRule, setSuggestedRule] = useRecoilState(suggestedRuleState)
   const bottomElementRef = useRef<HTMLDivElement>(null)
+  const { t } = useLocale()
+  const localizedString = t.templates.suggestTemplate
 
   //Setup scroll behavior
   useEffect(() => {
@@ -56,25 +59,25 @@ const SuggestTemplate: React.FC = () => {
       <Spacer y="25px" />
       <TextCell>
         <div css={textStyle}>
-          投票ルールの選択を手伝います。
+          {localizedString.helpChoosing}
         </div>
       </TextCell>
       <div css={skipButtonContainerStyle}>
         <TextButton onClick={toNewRoomWithoutRule}>
-          この工程をスキップ
+          {localizedString.skip}
         </TextButton>
       </div>
 
       <Card>
         <TextCell>
-          あなたが作ろうとしている投票ではどんな条件が望ましいですか？
+          {localizedString.question}
         </TextCell>
         <Spacer y="15px" />
 
         <div css={tableStyle}>
           {Object.values(ruleNames).map((ruleName, index) => (
             <SingleSelectionCell
-              text={ruleSuggestions[ruleName]}
+              text={t.ruleSuggestions[ruleName]}
               onClick={() => handleSelection(ruleName)}
               isSelected={ruleName === suggestedRule}
               key={index}
@@ -87,20 +90,20 @@ const SuggestTemplate: React.FC = () => {
         <div ref={bottomElementRef}>
           <Card>
             <SupportingTextCell textAlign="left">
-              おすすめの投票ルール
+              {localizedString.suggestedRule}
             </SupportingTextCell>
             <TextCell>
-              {ruleDisplayNames[suggestedRule]}
+              {t.ruleDisplayNames[suggestedRule]}
             </TextCell>
             <Spacer y="15px" />
             <div css={buttonGroupStyle}>
               <div css={buttonSpacerStyle} />
               <Button onClick={toNewRoomWithRule} isEnabled={true} isLoading={false}>
-                この決め方で投票を作成
+                {localizedString.createWith}
               </Button>
               <div css={textButtonContainerStyle}>
                 <TextButton onClick={toNewRoomWithoutRule}>
-                  決め方を保留にして投票を作成
+                  {localizedString.createWithout}
                 </TextButton>
               </div>
             </div>

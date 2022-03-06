@@ -4,6 +4,7 @@ import TextCell from '../ui/TextCell'
 import SupportingTextCell from '../ui/SupportingTextCell'
 import Button from '../ui/Button'
 import Spacer from '../ui/Spacer'
+import { useLocale } from '../../hooks/useLocale'
 
 type Props = {
   roomTitle: string
@@ -12,17 +13,20 @@ type Props = {
 }
 
 const ToVoteCard: React.FC<Props> = (props) => {
-  let text = "読み込み中"
+  const { t } = useLocale()
+  const localizedString = t.functional.toVoteCard
+
+  let text = localizedString.loading
   if (props.hasVoted === true) {
-    text = "結果を見る"
+    text = localizedString.seeResult
   } else if (props.hasVoted === false) {
-    text = "投票する"
+    text = localizedString.vote
   }
 
   return (
     <Card>
       <SupportingTextCell textAlign="left">
-        タイトル
+        {localizedString.title}
       </SupportingTextCell>
       <TextCell>
         {props.roomTitle}

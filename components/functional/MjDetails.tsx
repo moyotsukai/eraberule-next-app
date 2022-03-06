@@ -8,6 +8,7 @@ import SupportingTextCell from '../ui/SupportingTextCell'
 import Spacer from '../ui/Spacer'
 import { mjDetails } from '../../rules/mjDetails'
 import { primaryColor } from '../../styles/colors'
+import { useLocale } from '../../hooks/useLocale'
 
 type Props = {
   roomData: Room,
@@ -17,6 +18,8 @@ type Props = {
 const MjDetails: React.FC<Props> = (props) => {
   const [resultRanks, setResultRanks] = useState<RankResults[] | undefined>(undefined)
   const [mjDetailData, setMjDetailData] = useState<number[][] | undefined>(undefined)
+  const { t } = useLocale()
+  const localizedString = t.functional.mjDetails
 
   //Set resultRanks, mjDetails
   useEffect(() => {
@@ -53,7 +56,7 @@ const MjDetails: React.FC<Props> = (props) => {
                     {props.roomData.commonLanguage[evaluationIndex]}
                   </span>
                   <span css={scoreStyle}>
-                    {num}票
+                    {num + localizedString.numOfVotes}
                   </span>
                 </li>
               ))}

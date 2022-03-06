@@ -4,8 +4,8 @@ import { Room } from '../../types/Room.type'
 import { PreferenceProfilesFormatted } from '../../types/PreferenceProfiles.type'
 import { preferenceProfilesAssumption, preferenceProfilesFormatted } from '../../rules/preferenceProfiles'
 import SupportingTextCell from '../ui/SupportingTextCell'
-import { log } from '../../utils/log'
 import { dividerColor } from '../../styles/colors'
+import { useLocale } from '../../hooks/useLocale'
 
 type Props = {
   roomData: Room,
@@ -15,6 +15,8 @@ type Props = {
 const PreferenceProfilesTable: React.FC<Props> = (props) => {
   const [assumption, setAssumption] = useState<string>("")
   const [preferenceProfiles, setPreferenceProfiles] = useState<PreferenceProfilesFormatted[]>([])
+  const { t } = useLocale()
+  const localizedString = t.functional.preferenceProfileTable
 
   //Set preferenceProfilesAssumption, preferenceProfiles
   useEffect(() => {
@@ -30,12 +32,12 @@ const PreferenceProfilesTable: React.FC<Props> = (props) => {
       <div css={containerStyle}>
         <table css={tableStyle}>
           <tr>
-            <th css={obtainedLabelStyle}>人数</th>
-            <th css={rankOrderingLabelStyle}>選好順序</th>
+            <th css={obtainedLabelStyle}>{localizedString.nVoters}</th>
+            <th css={rankOrderingLabelStyle}>{localizedString.rankOrderings}</th>
           </tr>
           {preferenceProfiles.map((profile, index) => (
             <tr key={index} css={() => rowStyle(index % 2 !== 0)}>
-              <td css={obtainedStyle}>{profile.obtained}人</td>
+              <td css={obtainedStyle}>{profile.obtained + localizedString.people}</td>
               <td css={rankOrderingStyle}>{profile.rankOrdering}</td>
             </tr>
           ))}

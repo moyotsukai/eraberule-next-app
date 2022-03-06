@@ -6,7 +6,7 @@ const ErrorPage: React.FC = () => {
   return (
     <div css={layoutStyle}>
       <Message isLoading={false}>
-        エラー
+        Error
       </Message>
     </div>
   )

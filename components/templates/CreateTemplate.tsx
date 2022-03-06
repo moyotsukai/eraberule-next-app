@@ -5,6 +5,7 @@ import Message from '../ui/Message'
 import Button from '../ui/Button'
 import SupportingTextCell from '../ui/SupportingTextCell'
 import CardButton from '../ui/CardButton'
+import { useLocale } from '../../hooks/useLocale'
 
 type Props = {
   user: User | undefined | null
@@ -14,11 +15,14 @@ type Props = {
 }
 
 const CreateTemplate: React.FC<Props> = (props) => {
+  const { t } = useLocale()
+  const localizedString = t.templates.createTemplate
+
   if (props.user === undefined) {
     return (
       <div css={layoutStyle}>
         <Message isLoading={false}>
-          読み込み中...
+          {localizedString.loading}
         </Message>
       </div>
     )
@@ -28,7 +32,7 @@ const CreateTemplate: React.FC<Props> = (props) => {
     return (
       <div css={layoutStyle}>
         <Message isLoading={false}>
-          データベースに接続できません。
+          {localizedString.notConnected}
         </Message>
       </div>
     )
@@ -37,14 +41,14 @@ const CreateTemplate: React.FC<Props> = (props) => {
   return (
     <div css={layoutStyle}>
       <Message isLoading={false}>
-        新しい投票ルームを作成
+        {localizedString.createNew}
       </Message>
       <Button
         onClick={props.toNewRoom}
         isEnabled={true}
         isLoading={false}
       >
-        作成
+        {localizedString.create}
       </Button>
 
       {props.recentlyCreatedRoomTitle &&
@@ -52,7 +56,7 @@ const CreateTemplate: React.FC<Props> = (props) => {
           <div css={spacerStyle} />
           <div css={recentlyCreatedRoomContainerStyle}>
             <SupportingTextCell textAlign="left">
-              最近作成したルーム
+              {localizedString.recentRoom}
             </SupportingTextCell>
             <CardButton onClick={props.toRecentlyCreatedRoom}>
               {props.recentlyCreatedRoomTitle}
