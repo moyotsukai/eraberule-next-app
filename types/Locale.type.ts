@@ -102,7 +102,10 @@ export type Locale = {
       explanation: string,
       title: string,
       qrCode: string,
-      link: string
+      download: string,
+      link: string,
+      copy: string,
+      copied: string
     },
     suggestTemplate: {
       helpChoosing: string,

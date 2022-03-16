@@ -102,7 +102,10 @@ const ja: Locale = {
       explanation: "ルームのタイトルを検索する、QRコードを読み取る、またはリンクのURLにアクセスすることで投票に参加できます。",
       title: "タイトル",
       qrCode: "QRコード",
-      link: "リンク"
+      download: "QRコードをダウンロード",
+      link: "リンク",
+      copy: "リンクをコピー",
+      copied: "コピーしました"
     },
     suggestTemplate: {
       helpChoosing: "投票ルールの選択を手伝います。",

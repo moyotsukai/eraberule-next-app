@@ -102,7 +102,10 @@ const en: Locale = {
       explanation: "Participants can access the poll by searching the room title, scanning QR code, or clicking the link.",
       title: "Title",
       qrCode: "QR code",
-      link: "Link"
+      download: "Download QR code",
+      link: "Link",
+      copy: "Copy link",
+      copied: "Copied link"
     },
     suggestTemplate: {
       helpChoosing: "I will help you select a voting method.",

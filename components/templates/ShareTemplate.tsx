@@ -1,20 +1,45 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { css } from '@emotion/react'
 import Card from '../ui/Card'
 import SupportingTextCell from '../ui/SupportingTextCell'
 import TextCell from '../ui/TextCell'
 import Spacer from '../ui/Spacer'
-import QRCode from 'qrcode.react'
 import { useLocale } from '../../hooks/useLocale'
+import QRCode from 'qrcode'
+import TextButton from '../ui/TextButton'
 
 type Props = {
   title: string
-  url: string
+  roomLink: string
 }
 
 const ShareTemplate: React.FC<Props> = (props) => {
+  const [imageUrl, setImageUrl] = useState<string>("")
   const { t } = useLocale()
   const localizedString = t.templates.shareTemplate
+  const [isCopied, setIsCopied] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (!props.roomLink) { return }
+    QRCode.toDataURL(props.roomLink, (_, url) => {
+      setImageUrl(url)
+    })
+  }, [props.roomLink])
+
+  const onDownload = () => {
+    const downloadLink = document.createElement("a")
+    downloadLink.href = imageUrl
+    downloadLink.download = "eraberule_qrcode.png"
+    downloadLink.click()
+  }
+
+  const onCopy = () => {
+    navigator.clipboard?.writeText(props.roomLink)
+    setIsCopied(true)
+    setTimeout(() => {
+      setIsCopied(false)
+    }, 1000)
+  }
 
   return (
     <div css={layoutStyle}>
@@ -42,9 +67,14 @@ const ShareTemplate: React.FC<Props> = (props) => {
         <SupportingTextCell textAlign="left">
           {localizedString.qrCode}
         </SupportingTextCell>
-        {props.url &&
+        {imageUrl &&
           <div>
-            <QRCode value={props.url} id="rqCode" />
+            <img src={imageUrl} css={imageStyle} />
+            <div css={textButtonContainerStyle}>
+              <TextButton onClick={onDownload}>
+                {localizedString.download}
+              </TextButton>
+            </div>
           </div>
         }
         <Spacer y="15px" />
@@ -52,10 +82,19 @@ const ShareTemplate: React.FC<Props> = (props) => {
         <SupportingTextCell textAlign="left">
           {localizedString.link}
         </SupportingTextCell>
-        {props.url &&
-          <TextCell>
-            {props.url}
-          </TextCell>
+        {props.roomLink &&
+          <div>
+            <TextCell>
+              {props.roomLink}
+            </TextCell>
+            <div css={textButtonContainerStyle}>
+              <TextButton onClick={onCopy}>
+                {isCopied
+                  ? localizedString.copied
+                  : localizedString.copy}
+              </TextButton>
+            </div>
+          </div>
         }
       </Card>
     </div>
@@ -68,6 +107,15 @@ const layoutStyle = css`
 `
 const textStyle = css`
   text-align: center;
+`
+const imageStyle = css`
+  width: 180px;
+  height: 180px;
+  margin: 0 auto;
+`
+const textButtonContainerStyle = css`
+  text-align: left;
+  margin: 0 10px;
 `
 
 export default ShareTemplate
