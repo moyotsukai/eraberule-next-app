@@ -7,6 +7,7 @@ import Spacer from '../ui/Spacer'
 import { useLocale } from '../../hooks/useLocale'
 import QRCode from 'qrcode'
 import TextButton from '../ui/TextButton'
+import Image from 'next/image'
 
 type Props = {
   title: string
@@ -69,7 +70,7 @@ const ShareTemplate: React.FC<Props> = (props) => {
         </SupportingTextCell>
         {imageUrl &&
           <div>
-            <img src={imageUrl} css={imageStyle} />
+            <Image src={imageUrl} width={180} height={180} css={imageStyle} />
             <div css={textButtonContainerStyle}>
               <TextButton onClick={onDownload}>
                 {localizedString.download}
