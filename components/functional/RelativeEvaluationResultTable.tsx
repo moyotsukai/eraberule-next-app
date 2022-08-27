@@ -84,7 +84,7 @@ const rankStyle = css`
   border: solid 1px ${dividerColor};
 `
 const nameStyle = css`
-  min-width: 190px;
+  min-width: 170px;
   padding-left: 5px;
   text-align: left;
   border: solid 1px ${dividerColor};
