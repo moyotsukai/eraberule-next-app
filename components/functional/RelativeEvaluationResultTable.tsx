@@ -79,13 +79,13 @@ const rowStyle = (hasColor: boolean) => css`
   background-color: ${hasColor ? "#fafbff" : "transparent"};
 `
 const rankStyle = css`
-  width: 50px;
+  min-width: 50px;
   text-align: center;
   border: solid 1px ${dividerColor};
 `
 const nameStyle = css`
+  min-width: 190px;
   padding-left: 5px;
-  min-width: 200px;
   text-align: left;
   border: solid 1px ${dividerColor};
 `

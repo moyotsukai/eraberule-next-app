@@ -57,7 +57,7 @@ const tableStyle = css`
 `
 const obtainedLabelStyle = css`
   background-color: #f2f5ff;
-  width: 70px;
+  min-width: 70px;
   text-align: center;
   border: solid 1px ${dividerColor};
 `
