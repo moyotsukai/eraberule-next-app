@@ -5,9 +5,8 @@ import { ruleNames } from '../../types/rules'
 import { RankResults } from '../../types/RankResults.type'
 import { majorityJudgement } from '../../rules/majorityJudgement'
 import SupportingTextCell from '../ui/SupportingTextCell'
-import Spacer from '../ui/Spacer'
 import { mjDetails } from '../../rules/mjDetails'
-import { primaryColor } from '../../styles/colors'
+import { dividerColor, primaryColor } from '../../styles/colors'
 import { useLocale } from '../../hooks/useLocale'
 
 type Props = {
@@ -40,32 +39,33 @@ const MjDetails: React.FC<Props> = (props) => {
 
   if (props.roomData.rule === ruleNames.majorityJudgement) {
     return (
-      <div>
-        {mjDetailData.map((evaluations, optionIndex) => (
-          <React.Fragment key={optionIndex}>
-            <SupportingTextCell textAlign="left">
-              {props.roomData.options[optionIndex]}
-            </SupportingTextCell>
-            <ul css={tableStyle}>
-              {evaluations.map((num, evaluationIndex) => (
-                <li
-                  key={evaluationIndex}
-                  css={() => cellStyle(resultRanks[0][optionIndex].score === props.roomData.commonLanguage[evaluationIndex])}
-                >
-                  <span css={evaluationStyle}>
-                    {props.roomData.commonLanguage[evaluationIndex]}
-                  </span>
-                  <span css={scoreStyle}>
-                    {num + localizedString.numOfVotes}
-                  </span>
-                </li>
-              ))}
-            </ul>
-            {optionIndex !== mjDetailData.length - 1 &&
-              <Spacer y="10px" />
-            }
-          </React.Fragment>
-        ))}
+      <div css={containerStyle}>
+        <table css={tableStyle}>
+          {mjDetailData.map((evaluations, optionIndex) => (
+            <tr key={optionIndex} css={() => rowStyle(optionIndex % 2 !== 0)}>
+              <td css={tableDataStyle}>
+                <SupportingTextCell textAlign="left">
+                  {props.roomData.options[optionIndex]}
+                </SupportingTextCell>
+                <ul css={listStyle}>
+                  {evaluations.map((num, evaluationIndex) => (
+                    <li
+                      key={evaluationIndex}
+                      css={() => cellStyle(resultRanks[0].find((option) => option.name === props.roomData.options[optionIndex]).score === props.roomData.commonLanguage[evaluationIndex])}
+                    >
+                      <span css={evaluationStyle}>
+                        {props.roomData.commonLanguage[evaluationIndex]}
+                      </span>
+                      <span css={scoreStyle}>
+                        {num + localizedString.numOfVotes}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </td>
+            </tr>
+          ))}
+        </table>
       </div>
     )
   }
@@ -75,8 +75,23 @@ const MjDetails: React.FC<Props> = (props) => {
   )
 }
 
+const containerStyle = css`
+  padding: 5px 8px;
+`
 const tableStyle = css`
-  padding: 0 6px;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+`
+const rowStyle = (hasColor: boolean) => css`
+  background-color: ${hasColor ? "#fafbff" : "transparent"};
+`
+const tableDataStyle = css`
+  border: solid 1px ${dividerColor};
+  padding-bottom: 5px;
+`
+const listStyle = css`
+  padding: 0 5px;
 `
 const cellStyle = (isHighlighted: boolean) => css`
   color: ${isHighlighted ? primaryColor : "#000"};

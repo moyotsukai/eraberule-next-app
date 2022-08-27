@@ -5,6 +5,7 @@ import SupportingTextCell from '../ui/SupportingTextCell'
 import Spacer from '../ui/Spacer'
 import { RankResults } from '../../types/RankResults.type'
 import { useLocale } from '../../hooks/useLocale'
+import { dividerColor } from '../../styles/colors'
 
 type Props = {
   resultRanks: RankResults[] | undefined
@@ -17,35 +18,41 @@ const RelativeEvaluationReultTable: React.FC<Props> = (props) => {
 
   if (props.resultRanks.length === 1) {
     return (
-      <ul css={tableStyle}>
-        {props.resultRanks[0].map((result, index) => (
-          <li key={index} css={cellStyle}>
-            <span css={rankStyle}>{result.rank}</span>
-            <span css={nameStyle}>{result.name}</span>
-            <span css={scoreStyle}>{result.score}</span>
-          </li>
-        ))}
-      </ul>
+      <div css={containerStyle}>
+        <table css={tableStyle}>
+          {props.resultRanks[0].map((result, index) => (
+            <tr key={index} css={() => rowStyle(index % 2 !== 0)}>
+              <th css={rankStyle}>{result.rank}</th>
+              <td css={nameStyle}>{result.name}</td>
+              {result.score &&
+                <td css={scoreStyle}>{result.score}</td>
+              }
+            </tr>
+          ))}
+        </table>
+      </div>
     )
   }
 
   if (props.resultRanks.length >= 2) {
     return (
-      <div>
+      <div css={containerStyle}>
         {props.resultRanks.map((results, index) => (
           <React.Fragment key={index} >
             <SupportingTextCell textAlign="left">
               {localizedString.nPossibilityF + (index + 1) + localizedString.nPossibilityB}
             </SupportingTextCell>
-            <ul css={tableStyle}>
+            <table css={tableStyle}>
               {results.map((result, index) => (
-                <li key={index} css={cellStyle}>
-                  <span css={rankStyle}>{result.rank}</span>
-                  <span css={nameStyle}>{result.name}</span>
-                  <span css={scoreStyle}>{result.score}</span>
-                </li>
+                <tr key={index} css={() => rowStyle(index % 2 !== 0)}>
+                  <th css={rankStyle}>{result.rank}</th>
+                  <td css={nameStyle}>{result.name}</td>
+                  {result.score &&
+                    <td css={scoreStyle}>{result.score}</td>
+                  }
+                </tr>
               ))}
-            </ul>
+            </table>
             {index !== props.resultRanks.length - 1 &&
               <Spacer y="10px" />
             }
@@ -60,24 +67,32 @@ const RelativeEvaluationReultTable: React.FC<Props> = (props) => {
   )
 }
 
-const tableStyle = css`
-  padding: 0 6px;
+const containerStyle = css`
+  padding: 5px 8px;
 `
-const cellStyle = css`
-  display: flex;
-  justify-content: space-between;
+const tableStyle = css`
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+`
+const rowStyle = (hasColor: boolean) => css`
+  background-color: ${hasColor ? "#fafbff" : "transparent"};
 `
 const rankStyle = css`
   width: 50px;
   text-align: center;
+  border: solid 1px ${dividerColor};
 `
 const nameStyle = css`
+  padding-left: 5px;
   min-width: 200px;
   text-align: left;
+  border: solid 1px ${dividerColor};
 `
 const scoreStyle = css`
-  min-width: 60px;
+  min-width: 90px;
   text-align: right;
+  border: solid 1px ${dividerColor};
 `
 
 export default RelativeEvaluationReultTable

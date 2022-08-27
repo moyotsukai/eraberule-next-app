@@ -4,6 +4,7 @@ import SupportingTextCell from './SupportingTextCell'
 import { motion } from 'framer-motion'
 import Divider from './Divider'
 import ToggleMarker from './ToggleMarker'
+import Spacer from './Spacer'
 
 type Props = {
   title: string
@@ -41,7 +42,9 @@ const Accordion: React.FC<Props> = (props) => {
             {props.title}
           </SupportingTextCell>
         </div>
-        <ToggleMarker isOpen={!isOpen} />
+        <div css={toggleMarkerContainer}>
+          <ToggleMarker isOpen={!isOpen} />
+        </div>
       </motion.button>
 
       <motion.div
@@ -60,6 +63,7 @@ const Accordion: React.FC<Props> = (props) => {
       >
         <Divider />
         {props.children}
+        <Spacer y="15px" />
       </motion.div>
     </div>
   )
@@ -69,13 +73,8 @@ const accordionStyle = css`
   background-color: #fff;
   margin: 25px auto;
   max-width: 600px;
-  padding: 15px 5px;
   border-radius: 12px;
   text-align: center;
-
-  @media(min-width: 500px) {
-    padding: 15px 10px;
-  }
 `
 const summaryContainerStyle = css`
   display: flex;
@@ -85,6 +84,11 @@ const summaryContainerStyle = css`
   cursor: pointer;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   width: 100%;
+  padding: 15px 5px;
+
+  @media(min-width: 500px) {
+    padding: 15px 10px;
+  }
 
   &:focus {
     outline: none;
@@ -93,8 +97,16 @@ const summaryContainerStyle = css`
 const titleContainerStyle = css`
   flex-grow: 1;
 `
+const toggleMarkerContainer = css`
+  padding-right: 10px;
+`
 const detailContainerStyle = css`
   overflow: hidden;
+  padding: 0 5px;
+
+  @media(min-width: 500px) {
+    padding: 0 10px;
+  }
 `
 
 export default Accordion

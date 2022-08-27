@@ -2,6 +2,7 @@ import React from 'react'
 import { css } from '@emotion/react'
 import Spacer from '../ui/Spacer'
 import { RankResults } from '../../types/RankResults.type'
+import { dividerColor } from '../../styles/colors'
 
 type Props = {
   resultRanks: RankResults[] | undefined
@@ -9,40 +10,45 @@ type Props = {
 
 const MjResultTable: React.FC<Props> = (props) => {
   return (
-    <ul css={tableStyle}>
-      {props.resultRanks[0].map((result, index) => (
-        <React.Fragment key={index}>
-          <li css={mjCellStyle}>
-            <span css={rankStyle}>{result.rank}</span>
-            <span css={mjBlockStyle}>
-              <p>{result.name}</p>
-              <p>{result.score}</p>
-            </span>
-          </li>
-          {index !== props.resultRanks[0].length - 1 &&
-            <Spacer y="10px" />
-          }
-        </React.Fragment>
-      ))}
-    </ul>
+    <div css={containerStyle}>
+      <table css={tableStyle}>
+        {props.resultRanks[0].map((result, index) => (
+          <React.Fragment key={index}>
+            <tr css={() => rowStyle(index % 2 !== 0)}>
+              <th css={rankStyle}>{result.rank}</th>
+              <td css={mjBlockStyle}>
+                <p>{result.name}</p>
+                <p>{result.score}</p>
+              </td>
+            </tr>
+          </React.Fragment>
+        ))}
+      </table>
+    </div>
   )
 }
 
+const containerStyle = css`
+  padding: 5px 8px;
+`
 const tableStyle = css`
-  padding: 0 6px;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+`
+const rowStyle = (hasColor: boolean) => css`
+  background-color: ${hasColor ? "#fafbff" : "transparent"};
 `
 const rankStyle = css`
   width: 50px;
   text-align: center;
-`
-const mjCellStyle = css`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  border: solid 1px ${dividerColor};
 `
 const mjBlockStyle = css`
+  padding: 5px 0 5px 5px;
   min-width: 260px;
   text-align: left;
+  border: solid 1px ${dividerColor};
 `
 
 export default MjResultTable

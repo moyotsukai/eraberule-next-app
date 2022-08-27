@@ -48,7 +48,7 @@ const PreferenceProfilesTable: React.FC<Props> = (props) => {
 }
 
 const containerStyle = css`
-  padding: 5px 10px;
+  padding: 5px 8px;
 `
 const tableStyle = css`
   width: 100%;
