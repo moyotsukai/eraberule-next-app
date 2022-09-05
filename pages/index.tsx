@@ -1,16 +1,24 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { useAuthenticate } from '../hooks/auth'
 import IndexTemplate from '../components/templates/IndexTemplate'
 import { useSetRecoilState } from 'recoil'
 import { roomDataState } from '../states/atoms'
 import { anySpaceToSingleSpace } from '../utils/anySpaceToSingleSpace'
+import { useAuth } from '../auth/useAuth'
+import { signIn } from '../auth/auth'
 
 const IndexPage: React.FC = () => {
-  const user = useAuthenticate()
+  const { user, isLoading } = useAuth()
   const router = useRouter()
   const [enteredTitle, setEnteredTitle] = useState("")
   const setRoomData = useSetRecoilState(roomDataState)
+
+  //
+  useEffect(() => {
+    if (!user) {
+      signIn()
+    }
+  }, [])
 
   const handleTitleChange = (event) => {
     setEnteredTitle(event.target.value)
@@ -36,6 +44,15 @@ const IndexPage: React.FC = () => {
   }
 
   //UI
+  //
+  if (isLoading) {
+    return (
+      <div>
+        Loading...
+      </div>
+    )
+  }
+
   return (
     <IndexTemplate
       user={user}
