@@ -3,7 +3,7 @@ import { css } from '@emotion/react'
 import NewPageCard from '../functional/NewPageCard'
 import Button from '../ui/Button'
 import Spacer from '../ui/Spacer'
-import { useLocale } from '../../hooks/useLocale'
+import { useLocale } from '../../locales/useLocale'
 
 type Props = {
   title: string

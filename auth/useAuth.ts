@@ -7,7 +7,7 @@ import { auth } from '../firebase/initialize'
 
 export const useAuth = () => {
   const [user, setUser] = useRecoilState(userState)
-  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [isLoadingUser, setIsLoadingUser] = useState<boolean>(true)
 
   useEffect(() => {
     const unsubscriber = onAuthStateChanged(auth, async (user) => {
@@ -18,19 +18,19 @@ export const useAuth = () => {
           log("Signed in, uid: ", user.uid)
         } else {
           //User is not signed in
-          setUser(null)
+          setUser(undefined)
         }
       } catch (error) {
         //Most probably a connection error
-        log(error)
         setUser(null)
+        log(error)
       } finally {
-        setIsLoading(false)
+        setIsLoadingUser(false)
       }
     })
 
     return () => unsubscriber()
   }, [])
 
-  return { user, isLoading }
+  return { user, isLoadingUser }
 }

@@ -7,7 +7,7 @@ import LanguageMenu from '../functional/LanguageMenu'
 const Header: React.FC = () => {
 
   return (
-    <div css={headerStyle}>
+    <header css={headerStyle}>
       <a href="https://eraberule.com">
         <div css={linkStyle}>
           <Image src={Logo} alt="logo" />
@@ -15,7 +15,7 @@ const Header: React.FC = () => {
       </a>
       <div css={spacerStyle} />
       <LanguageMenu />
-    </div>
+    </header>
   )
 }
 

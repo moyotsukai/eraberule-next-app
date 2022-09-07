@@ -5,7 +5,7 @@ import Message from '../ui/Message'
 import Button from '../ui/Button'
 import SupportingTextCell from '../ui/SupportingTextCell'
 import CardButton from '../ui/CardButton'
-import { useLocale } from '../../hooks/useLocale'
+import { useLocale } from '../../locales/useLocale'
 
 type Props = {
   user: User | undefined | null

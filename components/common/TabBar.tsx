@@ -2,19 +2,25 @@ import React from 'react'
 import Tab from '../ui/Tab'
 import { css } from '@emotion/react'
 import { primaryShadowColor } from '../../styles/colors'
-import { useLocale } from '../../hooks/useLocale'
+import { useLocale } from '../../locales/useLocale'
+import T_TAB_BAR from '../../locales/tabBar'
 
 type Props = {
   path: string
 }
 
-interface Tabs {
+type Tabs = {
   text: string
   path: string
   match: string[]
 }
 
-const tabs = (text): Tabs[] => {
+type TabTexts = {
+  vote: string,
+  create: string
+}
+
+const createTabs = (text: TabTexts): Tabs[] => {
   return [
     {
       text: text.vote,
@@ -30,18 +36,19 @@ const tabs = (text): Tabs[] => {
 }
 
 const TabBar: React.FC<Props> = (props) => {
-  const { t } = useLocale()
+  const t = useLocale(T_TAB_BAR)
+  const tabs = createTabs({ vote: t.VOTE, create: t.CREATE })
 
   return (
-    <div css={tabBarStyle}>
-      {tabs(t.common.tabBar).map((tab, index) => {
+    <nav css={tabBarStyle}>
+      {tabs.map((tab, index) => {
         const isSelected = (tab.match.indexOf(props.path) !== -1)
 
         return (
           <Tab text={tab.text} path={tab.path} isSelected={isSelected} key={index} />
         )
       })}
-    </div>
+    </nav>
   )
 }
 

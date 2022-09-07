@@ -12,7 +12,7 @@ import { ruleNames } from '../../types/rules'
 import Button from '../ui/Button'
 import SingleSelectionCell from '../ui/SingleSelectionCell'
 import smoothscroll from 'smoothscroll-polyfill'
-import { useLocale } from '../../hooks/useLocale'
+import { useLocale } from '../../locales/useLocale'
 
 const SuggestTemplate: React.FC = () => {
   const router = useRouter()

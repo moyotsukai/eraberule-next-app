@@ -8,7 +8,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { createdRoomIdsState, hasNoUserDocState, recentlyCreatedRoomTitleState, suggestedRuleState } from '../../states/atoms'
 import NewTemplate from '../../components/templates/NewTemplate'
 import { anySpaceToSingleSpace } from '../../utils/anySpaceToSingleSpace'
-import { useLocale } from '../../hooks/useLocale'
+import { useLocale } from '../../locales/useLocale'
 
 const NewPage: React.FC = () => {
   const user = useAuthenticate()

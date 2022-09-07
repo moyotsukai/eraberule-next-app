@@ -10,7 +10,7 @@ import TextButton from '../ui/TextButton'
 import { supportingTextColor } from '../../styles/colors'
 import RemoveButton from '../ui/RemoveButton'
 import SingleSelectionCell from '../ui/SingleSelectionCell'
-import { useLocale } from '../../hooks/useLocale'
+import { useLocale } from '../../locales/useLocale'
 
 type Props = {
   title: string

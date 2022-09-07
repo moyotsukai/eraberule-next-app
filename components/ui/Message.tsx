@@ -3,13 +3,14 @@ import { css } from '@emotion/react'
 import LoadingCircle from './LoadingCircle'
 
 type Props = {
-  isLoading: boolean
+  isLoading?: boolean
   children?: React.ReactNode
 }
 
 const Message: React.FC<Props> = (props) => {
+  const isLoading = props.isLoading || false
 
-  if (props.isLoading) {
+  if (isLoading) {
     return (
       <div css={loadingStyle}>
         <LoadingCircle />

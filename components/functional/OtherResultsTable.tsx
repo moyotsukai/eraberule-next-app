@@ -5,7 +5,7 @@ import Accordion from '../ui/Accordion'
 import TextCell from '../ui/TextCell'
 import ResultTable from './ResultTable'
 import Spacer from '../ui/Spacer'
-import { useLocale } from '../../hooks/useLocale'
+import { useLocale } from '../../locales/useLocale'
 
 type Props = {
   otherResults: RankResults[][] | undefined | null

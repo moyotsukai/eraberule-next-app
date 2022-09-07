@@ -4,7 +4,7 @@ import { User } from '../../types/User.type'
 import Message from '../ui/Message'
 import ToVoteCard from '../functional/ToVoteCard'
 import { Room } from '../../types/Room.type'
-import { useLocale } from '../../hooks/useLocale'
+import { useLocale } from '../../locales/useLocale'
 
 type Props = {
   user: User | undefined | null

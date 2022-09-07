@@ -4,7 +4,7 @@ import { Room } from '../../types/Room.type'
 import SupportingTextCell from '../ui/SupportingTextCell'
 import Spacer from '../ui/Spacer'
 import { RankResults } from '../../types/RankResults.type'
-import { useLocale } from '../../hooks/useLocale'
+import { useLocale } from '../../locales/useLocale'
 import { dividerColor } from '../../styles/colors'
 
 type Props = {
