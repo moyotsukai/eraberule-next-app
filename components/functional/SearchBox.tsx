@@ -9,16 +9,17 @@ type Props = {
   value: string
   placeholder?: string
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
-  onEnterKey: () => void
+  isValid: () => boolean
+  onSubmit: () => void
 }
 
 const SearchBox: React.FC<Props> = (props) => {
-  const [isClicked, setIsClicked] = useState(false)
+  const [isClicked, setIsClicked] = useState<boolean>(false)
 
-  const onEnterKey: () => void = props.onEnterKey
-  const startSearch = () => {
+  const onSubmit = () => {
+    if (!props.isValid()) { return }
     setIsClicked(true)
-    onEnterKey()
+    props.onSubmit()
   }
 
   return (
@@ -28,15 +29,17 @@ const SearchBox: React.FC<Props> = (props) => {
           value={props.value}
           placeholder={props.placeholder}
           onChange={props.onChange}
-          onEnterKey={startSearch}
+          onEnterKey={onSubmit}
           css={inputStyle}
         />
         <CircleButton
-          onClick={startSearch}
+          onClick={onSubmit}
           isEnabled={!isClicked}
           isLoading={isClicked}
         >
-          {isClicked ? "" : <SearchIcon color={primaryColor} />}
+          {!isClicked &&
+            <SearchIcon color={primaryColor} />
+          }
         </CircleButton>
       </div>
     </div >

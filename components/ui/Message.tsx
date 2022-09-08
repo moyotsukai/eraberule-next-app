@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { css } from '@emotion/react'
 import LoadingCircle from './LoadingCircle'
 
@@ -45,4 +45,4 @@ const messageStyle = css`
   text-align: center;
 `
 
-export default Message
+export default memo(Message)

@@ -32,6 +32,7 @@ const Layout: React.FC<Props> = (props) => {
 
 const layoutStyle = css`
   background-color: ${backgroundColor};
+  text-align: center;
 `
 const containerStyle = css`
   display: grid;

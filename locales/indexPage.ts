@@ -3,7 +3,7 @@ import { asLocaleTable } from '../i18n/i18n'
 const T_INDEX_PAGE = asLocaleTable({
   SEARCH_ROOMS: {
     ja: "ルーム名を検索して投票に参加",
-    en: "Enter the name of the room to join a poll"
+    en: "Enter the room name to join a poll"
   },
   ENTER_TITLE: {
     ja: "ルーム名を入力",

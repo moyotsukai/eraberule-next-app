@@ -13,17 +13,16 @@ export const useAuth = () => {
     const unsubscriber = onAuthStateChanged(auth, async (user) => {
       try {
         if (user) {
-          //User is signed in
           setUser({ uid: user.uid, isAnonymous: user.isAnonymous })
-          log("Signed in, uid: ", user.uid)
+          log("useAuth, uid: ", user.uid)
         } else {
-          //User is not signed in
           setUser(undefined)
+          log("useAuth, Not signed in")
         }
       } catch (error) {
         //Most probably a connection error
         setUser(null)
-        log(error)
+        log("useAuth, error", error)
       } finally {
         setIsLoadingUser(false)
       }

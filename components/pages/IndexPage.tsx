@@ -1,36 +1,30 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { css } from '@emotion/react'
 import { useRouter } from 'next/router'
-import { useSetRecoilState } from 'recoil'
 import { roomDataState } from '../../states/atoms'
+import { useSetRecoilState } from 'recoil'
 import { anySpaceToSingleSpace } from '../../utils/anySpaceToSingleSpace'
-import { useAuth } from '../../auth/useAuth'
+import { removeBlanks } from '../../utils/removeBlanks'
 import SignInProvider from '../common/SignInProvider'
 import Message from '../ui/Message'
-import SearchBox from '../functional/SearchBox'
 import SupportingTextCell from '../ui/SupportingTextCell'
 import { useLocale } from '../../locales/useLocale'
 import T_INDEX_PAGE from '../../locales/indexPage'
 import { supportingTextColor } from '../../styles/colors'
+import SearchBox from '../functional/SearchBox'
 
 const IndexPage: React.FC = () => {
-  const { user } = useAuth()
   const router = useRouter()
-  const [enteredTitle, setEnteredTitle] = useState("")
   const setRoomData = useSetRecoilState(roomDataState)
+  const [enteredTitle, setEnteredTitle] = useState<string>("")
   const t = useLocale(T_INDEX_PAGE)
 
-  const handleTitleChange = (event) => {
+  const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEnteredTitle(event.target.value)
   }
 
-  const handleOnClick = () => {
-    if (!isValidTitle) { return }
-    toRoom()
-  }
-
   const isValidTitle = () => {
-    if (enteredTitle === "") { return false }
+    if (removeBlanks(enteredTitle) === "") { return false }
     return true
   }
 
@@ -51,10 +45,12 @@ const IndexPage: React.FC = () => {
       <SearchBox
         value={enteredTitle}
         placeholder={t.ENTER_TITLE}
-        onChange={handleTitleChange}
-        onEnterKey={handleOnClick}
+        onChange={onTitleChange}
+        isValid={isValidTitle}
+        onSubmit={toRoom}
       />
       <div css={spacerStyle} />
+
       <SupportingTextCell textAlign="center">
         {t.AGREE_TO_TERMS_1}
         <a

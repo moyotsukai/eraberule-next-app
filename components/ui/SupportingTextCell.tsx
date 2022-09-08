@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { css } from '@emotion/react'
 import { errorColor, supportingTextColor } from '../../styles/colors'
 
@@ -26,4 +26,4 @@ const layoutStyle = (isError: boolean, textAlign: string) => css`
   margin: 5px 10px;
 `
 
-export default SupportingTextCell
+export default memo(SupportingTextCell)

@@ -9,6 +9,7 @@ import { createdRoomIdsState, hasNoUserDocState, recentlyCreatedRoomTitleState, 
 import NewTemplate from '../../components/templates/NewTemplate'
 import { anySpaceToSingleSpace } from '../../utils/anySpaceToSingleSpace'
 import { useLocale } from '../../locales/useLocale'
+import { removeBlanks } from '../../utils/removeBlanks'
 
 const NewPage: React.FC = () => {
   const user = useAuthenticate()
@@ -79,7 +80,7 @@ const NewPage: React.FC = () => {
   //Set isSendEnabled
   useLayoutEffect(() => {
     setIsSendEnabled(false)
-    if (title === "") { return }
+    if (removeBlanks(title) === "") { return }
     if (validArray(options).length === 0) { return }
     if (isOptionsExceed) { return }
     if (selectedRule === "") { return }
