@@ -4,7 +4,7 @@ import TextCell from '../ui/TextCell'
 import SupportingTextCell from '../ui/SupportingTextCell'
 import Button from '../ui/Button'
 import Spacer from '../ui/Spacer'
-import { useLocale } from '../../locales/useLocale'
+import { useLocale } from '../../i18n/useLocale'
 
 type Props = {
   roomTitle: string

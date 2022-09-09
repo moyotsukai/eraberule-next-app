@@ -5,7 +5,7 @@ import { PreferenceProfilesFormatted } from '../../types/PreferenceProfiles.type
 import { preferenceProfilesAssumption, preferenceProfilesFormatted } from '../../rules/preferenceProfiles'
 import SupportingTextCell from '../ui/SupportingTextCell'
 import { dividerColor } from '../../styles/colors'
-import { useLocale } from '../../locales/useLocale'
+import { useLocale } from '../../i18n/useLocale'
 
 type Props = {
   roomData: Room,

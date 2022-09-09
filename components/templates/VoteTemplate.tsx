@@ -6,7 +6,7 @@ import { Room } from '../../types/Room.type'
 import VotePageCard from '../functional/VotePageCard'
 import Button from '../ui/Button'
 import Spacer from '../ui/Spacer'
-import { useLocale } from '../../locales/useLocale'
+import { useLocale } from '../../i18n/useLocale'
 
 type Props = {
   user: User | undefined | null

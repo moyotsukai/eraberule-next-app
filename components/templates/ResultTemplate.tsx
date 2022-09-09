@@ -21,7 +21,7 @@ import MjDetails from '../functional/MjDetails'
 import OtherResultsTable from '../functional/OtherResultsTable'
 import TextButton from '../ui/TextButton'
 import PreferenceProfilesTable from '../functional/PreferenceProfilesTable'
-import { useLocale } from '../../locales/useLocale'
+import { useLocale } from '../../i18n/useLocale'
 
 type Props = {
   user: User | undefined | null

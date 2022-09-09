@@ -7,7 +7,7 @@ import { majorityJudgement } from '../../rules/majorityJudgement'
 import SupportingTextCell from '../ui/SupportingTextCell'
 import { mjDetails } from '../../rules/mjDetails'
 import { dividerColor, primaryColor } from '../../styles/colors'
-import { useLocale } from '../../locales/useLocale'
+import { useLocale } from '../../i18n/useLocale'
 
 type Props = {
   roomData: Room,

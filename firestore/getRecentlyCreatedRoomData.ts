@@ -2,7 +2,7 @@ import { collection, getDocs, query, where } from 'firebase/firestore'
 import { db } from '../firebase/initialize'
 import { log } from '../utils/log'
 import { fromFirestore } from './dataConverter'
-import { KEYS } from './keys'
+import { KEYS } from './key'
 
 export const getRecentlyCreatedRoomData = async (userId: string) => {
   const q = query(collection(db, KEYS.ROOMS), where(KEYS.SENDER_ID, "==", userId))

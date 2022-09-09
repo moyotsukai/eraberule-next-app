@@ -9,9 +9,9 @@ import Message from '../ui/Message'
 import Button from '../ui/Button'
 import SupportingTextCell from '../ui/SupportingTextCell'
 import CardButton from '../ui/CardButton'
-import { useLocale } from '../../locales/useLocale'
+import { useLocale } from '../../i18n/useLocale'
 import T_CREATE from '../../locales/createPage'
-import { getRecentlyCreatedRoomData } from '../../firestore/getRoomData'
+import { getRecentlyCreatedRoomData } from '../../firestore/getRecentlyCreatedRoomData'
 
 const CreatePage: React.FC = () => {
   const { user } = useAuth()

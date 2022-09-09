@@ -9,7 +9,7 @@ import { ruleNames } from '../../types/rules'
 import SingleSelectionTable from './SingleSelectionTable'
 import RankSelectionTable from './RankSelectionTable'
 import MjSelectionTable from './MjSelectionTable'
-import { useLocale } from '../../locales/useLocale'
+import { useLocale } from '../../i18n/useLocale'
 
 type Props = {
   isEnabled: boolean

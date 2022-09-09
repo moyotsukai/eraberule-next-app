@@ -1,28 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { useQyeryParameter } from '../../hooks/useQueryParameter'
-import ShareTemplate from '../../components/templates/ShareTemplate'
-import { spaceToPlus } from '../../utils/spaceToPlus'
+import React from 'react'
+import SharePage from '../../components/pages/SharePage'
 
-const SharePage: React.FC = () => {
-  const [roomLink, setRoomLink] = useState<string | null>(null)
-
-  //Set title
-  const title = useQyeryParameter("title")
-
-  //Set url
-  useEffect(() => {
-    if (title) {
-      const replacedTitle = spaceToPlus(title)
-      setRoomLink(`https://app.eraberule.com/room?q=${replacedTitle}`)
-    }
-  }, [title])
-
+const Share: React.FC = () => {
   return (
-    <ShareTemplate
-      title={title}
-      roomLink={roomLink}
-    />
+    <SharePage />
   )
 }
 
-export default SharePage
+export default Share

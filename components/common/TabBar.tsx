@@ -2,7 +2,7 @@ import React from 'react'
 import Tab from '../ui/Tab'
 import { css } from '@emotion/react'
 import { primaryShadowColor } from '../../styles/colors'
-import { useLocale } from '../../locales/useLocale'
+import { useLocale } from '../../i18n/useLocale'
 import T_TAB_BAR from '../../locales/tabBar'
 
 type Props = {
