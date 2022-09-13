@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { css } from '@emotion/react'
 
 type Props = {
@@ -17,4 +17,4 @@ const layoutStyle = (y) => css`
   height: ${y};
 `
 
-export default Spacer
+export default memo(Spacer)

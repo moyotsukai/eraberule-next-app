@@ -3,7 +3,7 @@ import { db } from '../../lib/firebase'
 import { useRouter } from 'next/router'
 import { useRecoilValue, useRecoilState } from 'recoil'
 import { roomDataState, personalRankState, attendedRoomIdsState, hasNoUserDocState } from '../../states/atoms'
-import { ruleNames } from '../../types/rules'
+import { ruleNames } from '../../rules/ruleNames'
 import { useAuthenticate } from '../../hooks/auth'
 import VoteTemplate from '../../components/templates/VoteTemplate'
 

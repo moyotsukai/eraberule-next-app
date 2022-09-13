@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { css } from '@emotion/react'
 import { Room } from '../../types/Room.type'
-import { ruleNames } from '../../types/rules'
+import { ruleNames } from '../../rules/ruleNames'
 import { RankResults } from '../../types/RankResults.type'
 import { majorityJudgement } from '../../rules/majorityJudgement'
 import SupportingTextCell from '../ui/SupportingTextCell'

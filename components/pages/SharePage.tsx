@@ -9,7 +9,7 @@ import TextCell from '../ui/TextCell'
 import { useLocale } from '../../i18n/useLocale'
 import T_SHARE from '../../locales/sharePage'
 import { generateRoomLink } from '../../qrcode/generateRoomLink'
-import { useQrcode } from '../../qrcode/generateQrcode'
+import { useQrcode } from '../../qrcode/useQrcode'
 import LoadingProviderWithoutAuth from '../common/LoadingProviderWithoutAuth'
 
 const SharePage: React.FC = () => {

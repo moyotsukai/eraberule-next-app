@@ -1,6 +1,6 @@
 import { RankResults } from '../types/RankResults.type'
 import { Room } from '../types/Room.type'
-import { ruleNames } from '../types/rules'
+import { ruleNames } from './ruleNames'
 import { rankingFormatted } from '../utils/rankingFormatted'
 import { scoreLabelString } from '../utils/scoreLabelString'
 

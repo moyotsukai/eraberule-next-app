@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { css } from '@emotion/react'
 import { primaryColor, primaryShadowColor, primaryDisabledColor } from '../../styles/colors'
 import { motion } from "framer-motion"
@@ -91,4 +91,4 @@ const buttonLoadingStyle = css`
   margin: 0 auto;
 `
 
-export default Button
+export default memo(Button)

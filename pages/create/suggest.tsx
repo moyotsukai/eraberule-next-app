@@ -1,10 +1,10 @@
 import React from 'react'
-import SuggestTemplate from '../../components/templates/SuggestTemplate'
+import SuggestPage from '../../components/pages/SuggestPage'
 
-const SuggestPage: React.FC = () => {
+const Suggest: React.FC = () => {
   return (
-    <SuggestTemplate />
+    <SuggestPage />
   )
 }
 
-export default SuggestPage
+export default Suggest

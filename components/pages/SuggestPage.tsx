@@ -1,25 +1,28 @@
 import React, { useEffect, useRef } from 'react'
 import { css } from '@emotion/react'
+import LoadingProviderWithoutAuth from '../common/LoadingProviderWithoutAuth'
+import { useLocale } from '../../i18n/useLocale'
+import { T_SUGGEST } from '../../locales/suggestPage'
+import Spacer from '../ui/Spacer'
+import TextCell from '../ui/TextCell'
+import TextButton from '../ui/TextButton'
 import Card from '../ui/Card'
 import SupportingTextCell from '../ui/SupportingTextCell'
-import TextCell from '../ui/TextCell'
-import Spacer from '../ui/Spacer'
-import TextButton from '../ui/TextButton'
+import Button from '../ui/Button'
+import SingleSelectionCell from '../ui/SingleSelectionCell'
 import { useRouter } from 'next/router'
 import { useRecoilState } from 'recoil'
 import { suggestedRuleState } from '../../states/atoms'
-import { ruleNames } from '../../types/rules'
-import Button from '../ui/Button'
-import SingleSelectionCell from '../ui/SingleSelectionCell'
+import { RuleKeyName, RULE_NAMES } from '../../rules/ruleNames'
+import { T_RULES } from '../../locales/rules'
 import smoothscroll from 'smoothscroll-polyfill'
-import { useLocale } from '../../i18n/useLocale'
 
-const SuggestTemplate: React.FC = () => {
+const SuggestPage: React.FC = () => {
   const router = useRouter()
   const [suggestedRule, setSuggestedRule] = useRecoilState(suggestedRuleState)
   const bottomElementRef = useRef<HTMLDivElement>(null)
-  const { t } = useLocale()
-  const localizedString = t.templates.suggestTemplate
+  const t = useLocale(T_SUGGEST)
+  const t_rules = useLocale(T_RULES)
 
   //Setup scroll behavior
   useEffect(() => {
@@ -33,16 +36,20 @@ const SuggestTemplate: React.FC = () => {
     })
   }, [suggestedRule])
 
-  const handleSelection = (ruleName: string) => {
+  const onRuleSelect = (ruleKeyName: RuleKeyName) => {
     if (suggestedRule === null) {
-      setSuggestedRule(ruleName)
+      setSuggestedRule(ruleKeyName)
     } else {
-      if (suggestedRule === ruleName) {
+      if (suggestedRule === ruleKeyName) {
         setSuggestedRule(null)
       } else {
-        setSuggestedRule(ruleName)
+        setSuggestedRule(ruleKeyName)
       }
     }
+  }
+
+  const toNewRoomWithRule = () => {
+    router.push("/create/new")
   }
 
   const toNewRoomWithoutRule = () => {
@@ -50,72 +57,69 @@ const SuggestTemplate: React.FC = () => {
     router.push("/create/new")
   }
 
-  const toNewRoomWithRule = () => {
-    router.push("/create/new")
-  }
-
   return (
-    <div css={layoutStyle}>
+    <LoadingProviderWithoutAuth isLoading={false}>
       <Spacer y="25px" />
       <TextCell>
         <div css={textStyle}>
-          {localizedString.helpChoosing}
+          {t.HELP_CHOOSING}
         </div>
       </TextCell>
       <div css={skipButtonContainerStyle}>
         <TextButton onClick={toNewRoomWithoutRule}>
-          {localizedString.skip}
+          {t.SKIP}
         </TextButton>
       </div>
 
-      <Card>
-        <TextCell>
-          {localizedString.question}
-        </TextCell>
-        <Spacer y="15px" />
+      <div css={cardContainerStyle}>
+        <Card>
+          <TextCell>
+            {t.QUESTION}
+          </TextCell>
+          <Spacer y="15px" />
 
-        <div css={tableStyle}>
-          {Object.values(ruleNames).map((ruleName, index) => (
-            <SingleSelectionCell
-              text={t.ruleSuggestions[ruleName]}
-              onClick={() => handleSelection(ruleName)}
-              isSelected={ruleName === suggestedRule}
-              key={index}
-            />
-          ))}
-        </div>
-      </Card>
+          <div css={tableStyle}>
+            {Object.keys(RULE_NAMES).map((RULE_KEY_NAME: RuleKeyName, index) => (
+              <SingleSelectionCell
+                text={t_rules.$RULE_SUGGESTION(RULE_KEY_NAME)}
+                onClick={() => onRuleSelect(RULE_KEY_NAME)}
+                isSelected={RULE_KEY_NAME === suggestedRule}
+                key={index}
+              />
+            ))}
+          </div>
+        </Card>
+      </div>
 
       {suggestedRule &&
-        <div ref={bottomElementRef}>
+        <div ref={bottomElementRef} css={cardContainerStyle}>
           <Card>
             <SupportingTextCell textAlign="left">
-              {localizedString.suggestedRule}
+              {t.SUGGESTED_RULE}
             </SupportingTextCell>
             <TextCell>
-              {t.ruleDisplayNames[suggestedRule]}
+              {t_rules.$RULE_DISPLAY_NAME(suggestedRule)}
             </TextCell>
             <Spacer y="15px" />
             <div css={buttonGroupStyle}>
               <div css={buttonSpacerStyle} />
               <Button onClick={toNewRoomWithRule} isEnabled={true} isLoading={false}>
-                {localizedString.createWith}
+                {t.CREATE}
               </Button>
               <div css={textButtonContainerStyle}>
                 <TextButton onClick={toNewRoomWithoutRule}>
-                  {localizedString.createWithout}
+                  {t.CHOOSE_LATER}
                 </TextButton>
               </div>
             </div>
           </Card>
         </div>
       }
-    </div>
+    </LoadingProviderWithoutAuth>
   )
 }
 
-const layoutStyle = css`
-  min-height: 100vh;
+const cardContainerStyle = css`
   padding: 0 15px;
 `
 const textStyle = css`
@@ -142,4 +146,4 @@ const textButtonContainerStyle = css`
   margin-left: 8px;
 `
 
-export default SuggestTemplate
+export default SuggestPage

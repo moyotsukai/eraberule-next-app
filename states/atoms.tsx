@@ -1,4 +1,5 @@
 import { atom } from 'recoil'
+import { RuleKeyName } from '../rules/ruleNames'
 import { Room } from '../types/Room.type'
 import { User } from '../types/User.type'
 
@@ -44,7 +45,7 @@ export const personalRankState = atom<number[]>({
   default: []
 })
 
-export const suggestedRuleState = atom<string | null>({
+export const suggestedRuleState = atom<RuleKeyName | null>({
   key: "suggestedRule",
   default: null
 })

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { css } from '@emotion/react'
 
 type Props = {
@@ -20,4 +20,4 @@ const layoutStyle = css`
   text-align: left;
 `
 
-export default TextCell
+export default memo(TextCell)

@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useAuthenticate } from '../../hooks/auth'
-import { defaultCoommonLanguage, ruleNames } from '../../types/rules'
+import { defaultCoommonLanguage, ruleNames } from '../../rules/ruleNames'
 import { Room } from '../../types/Room.type'
 import { db } from '../../lib/firebase'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'

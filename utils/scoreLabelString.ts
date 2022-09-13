@@ -1,4 +1,4 @@
-import { ruleNames } from "../types/rules"
+import { ruleNames } from "../rules/ruleNames"
 
 export const scoreLabelString = (ruleName: string, locale: string) => {
   if (locale === "ja") {

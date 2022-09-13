@@ -1,4 +1,4 @@
-import { RuleSet } from "./rules"
+import { RuleSet } from "../rules/ruleNames"
 
 export type Locale = {
   common: {

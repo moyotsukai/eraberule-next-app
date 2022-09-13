@@ -1,6 +1,6 @@
 import React from 'react'
 import { Room } from '../../types/Room.type'
-import { ruleNames } from '../../types/rules'
+import { ruleNames } from '../../rules/ruleNames'
 import { RankResults } from '../../types/RankResults.type'
 import RelativeEvaluationReultTable from './RelativeEvaluationResultTable'
 import MjResultTable from './MjResultTable'

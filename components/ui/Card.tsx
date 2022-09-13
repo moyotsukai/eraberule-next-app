@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { css } from '@emotion/react'
 
 type Props = {
@@ -26,4 +26,4 @@ const cardStyle = css`
   }
 `
 
-export default Card
+export default memo(Card)

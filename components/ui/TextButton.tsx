@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { css } from '@emotion/react'
 import { primaryColor, primarySelectedColor } from '../../styles/colors'
 
@@ -42,4 +42,4 @@ const buttonStyle = () => css`
   }
 `
 
-export default TextButton
+export default memo(TextButton)
