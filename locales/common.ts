@@ -1,6 +1,6 @@
 import { asLocaleTable } from '../i18n/i18n'
 
-const T_COMMON = asLocaleTable({
+export const T_COMMON = asLocaleTable({
   LOADING: {
     ja: "読み込み中...",
     en: "Loading..."
@@ -18,5 +18,3 @@ const T_COMMON = asLocaleTable({
     en: "This poll is closed"
   }
 })
-
-export default T_COMMON

@@ -1,6 +1,6 @@
 import { asLocaleTable } from '../i18n/i18n'
 
-const T_INDEX_PAGE = asLocaleTable({
+export const T_INDEX_PAGE = asLocaleTable({
   SEARCH_ROOMS: {
     ja: "ルーム名を検索して投票に参加",
     en: "Enter the room name to join a poll"
@@ -22,5 +22,3 @@ const T_INDEX_PAGE = asLocaleTable({
     en: ""
   }
 })
-
-export default T_INDEX_PAGE

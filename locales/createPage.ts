@@ -1,6 +1,6 @@
 import { asLocaleTable } from '../i18n/i18n'
 
-const T_CREATE = asLocaleTable({
+export const T_CREATE = asLocaleTable({
   CREATE_NEW: {
     ja: "新しい投票ルームを作成",
     en: "Create a new voting room"
@@ -14,5 +14,3 @@ const T_CREATE = asLocaleTable({
     en: "Recently created room"
   }
 })
-
-export default T_CREATE

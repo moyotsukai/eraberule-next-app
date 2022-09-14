@@ -1,6 +1,6 @@
 import { asLocaleTable } from '../i18n/i18n'
 
-const T_TAB_BAR = asLocaleTable({
+export const T_TAB_BAR = asLocaleTable({
   VOTE: {
     ja: "参加",
     en: "Vote"
@@ -10,5 +10,3 @@ const T_TAB_BAR = asLocaleTable({
     en: "Create"
   }
 })
-
-export default T_TAB_BAR

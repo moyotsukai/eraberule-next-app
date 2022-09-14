@@ -10,7 +10,7 @@ import Button from '../ui/Button'
 import SupportingTextCell from '../ui/SupportingTextCell'
 import CardButton from '../ui/CardButton'
 import { useLocale } from '../../i18n/useLocale'
-import T_CREATE from '../../locales/createPage'
+import { T_CREATE } from '../../locales/createPage'
 import { getRecentlyCreatedRoomData } from '../../firestore/getRecentlyCreatedRoomData'
 
 const CreatePage: React.FC = () => {

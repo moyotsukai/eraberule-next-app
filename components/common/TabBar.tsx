@@ -3,7 +3,7 @@ import Tab from '../ui/Tab'
 import { css } from '@emotion/react'
 import { primaryShadowColor } from '../../styles/colors'
 import { useLocale } from '../../i18n/useLocale'
-import T_TAB_BAR from '../../locales/tabBar'
+import { T_TAB_BAR } from '../../locales/tabBar'
 
 type Props = {
   path: string

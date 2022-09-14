@@ -9,7 +9,7 @@ import SignInProvider from '../common/SignInProvider'
 import Message from '../ui/Message'
 import SupportingTextCell from '../ui/SupportingTextCell'
 import { useLocale } from '../../i18n/useLocale'
-import T_INDEX_PAGE from '../../locales/indexPage'
+import { T_INDEX_PAGE } from '../../locales/indexPage'
 import { supportingTextColor } from '../../styles/colors'
 import SearchBox from '../functional/SearchBox'
 

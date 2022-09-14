@@ -21,6 +21,7 @@ export const useHasVoted = (props: Props) => {
     if (props.isLoading) { return }
     if (!props.userId) {
       setHasVoted(false)
+      return
     }
     if (_hasFetched.current) { return }
 

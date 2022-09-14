@@ -1,6 +1,6 @@
 import { asLocaleTable } from '../i18n/i18n'
 
-const T_SHARE = asLocaleTable({
+export const T_SHARE = asLocaleTable({
   CREATED: {
     ja: "ルームを作成しました。",
     en: "Created a new room"
@@ -34,5 +34,3 @@ const T_SHARE = asLocaleTable({
     en: "Copied"
   }
 })
-
-export default T_SHARE

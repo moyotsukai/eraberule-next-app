@@ -1,4 +1,3 @@
-import { useRouter } from "next/router"
 import { useEffect, useRef, useState } from "react"
 import { getRoomDataByTitle } from "../firestore/getRoomData"
 import { Room } from "../types/Room.type"
@@ -18,6 +17,7 @@ export const useQueryRoom = (props: Props) => {
     if (props.isLoading) { return }
     if (!props.title) {
       setQueriedRoomData(null)
+      return
     }
     if (_hasFetched.current) { return }
 

@@ -3,7 +3,7 @@ import { useAuth } from '../../auth/useAuth'
 import { signIn } from '../../auth/auth'
 import Message from '../ui/Message'
 import { useLocale } from '../../i18n/useLocale'
-import T_COMMON from '../../locales/common'
+import { T_COMMON } from '../../locales/common'
 
 type Props = {
   isLoading?: boolean
