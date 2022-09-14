@@ -24,6 +24,7 @@ export const useHasVoted = (props: Props) => {
       return
     }
     if (_hasFetched.current) { return }
+    _hasFetched.current = true
 
     getAttendedRoomIds(props.userId)
       .then((attendedRoomIds) => {

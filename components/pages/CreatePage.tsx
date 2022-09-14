@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import { css } from '@emotion/react'
 import SignInProvider from '../common/SignInProvider'
 import { useAuth } from '../../auth/useAuth'
@@ -11,30 +11,21 @@ import SupportingTextCell from '../ui/SupportingTextCell'
 import CardButton from '../ui/CardButton'
 import { useLocale } from '../../i18n/useLocale'
 import { T_CREATE } from '../../locales/createPage'
-import { getRecentlyCreatedRoomData } from '../../firestore/getRecentlyCreatedRoomData'
+import { useRecentlyCreatedRoom } from '../../room/useRecentlyCreatedRoom'
 
 const CreatePage: React.FC = () => {
   const { user } = useAuth()
   const router = useRouter()
   const [recentlyCreatedRoomTitle, setRecentlyCreatedRoomTitle] = useRecoilState(recentlyCreatedRoomTitleState)
   const setSuggestedRule = useSetRecoilState(suggestedRuleState)
-  const hasFetchRecentlyCreatedRoomData = useRef(false)
+  const { recentlyCreatedRoomData } = useRecentlyCreatedRoom(user)
   const t = useLocale(T_CREATE)
 
-  //Set recently created room title
+  //Set recently created room title globally
   useEffect(() => {
-    if (!user) { return }
-    if (recentlyCreatedRoomTitle !== undefined) { return }
-    if (hasFetchRecentlyCreatedRoomData.current) { return }
-
-    hasFetchRecentlyCreatedRoomData.current = true
-    const fetchRecentlyCreatedRoomData = async () => {
-      const userId = user.uid
-      const recentlyCreatedRoom = await getRecentlyCreatedRoomData(userId)
-      setRecentlyCreatedRoomTitle(recentlyCreatedRoom.title)
-    }
-    fetchRecentlyCreatedRoomData()
-  }, [user])
+    if (!recentlyCreatedRoomData) { return }
+    setRecentlyCreatedRoomTitle(recentlyCreatedRoomData.title)
+  }, [recentlyCreatedRoomData])
 
   const toNewRoom = () => {
     setSuggestedRule(null)

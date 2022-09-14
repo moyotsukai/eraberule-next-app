@@ -20,11 +20,11 @@ export const useQueryRoom = (props: Props) => {
       return
     }
     if (_hasFetched.current) { return }
+    _hasFetched.current = true
 
     getRoomDataByTitle(props.title)
       .then((roomData) => {
         setQueriedRoomData(roomData)
-        _hasFetched.current = true
       })
       .catch((error) => {
         log("useQueryRoom: ", error)
