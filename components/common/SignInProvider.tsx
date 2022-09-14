@@ -6,6 +6,9 @@ import { useLocale } from '../../i18n/useLocale'
 import T_COMMON from '../../locales/common'
 
 type Props = {
+  isLoading?: boolean
+  hasNoResults?: boolean
+  isClosedRoom?: boolean
   children: React.ReactNode
 }
 
@@ -19,7 +22,7 @@ const SignInProvider: React.FC<Props> = (props) => {
     }
   }, [])
 
-  if (isLoadingUser) {
+  if (isLoadingUser || (props.isLoading ?? false)) {
     return (
       <Message isLoading={true}>
         {t.LOADING}
@@ -29,8 +32,24 @@ const SignInProvider: React.FC<Props> = (props) => {
 
   if (user === null) {
     return (
-      <Message isLoading={false}>
+      <Message>
         {t.NOT_CONNECTED}
+      </Message>
+    )
+  }
+
+  if (props.hasNoResults ?? false) {
+    return (
+      <Message>
+        {t.NO_RESULTS}
+      </Message>
+    )
+  }
+
+  if (props.isClosedRoom ?? false) {
+    return (
+      <Message>
+        {t.CLOSED_ROOM}
       </Message>
     )
   }

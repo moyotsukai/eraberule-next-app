@@ -20,45 +20,46 @@ const VoteTemplate: React.FC<Props> = (props) => {
   const { t } = useLocale()
   const localizedString = t.templates.voteTemplate
 
-  if (props.user === undefined) {
-    return (
-      <div css={layoutStyle}>
-        <Message isLoading={false}>
-          {localizedString.loading}
-        </Message>
-      </div>
-    )
-  }
+  // if (props.user === undefined) {
+  //   return (
+  //     <div css={layoutStyle}>
+  //       <Message isLoading={false}>
+  //         {localizedString.loading}
+  //       </Message>
+  //     </div>
+  //   )
+  // }
 
-  if (props.user === null) {
-    return (
-      <div css={layoutStyle}>
-        <Message isLoading={false}>
-          {localizedString.notConnected}
-        </Message>
-      </div>
-    )
-  }
+  // if (props.user === null) {
+  //   return (
+  //     <div css={layoutStyle}>
+  //       <Message isLoading={false}>
+  //         {localizedString.notConnected}
+  //       </Message>
+  //     </div>
+  //   )
+  // }
 
   return (
-    <div css={layoutStyle}>
-      <VotePageCard isEnabled={!props.isClicked} />
+    // <div css={layoutStyle}>
+    //   <VotePageCard isEnabled={!props.isClicked} />
 
-      <Button
-        onClick={props.sendVote}
-        isEnabled={props.isEnabled}
-        isLoading={props.isClicked}
-      >
-        {props.isClicked ? localizedString.sending : localizedString.send}
-      </Button>
-      <Spacer y="35px" />
-    </div>
+    //   <Button
+    //     onClick={props.sendVote}
+    //     isEnabled={props.isEnabled}
+    //     isLoading={props.isClicked}
+    //   >
+    //     {props.isClicked ? localizedString.sending : localizedString.send}
+    //   </Button>
+    //   <Spacer y="35px" />
+    // </div>
   )
 }
 
-const layoutStyle = css`
-  min-height: 100vh;
-  text-align: center;
-  padding: 0 15px;`
+// const layoutStyle = css`
+//   min-height: 100vh;
+//   text-align: center;
+//   padding: 0 15px;
+//   `
 
 export default VoteTemplate

@@ -8,8 +8,8 @@ import { useAuthenticate } from '../../hooks/auth'
 import VoteTemplate from '../../components/templates/VoteTemplate'
 
 const VotePage: React.FC = () => {
-  const user = useAuthenticate()
-  const router = useRouter()
+  // const user = useAuthenticate()
+  // const router = useRouter()
   const roomData = useRecoilValue(roomDataState)
   const [personalRank, setPersonalRank] = useRecoilState(personalRankState)
   const [isEnabled, setIsEnabled] = useState(true)

@@ -8,11 +8,15 @@ const T_COMMON = asLocaleTable({
   NOT_CONNECTED: {
     ja: "データベースに接続できません",
     en: "Not connected to the database"
+  },
+  NO_RESULTS: {
+    ja: "検索結果がありません。",
+    en: "No results found"
+  },
+  CLOSED_ROOM: {
+    ja: "このルームは非公開です。",
+    en: "This poll is closed"
   }
-  // $GREET: {
-  //   ja: (name) => `こんにちは、${name}`,
-  //   en: (name) => `Hello, ${name}`
-  // }
 })
 
 export default T_COMMON

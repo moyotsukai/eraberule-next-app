@@ -1,4 +1,7 @@
 export const KEYS = {
   ROOMS: "rooms",
-  SENDER_ID: "senderId"
+  USERS: "users",
+  TITLE: "title",
+  SENDER_ID: "senderId",
+  ATTENDED_ROOMS: "attendedRooms"
 }
