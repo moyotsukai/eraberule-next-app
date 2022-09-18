@@ -4,14 +4,16 @@ import { useEffect, useRef, useState } from "react"
 import { getAttendedRoomIds } from "../firestore/getAttendedRoomIds"
 import { Room } from "../types/Room.type"
 import { log } from "../utils/log"
+import { User } from '../types/User.type';
 
 type Props = {
-  userId: string
+  user: User
   roomData: Room
   isLoading: boolean
 }
 
 export const useHasVoted = (props: Props) => {
+  const [attendedRoomIds, setAttendedRoomIds] = useState<string[]>(undefined)
   const [hasVoted, setHasVoted] = useState<boolean | undefined>(undefined)
   const [isLoadingHasVoted, setIsloadingHasVoted] = useState<boolean>(true)
   const _hasFetched = useRef(false)
@@ -19,17 +21,20 @@ export const useHasVoted = (props: Props) => {
 
   useEffect(() => {
     if (props.isLoading) { return }
-    if (!props.userId) {
+    if (!props.roomData) { return }
+    if (!props.user.uid) {
       setHasVoted(false)
       return
     }
     if (_hasFetched.current) { return }
     _hasFetched.current = true
 
-    getAttendedRoomIds(props.userId)
+    getAttendedRoomIds(props.user.uid)
       .then((attendedRoomIds) => {
+        setAttendedRoomIds(attendedRoomIds ?? [])
+
         if (attendedRoomIds) {
-          setHasVoted(attendedRoomIds.includes(props.roomData && props.roomData.docId))
+          setHasVoted(attendedRoomIds.includes(props.roomData.docId))
           setHasNoUserDoc(false)
         } else {
           setHasVoted(false)
@@ -43,7 +48,7 @@ export const useHasVoted = (props: Props) => {
       .finally(() => {
         setIsloadingHasVoted(false)
       })
-  }, [props.userId, props.roomData, props.isLoading])
+  }, [props.user, props.roomData, props.isLoading])
 
-  return { hasVoted, isLoadingHasVoted }
+  return { attendedRoomIds, hasVoted, isLoadingHasVoted }
 }

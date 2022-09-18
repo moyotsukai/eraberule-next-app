@@ -1,37 +1,109 @@
-import React, { useState } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { css } from '@emotion/react'
 import { useRouter } from 'next/router'
-import { roomDataState } from '../../states/atoms'
-import { useSetRecoilState } from 'recoil'
-import { anySpaceToSingleSpace } from '../../utils/anySpaceToSingleSpace'
-import { removeBlanks } from '../../utils/removeBlanks'
+import { attendedRoomIdsState, hasNoUserDocState, personalRankState, roomDataState } from '../../states/atoms'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import SignInProvider from '../common/SignInProvider'
-import Message from '../ui/Message'
-import SupportingTextCell from '../ui/SupportingTextCell'
 import { useLocale } from '../../i18n/useLocale'
-import { T_INDEX_PAGE } from '../../locales/indexPage'
-import { supportingTextColor } from '../../styles/colors'
-import SearchBox from '../functional/SearchBox'
 import { useAuth } from '../../auth/useAuth'
 import VotePageCard from '../functional/VotePageCard'
 import Button from '../ui/Button'
 import Spacer from '../ui/Spacer'
+import { T_VOTE } from '../../locales/votePage'
+import { setVote } from '../../firestore/setVote'
+import { userDocDataToFirebase, voteToFirestore } from '../../firestore/dataConverter'
+import { setUserDocData } from '../../firestore/setUserDocData'
+import { asyncTask } from '../../utils/asyncTask'
+import { RULE_NAMES } from '../../rules/ruleNames'
+import { log } from '../../utils/log'
+import { updateUserDocData } from '../../firestore/updateUserDocData'
 
 const VotePage: React.FC = () => {
-  const user = useAuth()
+  const { user } = useAuth()
   const router = useRouter()
+  const roomData = useRecoilValue(roomDataState)
+  const personalRank = useRecoilValue(personalRankState)
+  const [attendedRoomIds, setAttendedRoomIds] = useRecoilState(attendedRoomIdsState)
+  const [hasNoUserDoc, setHasNoUserDoc] = useRecoilState(hasNoUserDocState)
+  const [isEnabled, setIsEnabled] = useState<boolean>(true)
+  const [isClicked, setIsClicked] = useState<boolean>(false)
+  const didSendRef = useRef<boolean>(false)
+  const t = useLocale(T_VOTE)
+
+  //Push router when reloaded
+  useEffect(() => {
+    log("vote page first rendered")
+    if (!roomData.title) {
+      router.push("/")
+    }
+  }, [])
+
+  //Set isEnabled
+  useLayoutEffect(() => {
+    switch (roomData.rule) {
+      case RULE_NAMES.MAJORITY_RULE:
+        setIsEnabled(personalRank.indexOf(1) !== -1)
+        break
+      case RULE_NAMES.BORDA_COUNT_METHOD:
+      case RULE_NAMES.CONDORCET_METHOD:
+      case RULE_NAMES.MAJORITY_JUDGEMENT:
+        setIsEnabled(personalRank.indexOf(0) === -1)
+        break
+    }
+  }, [personalRank])
+
+  const onSend = () => {
+    if (didSendRef.current) { return }
+    didSendRef.current = true
+    setIsClicked(true)
+    setIsEnabled(false)
+
+    asyncTask(async () => {
+      //Send vote
+      const vote = voteToFirestore({
+        personalRank: personalRank
+      })
+      await setVote({ roomData: roomData, data: vote })
+
+      //Set attended room ids globally
+      const newAttendedRoomIds = [roomData.docId, ...attendedRoomIds]
+      setAttendedRoomIds(newAttendedRoomIds)
+
+      //Send attendance
+      const userDocData = hasNoUserDoc
+        ? userDocDataToFirebase({
+          attendedRooms: newAttendedRoomIds,
+          createdRooms: []
+        })
+        : userDocDataToFirebase({
+          attendedRooms: newAttendedRoomIds
+        })
+      if (hasNoUserDoc) {
+        await setUserDocData({ userId: user.uid, data: userDocData })
+        setHasNoUserDoc(false)
+      } else {
+        await updateUserDocData({ userId: user.uid, data: userDocData })
+      }
+
+      toResult()
+    })
+  }
+
+  const toResult = () => {
+    router.push("/room/result")
+  }
 
   return (
     <SignInProvider>
       <div css={layoutStyle}>
-        <VotePageCard isEnabled={!props.isClicked} />
+        <VotePageCard isEnabled={!isClicked} />
 
         <Button
-          onClick={props.sendVote}
-          isEnabled={props.isEnabled}
-          isLoading={props.isClicked}
+          onClick={onSend}
+          isEnabled={isEnabled}
+          isLoading={isClicked}
         >
-          {props.isClicked ? localizedString.sending : localizedString.send}
+          {isClicked ? t.SENDING : t.SEND}
         </Button>
         <Spacer y="35px" />
       </div>

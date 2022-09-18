@@ -3,6 +3,7 @@ import { useRef, useState } from 'react'
 import { getRecentlyCreatedRoomData } from '../firestore/getRecentlyCreatedRoomData'
 import { Room } from '../types/Room.type'
 import { User } from '../types/User.type'
+import { asyncTask } from '../utils/asyncTask'
 import { log } from '../utils/log'
 
 export const useRecentlyCreatedRoom = (user: User | undefined | null) => {
@@ -13,7 +14,7 @@ export const useRecentlyCreatedRoom = (user: User | undefined | null) => {
     if (!user) { return }
     if (_hasFetched.current) { return }
 
-    (async () => {
+    asyncTask(async () => {
       _hasFetched.current = true
       try {
         const recentlyCreatedRoom = await getRecentlyCreatedRoomData(user.uid)
@@ -22,7 +23,7 @@ export const useRecentlyCreatedRoom = (user: User | undefined | null) => {
         log("useRecentlyCreatedRoom: ", error)
         setRecentlyCreatedRoomData(null)
       }
-    })()
+    })
   }, [user])
 
   return { recentlyCreatedRoomData }

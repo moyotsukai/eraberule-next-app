@@ -3,5 +3,6 @@ export const KEYS = {
   USERS: "users",
   TITLE: "title",
   SENDER_ID: "senderId",
-  ATTENDED_ROOMS: "attendedRooms"
+  ATTENDED_ROOMS: "attendedRooms",
+  VOTES: "votes"
 }

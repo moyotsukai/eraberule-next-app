@@ -23,8 +23,8 @@ const RoomPage: React.FC = () => {
   const { queriedRoomData, isLoadingRoomData } = useQueryRoom({ title: title, isLoading: isLoadingRouter || isLoadingUser })
   const [roomData, setRoomData] = useRecoilState(roomDataState)
   const setPersonalRank = useSetRecoilState(personalRankState)
-  const { hasVoted, isLoadingHasVoted } = useHasVoted({ userId: user.uid, roomData: roomData, isLoading: isLoadingRoomData })
-  const [attendedRoomIds, setAttendedRoomIds] = useRecoilState(attendedRoomIdsState)
+  const { attendedRoomIds, hasVoted, isLoadingHasVoted } = useHasVoted({ user: user, roomData: roomData, isLoading: isLoadingRoomData })
+  const setAttendedRoomIds = useSetRecoilState(attendedRoomIdsState)
   const t = useLocale(T_ROOM)
 
   //Set room data state globally
