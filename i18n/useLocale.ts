@@ -7,5 +7,5 @@ export const useLocale = <T>(localeTable: LocaleTable<T>) => {
   const i18n = new I18n(localeTable, { language: language })
   const t = i18n.t
 
-  return t
+  return { t, language }
 }

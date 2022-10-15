@@ -6,6 +6,7 @@ import { preferenceProfilesAssumption, preferenceProfilesFormatted } from '../..
 import SupportingTextCell from '../ui/SupportingTextCell'
 import { dividerColor } from '../../styles/colors'
 import { useLocale } from '../../i18n/useLocale'
+import { T_PREFERENCE_PROFILES_TABLE } from '../../locales/preferenceProfilesTable'
 
 type Props = {
   roomData: Room,
@@ -13,16 +14,17 @@ type Props = {
 }
 
 const PreferenceProfilesTable: React.FC<Props> = (props) => {
+  const { roomData, personalRanks } = props
   const [assumption, setAssumption] = useState<string>("")
   const [preferenceProfiles, setPreferenceProfiles] = useState<PreferenceProfilesFormatted[]>([])
-  const { t } = useLocale()
-  const localizedString = t.functional.preferenceProfileTable
+  const { t } = useLocale(T_PREFERENCE_PROFILES_TABLE)
 
   //Set preferenceProfilesAssumption, preferenceProfiles
   useEffect(() => {
-    setAssumption(preferenceProfilesAssumption(props.roomData))
-    setPreferenceProfiles(preferenceProfilesFormatted(props.roomData, props.personalRanks))
-  }, [])
+    if (!personalRanks) { return }
+    setAssumption(preferenceProfilesAssumption(roomData))
+    setPreferenceProfiles(preferenceProfilesFormatted(roomData, personalRanks))
+  }, [personalRanks])
 
   return (
     <React.Fragment>
@@ -32,12 +34,12 @@ const PreferenceProfilesTable: React.FC<Props> = (props) => {
       <div css={containerStyle}>
         <table css={tableStyle}>
           <tr>
-            <th css={obtainedLabelStyle}>{localizedString.nVoters}</th>
-            <th css={rankOrderingLabelStyle}>{localizedString.rankOrderings}</th>
+            <th css={obtainedLabelStyle}>{t.N_VOTERS}</th>
+            <th css={rankOrderingLabelStyle}>{t.RANK_ORDERINGS}</th>
           </tr>
           {preferenceProfiles.map((profile, index) => (
             <tr key={index} css={() => rowStyle(index % 2 !== 0)}>
-              <td css={obtainedStyle}>{profile.obtained + localizedString.people}</td>
+              <td css={obtainedStyle}>{profile.obtained + t.PEOPLE}</td>
               <td css={rankOrderingStyle}>{profile.rankOrdering}</td>
             </tr>
           ))}

@@ -1,10 +1,10 @@
-import { hasNoUserDocState } from './../states/atoms';
+import { hasNoUserDocState } from '../../states/atoms';
 import { useSetRecoilState } from 'recoil';
 import { useEffect, useRef, useState } from "react"
 import { getAttendedRoomIds } from "../firestore/getAttendedRoomIds"
-import { Room } from "../types/Room.type"
-import { log } from "../utils/log"
-import { User } from '../types/User.type';
+import { Room } from "../../types/Room.type"
+import { log } from "../../utils/log"
+import { User } from '../../types/User.type';
 
 type Props = {
   user: User

@@ -8,15 +8,15 @@ import TextButton from '../ui/TextButton'
 import TextCell from '../ui/TextCell'
 import { useLocale } from '../../i18n/useLocale'
 import { T_SHARE } from '../../locales/sharePage'
-import { generateRoomLink } from '../../qrcode/generateRoomLink'
-import { useQrcode } from '../../qrcode/useQrcode'
+import { generateRoomLink } from '../../model/qrcode/generateRoomLink'
+import { useQrcode } from '../../model/qrcode/useQrcode'
 import LoadingProviderWithoutAuth from '../common/LoadingProviderWithoutAuth'
 
 const SharePage: React.FC = () => {
   const { title, roomLink, isLoadingRouter } = generateRoomLink()
   const { imageUrl, imageName, isLoadingImageUrl } = useQrcode(roomLink)
   const [isCopied, setIsCopied] = useState<boolean>(false)
-  const t = useLocale(T_SHARE)
+  const { t } = useLocale(T_SHARE)
 
   const onDownload = () => {
     const downloadLink = document.createElement("a")

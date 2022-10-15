@@ -17,7 +17,7 @@ const IndexPage: React.FC = () => {
   const router = useRouter()
   const setRoomData = useSetRecoilState(roomDataState)
   const [enteredTitle, setEnteredTitle] = useState<string>("")
-  const t = useLocale(T_INDEX_PAGE)
+  const { t } = useLocale(T_INDEX_PAGE)
 
   const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEnteredTitle(event.target.value)

@@ -1,9 +1,9 @@
-import { Room } from '../types/Room.type';
+import { Room } from '../../types/Room.type';
 import { collection, doc, setDoc } from "firebase/firestore"
-import { db } from "../firebase/initialize"
+import { db } from "../../lib/firebase"
 import { KEYS } from "./key"
-import { Vote } from '../types/Vote.type';
-import { log } from '../utils/log';
+import { Vote } from '../../types/Vote.type';
+import { log } from '../../utils/log';
 
 type Props = {
   roomData: Room

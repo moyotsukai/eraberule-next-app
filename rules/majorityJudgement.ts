@@ -1,8 +1,10 @@
 import { RankResults } from '../types/RankResults.type'
-import { Room } from '../types/Room.type'
 import { rankingFormatted } from '../utils/rankingFormatted'
+import { RuleDataAsset } from '../types/RuleDataAsset';
 
-export const majorityJudgement = (roomData: Room, personalRanks: number[][], locale: string): RankResults[] => {
+export const majorityJudgement = (props: RuleDataAsset): RankResults[] => {
+  const { roomData, personalRanks, language } = props
+
   //Setup
   let results = roomData.options.map((option) => (
     {
@@ -75,7 +77,10 @@ export const majorityJudgement = (roomData: Room, personalRanks: number[][], loc
     return {
       name: result.name,
       score: score,
-      rank: rankingFormatted(result.rank, locale)
+      rank: rankingFormatted({
+        rank: result.rank,
+        language: language
+      })
     }
   })
 

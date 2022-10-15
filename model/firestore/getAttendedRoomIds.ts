@@ -1,6 +1,6 @@
 import { doc, getDoc } from 'firebase/firestore'
-import { db } from '../firebase/initialize'
-import { log } from '../utils/log'
+import { db } from '../../lib/firebase'
+import { log } from '../../utils/log'
 import { KEYS } from './key'
 
 export const getAttendedRoomIds = async (userId: string): Promise<string[] | null> => {

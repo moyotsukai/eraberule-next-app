@@ -5,7 +5,6 @@ import Logo from '../../public/logo.png'
 import LanguageMenu from '../functional/LanguageMenu'
 
 const Header: React.FC = () => {
-
   return (
     <header css={headerStyle}>
       <a href="https://eraberule.com">

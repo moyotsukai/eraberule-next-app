@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import QRCode from 'qrcode'
-import { log } from '../utils/log'
+import { log } from '../../utils/log'
 
 export const useQrcode = (text: string) => {
   const [imageUrl, setImageUrl] = useState<string>("")

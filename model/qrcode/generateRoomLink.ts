@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import { spaceToPlus } from "../utils/spaceToPlus"
+import { spaceToPlus } from "../../utils/spaceToPlus"
 
 export const generateRoomLink = () => {
   const router = useRouter()

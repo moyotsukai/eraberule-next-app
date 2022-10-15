@@ -5,6 +5,8 @@ export const RULE_NAMES = {
   MAJORITY_JUDGEMENT: "majorityJudgement"
 }
 
+export const RULE_KEY_NAMES = Object.keys(RULE_NAMES)
+
 export type RuleKeyName = keyof typeof RULE_NAMES
 
 export const defaultCoommonLanguage: string[] = [

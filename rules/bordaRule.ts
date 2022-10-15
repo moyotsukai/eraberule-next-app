@@ -1,10 +1,12 @@
 import { RankResults } from '../types/RankResults.type'
-import { Room } from '../types/Room.type'
-import { ruleNames } from './ruleNames'
+import { RULE_NAMES } from './ruleNames'
 import { rankingFormatted } from '../utils/rankingFormatted'
 import { scoreLabelString } from '../utils/scoreLabelString'
+import { RuleDataAsset } from '../types/RuleDataAsset'
 
-export const bordaRule = (roomData: Room, personalRanks: number[][], locale: string): RankResults[] => {
+export const bordaRule = (props: RuleDataAsset): RankResults[] => {
+  const { roomData, personalRanks, language } = props
+
   //Setup
   const results = roomData.options.map((option) => (
     {
@@ -43,8 +45,14 @@ export const bordaRule = (roomData: Room, personalRanks: number[][], locale: str
   const resultsString: RankResults = results.map((result) => (
     {
       name: result.name,
-      score: result.score.toString() + scoreLabelString(ruleNames.bordaRule, locale),
-      rank: rankingFormatted(result.rank, locale)
+      score: result.score.toString() + scoreLabelString({
+        ruleName: RULE_NAMES.BORDA_COUNT_METHOD,
+        language: language
+      }),
+      rank: rankingFormatted({
+        rank: result.rank,
+        language: language
+      })
     }
   ))
 

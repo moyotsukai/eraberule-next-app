@@ -1,0 +1,1 @@
+export const RULE_DETAILS_URL = "https://www.eraberule.com/details"

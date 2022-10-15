@@ -1,11 +1,11 @@
 import { QueryDocumentSnapshot } from 'firebase/firestore'
-import { RuleKeyName, RULE_NAMES } from '../rules/ruleNames'
-import { Room } from '../types/Room.type'
-import { UserDocData } from '../types/UserDocData.type'
-import { Vote } from '../types/Vote.type'
+import { RuleKeyName, RULE_NAMES } from '../../rules/ruleNames'
+import { Room } from '../../types/Room.type'
+import { UserDocData } from '../../types/UserDocData.type'
+import { Vote } from '../../types/Vote.type'
 
-export const roomFromFirestore = (doc: QueryDocumentSnapshot) => {
-  const converted: Room = {
+export const roomFromFirestore = (doc: QueryDocumentSnapshot): Room => {
+  return {
     title: doc.data().title ?? "",
     explanation: doc.data().explanation ?? "",
     options: doc.data().options ?? [],
@@ -16,8 +16,14 @@ export const roomFromFirestore = (doc: QueryDocumentSnapshot) => {
     date: doc.data().date ?? new Date(),
     docId: doc.id ?? ""
   }
+}
 
-  return converted
+
+export const voteFromFirestore = (doc: QueryDocumentSnapshot): Vote => {
+  return {
+    personalRank: doc.data().personalRank ?? [],
+    date: doc.data().date ?? new Date()
+  }
 }
 
 

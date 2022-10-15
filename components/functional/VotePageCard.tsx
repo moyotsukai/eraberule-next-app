@@ -12,7 +12,7 @@ import MjSelectionTable from './MjSelectionTable'
 import { useLocale } from '../../i18n/useLocale'
 import { T_VOTE } from '../../locales/votePage'
 import { T_RULES } from '../../locales/rules'
-import { ruleKeyNameFromRuleName } from '../../firestore/dataConverter'
+import { ruleKeyNameFromRuleName } from '../../model/firestore/dataConverter'
 
 type Props = {
   isEnabled: boolean

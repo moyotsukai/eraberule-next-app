@@ -36,7 +36,7 @@ const createTabs = (text: TabTexts): Tabs[] => {
 }
 
 const TabBar: React.FC<Props> = (props) => {
-  const t = useLocale(T_TAB_BAR)
+  const { t } = useLocale(T_TAB_BAR)
   const tabs = createTabs({ vote: t.VOTE, create: t.CREATE })
 
   return (

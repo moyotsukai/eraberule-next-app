@@ -1,11 +1,19 @@
-import { ruleNames } from "../rules/ruleNames"
+import { Language } from "../i18n/i18n"
+import { RULE_NAMES } from "../rules/ruleNames"
 
-export const scoreLabelString = (ruleName: string, locale: string) => {
-  if (locale === "ja") {
-    if (ruleName === ruleNames.majorityRule) {
+type Props = {
+  ruleName: string,
+  language: Language
+}
+
+export const scoreLabelString = (props: Props) => {
+  const { ruleName, language } = props
+
+  if (language === "ja") {
+    if (ruleName === RULE_NAMES.MAJORITY_RULE) {
       return "票"
     }
-    if (ruleName === ruleNames.bordaRule) {
+    if (ruleName === RULE_NAMES.BORDA_COUNT_METHOD) {
       return "点"
     }
   } else {

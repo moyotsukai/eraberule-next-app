@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { css } from '@emotion/react'
 import { Room } from '../../types/Room.type'
-import { ruleNames } from '../../rules/ruleNames'
 import { RankResults } from '../../types/RankResults.type'
 import { majorityJudgement } from '../../rules/majorityJudgement'
 import SupportingTextCell from '../ui/SupportingTextCell'
 import { mjDetails } from '../../rules/mjDetails'
 import { dividerColor, primaryColor } from '../../styles/colors'
 import { useLocale } from '../../i18n/useLocale'
+import { T_MJ_DETAILS } from '../../locales/mjDetails'
+import { RuleDataAsset } from '../../types/RuleDataAsset'
+import { RULE_NAMES } from '../../rules/ruleNames'
 
 type Props = {
   roomData: Room,
@@ -15,20 +17,25 @@ type Props = {
 }
 
 const MjDetails: React.FC<Props> = (props) => {
+  const { roomData, personalRanks } = props
   const [resultRanks, setResultRanks] = useState<RankResults[] | undefined>(undefined)
   const [mjDetailData, setMjDetailData] = useState<number[][] | undefined>(undefined)
-  const { t, locale } = useLocale()
-  const localizedString = t.functional.mjDetails
+  const { t, language } = useLocale(T_MJ_DETAILS)
 
   //Set resultRanks, mjDetails
   useEffect(() => {
-    if (props.roomData.rule === ruleNames.majorityJudgement) {
-      const mjResult = majorityJudgement(props.roomData, props.personalRanks, locale)
+    if (roomData.rule === RULE_NAMES.MAJORITY_JUDGEMENT) {
+      const ruleDataAsset: RuleDataAsset = {
+        roomData: roomData,
+        personalRanks: personalRanks,
+        language: language
+      }
+      const mjResult = majorityJudgement(ruleDataAsset)
       setResultRanks(mjResult)
-      const detail = mjDetails(props.roomData, props.personalRanks)
+      const detail = mjDetails(roomData, personalRanks)
       setMjDetailData(detail)
     }
-  }, [props.personalRanks])
+  }, [personalRanks])
 
   //UI
   if (mjDetailData === undefined) {
@@ -37,7 +44,7 @@ const MjDetails: React.FC<Props> = (props) => {
     )
   }
 
-  if (props.roomData.rule === ruleNames.majorityJudgement) {
+  if (roomData.rule === RULE_NAMES.MAJORITY_JUDGEMENT) {
     return (
       <div css={containerStyle}>
         <table css={tableStyle}>
@@ -45,19 +52,19 @@ const MjDetails: React.FC<Props> = (props) => {
             <tr key={optionIndex} css={() => rowStyle(optionIndex % 2 !== 0)}>
               <td css={tableDataStyle}>
                 <SupportingTextCell textAlign="left">
-                  {props.roomData.options[optionIndex]}
+                  {roomData.options[optionIndex]}
                 </SupportingTextCell>
                 <ul css={listStyle}>
                   {evaluations.map((num, evaluationIndex) => (
                     <li
                       key={evaluationIndex}
-                      css={() => cellStyle(resultRanks[0].find((option) => option.name === props.roomData.options[optionIndex]).score === props.roomData.commonLanguage[evaluationIndex])}
+                      css={() => cellStyle(resultRanks[0].find((option) => option.name === roomData.options[optionIndex]).score === roomData.commonLanguage[evaluationIndex])}
                     >
                       <span css={evaluationStyle}>
                         {props.roomData.commonLanguage[evaluationIndex]}
                       </span>
                       <span css={scoreStyle}>
-                        {num + localizedString.numOfVotes}
+                        {num + t.NUM_OF_VOTES}
                       </span>
                     </li>
                   ))}

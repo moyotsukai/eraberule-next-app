@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { css } from '@emotion/react'
 import SignInProvider from '../common/SignInProvider'
-import { useAuth } from '../../auth/useAuth'
+import { useAuth } from '../../model/auth/useAuth'
 import { useRouter } from 'next/router'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { recentlyCreatedRoomTitleState, suggestedRuleState } from '../../states/atoms'
@@ -11,7 +11,7 @@ import SupportingTextCell from '../ui/SupportingTextCell'
 import CardButton from '../ui/CardButton'
 import { useLocale } from '../../i18n/useLocale'
 import { T_CREATE } from '../../locales/createPage'
-import { useRecentlyCreatedRoom } from '../../room/useRecentlyCreatedRoom'
+import { useRecentlyCreatedRoom } from '../../model/room/useRecentlyCreatedRoom'
 
 const CreatePage: React.FC = () => {
   const { user } = useAuth()
@@ -19,7 +19,7 @@ const CreatePage: React.FC = () => {
   const [recentlyCreatedRoomTitle, setRecentlyCreatedRoomTitle] = useRecoilState(recentlyCreatedRoomTitleState)
   const setSuggestedRule = useSetRecoilState(suggestedRuleState)
   const { recentlyCreatedRoomData } = useRecentlyCreatedRoom(user)
-  const t = useLocale(T_CREATE)
+  const { t } = useLocale(T_CREATE)
 
   //Set recently created room title globally
   useEffect(() => {

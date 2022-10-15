@@ -1,6 +1,5 @@
 import React from 'react'
 import { css } from '@emotion/react'
-import Spacer from '../ui/Spacer'
 import { RankResults } from '../../types/RankResults.type'
 import { dividerColor } from '../../styles/colors'
 
@@ -9,10 +8,12 @@ type Props = {
 }
 
 const MjResultTable: React.FC<Props> = (props) => {
+  const { resultRanks } = props
+
   return (
     <div css={containerStyle}>
       <table css={tableStyle}>
-        {props.resultRanks[0].map((result, index) => (
+        {resultRanks[0].map((result, index) => (
           <React.Fragment key={index}>
             <tr css={() => rowStyle(index % 2 !== 0)}>
               <th css={rankStyle}>{result.rank}</th>

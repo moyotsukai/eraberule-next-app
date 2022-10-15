@@ -1,8 +1,8 @@
 import { doc, updateDoc } from "firebase/firestore"
-import { db } from "../firebase/initialize"
+import { db } from "../../lib/firebase"
 import { KEYS } from "./key"
-import { UserDocData } from '../types/UserDocData.type';
-import { log } from '../utils/log';
+import { UserDocData } from '../../types/UserDocData.type';
+import { log } from '../../utils/log';
 
 type Props = {
   userId: string

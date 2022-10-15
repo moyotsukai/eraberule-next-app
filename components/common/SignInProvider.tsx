@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
-import { useAuth } from '../../auth/useAuth'
-import { signIn } from '../../auth/auth'
+import { useAuth } from '../../model/auth/useAuth'
+import { signIn } from '../../model/auth/auth'
 import Message from '../ui/Message'
 import { useLocale } from '../../i18n/useLocale'
 import { T_COMMON } from '../../locales/common'
@@ -14,7 +14,7 @@ type Props = {
 
 const SignInProvider: React.FC<Props> = (props) => {
   const { user, isLoadingUser } = useAuth()
-  const t = useLocale(T_COMMON)
+  const { t } = useLocale(T_COMMON)
 
   useEffect(() => {
     if (!user) {

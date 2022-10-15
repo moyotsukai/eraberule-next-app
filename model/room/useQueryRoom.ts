@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { getRoomDataByTitle } from "../firestore/getRoomData"
-import { Room } from "../types/Room.type"
-import { log } from "../utils/log"
+import { Room } from "../../types/Room.type"
+import { log } from "../../utils/log"
 
 type Props = {
   title: string

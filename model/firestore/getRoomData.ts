@@ -1,7 +1,7 @@
 import { collection, getDocs, limit, query, where } from 'firebase/firestore'
-import { db } from '../firebase/initialize'
-import { Room } from '../types/Room.type'
-import { log } from '../utils/log'
+import { db } from '../../lib/firebase'
+import { Room } from '../../types/Room.type'
+import { log } from '../../utils/log'
 import { roomFromFirestore } from './dataConverter'
 import { KEYS } from './key'
 

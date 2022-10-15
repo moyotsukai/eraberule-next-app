@@ -13,7 +13,7 @@ import SingleSelectionCell from '../ui/SingleSelectionCell'
 import { useRouter } from 'next/router'
 import { useRecoilState } from 'recoil'
 import { suggestedRuleState } from '../../states/atoms'
-import { RuleKeyName, RULE_NAMES } from '../../rules/ruleNames'
+import { RuleKeyName, RULE_KEY_NAMES } from '../../rules/ruleNames'
 import { T_RULES } from '../../locales/rules'
 import smoothscroll from 'smoothscroll-polyfill'
 
@@ -21,8 +21,8 @@ const SuggestPage: React.FC = () => {
   const router = useRouter()
   const [suggestedRule, setSuggestedRule] = useRecoilState(suggestedRuleState)
   const bottomElementRef = useRef<HTMLDivElement>(null)
-  const t = useLocale(T_SUGGEST)
-  const t_rules = useLocale(T_RULES)
+  const { t } = useLocale(T_SUGGEST)
+  const t_rules = useLocale(T_RULES).t
 
   //Setup scroll behavior
   useEffect(() => {
@@ -79,7 +79,7 @@ const SuggestPage: React.FC = () => {
           <Spacer y="15px" />
 
           <div css={tableStyle}>
-            {Object.keys(RULE_NAMES).map((RULE_KEY_NAME: RuleKeyName, index) => (
+            {RULE_KEY_NAMES.map((RULE_KEY_NAME: RuleKeyName, index) => (
               <SingleSelectionCell
                 text={t_rules.$RULE_SUGGESTION(RULE_KEY_NAME)}
                 onClick={() => onRuleSelect(RULE_KEY_NAME)}

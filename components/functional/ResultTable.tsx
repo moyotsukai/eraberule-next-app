@@ -1,9 +1,9 @@
 import React from 'react'
 import { Room } from '../../types/Room.type'
-import { ruleNames } from '../../rules/ruleNames'
 import { RankResults } from '../../types/RankResults.type'
 import RelativeEvaluationReultTable from './RelativeEvaluationResultTable'
 import MjResultTable from './MjResultTable'
+import { RULE_NAMES } from '../../rules/ruleNames'
 
 type Props = {
   resultRanks: RankResults[] | undefined
@@ -11,21 +11,22 @@ type Props = {
 }
 
 const ResultTable: React.FC<Props> = (props) => {
-  if (!props.resultRanks) {
+  const { resultRanks, roomData } = props
+  if (!resultRanks) {
     return (
       <div />
     )
   }
 
-  if (props.roomData.rule === ruleNames.majorityJudgement) {
+  if (roomData.rule === RULE_NAMES.MAJORITY_JUDGEMENT) {
     return (
-      <MjResultTable resultRanks={props.resultRanks} />
+      <MjResultTable resultRanks={resultRanks} />
     )
   } else {
     return (
       <RelativeEvaluationReultTable
-        resultRanks={props.resultRanks}
-        roomData={props.roomData}
+        resultRanks={resultRanks}
+        roomData={roomData}
       />
     )
   }

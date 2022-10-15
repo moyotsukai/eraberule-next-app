@@ -1,8 +1,10 @@
 import { RankResults } from '../types/RankResults.type'
-import { Room } from '../types/Room.type'
+import { RuleDataAsset } from '../types/RuleDataAsset'
 import { rankingFormatted } from '../utils/rankingFormatted'
 
-export const condorcetRule = (roomData: Room, personalRanks: number[][], locale: string): RankResults[] => {
+export const condorcetRule = (props: RuleDataAsset): RankResults[] => {
+  const { roomData, personalRanks, language } = props
+
   //Setup results
   const results = roomData.options.map((option, index) => (
     {
@@ -96,7 +98,10 @@ export const condorcetRule = (roomData: Room, personalRanks: number[][], locale:
         arrayIndex: result.arrayIndex,
         name: result.name,
         score: "",
-        rank: rankingFormatted(result.rank, locale)
+        rank: rankingFormatted({
+          rank: result.rank,
+          language: language
+        })
       }
     ))
     arrayOfResults.push(resultsString)

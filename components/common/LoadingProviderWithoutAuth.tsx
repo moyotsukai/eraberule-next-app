@@ -9,7 +9,7 @@ type Props = {
 }
 
 const LoadingProviderWithoutAuth: React.FC<Props> = (props) => {
-  const t = useLocale(T_COMMON)
+  const { t } = useLocale(T_COMMON)
 
   if (props.isLoading) {
     return (

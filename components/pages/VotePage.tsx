@@ -5,18 +5,18 @@ import { attendedRoomIdsState, hasNoUserDocState, personalRankState, roomDataSta
 import { useRecoilState, useRecoilValue } from 'recoil'
 import SignInProvider from '../common/SignInProvider'
 import { useLocale } from '../../i18n/useLocale'
-import { useAuth } from '../../auth/useAuth'
+import { useAuth } from '../../model/auth/useAuth'
 import VotePageCard from '../functional/VotePageCard'
 import Button from '../ui/Button'
 import Spacer from '../ui/Spacer'
 import { T_VOTE } from '../../locales/votePage'
-import { setVote } from '../../firestore/setVote'
-import { userDocDataToFirebase, voteToFirestore } from '../../firestore/dataConverter'
-import { setUserDocData } from '../../firestore/setUserDocData'
+import { setVote } from '../../model/firestore/setVote'
+import { userDocDataToFirebase, voteToFirestore } from '../../model/firestore/dataConverter'
+import { setUserDocData } from '../../model/firestore/setUserDocData'
 import { asyncTask } from '../../utils/asyncTask'
 import { RULE_NAMES } from '../../rules/ruleNames'
 import { log } from '../../utils/log'
-import { updateUserDocData } from '../../firestore/updateUserDocData'
+import { updateUserDocData } from '../../model/firestore/updateUserDocData'
 
 const VotePage: React.FC = () => {
   const { user } = useAuth()
@@ -28,7 +28,7 @@ const VotePage: React.FC = () => {
   const [isEnabled, setIsEnabled] = useState<boolean>(true)
   const [isClicked, setIsClicked] = useState<boolean>(false)
   const didSendRef = useRef<boolean>(false)
-  const t = useLocale(T_VOTE)
+  const { t } = useLocale(T_VOTE)
 
   //Push router when reloaded
   useEffect(() => {

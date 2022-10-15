@@ -6,6 +6,7 @@ import Spacer from '../ui/Spacer'
 import { RankResults } from '../../types/RankResults.type'
 import { useLocale } from '../../i18n/useLocale'
 import { dividerColor } from '../../styles/colors'
+import { T_RELATIVE_EVALUATION_RESULT_TABLE } from '../../locales/RelativeEvaluationReultTable'
 
 type Props = {
   resultRanks: RankResults[] | undefined
@@ -13,8 +14,7 @@ type Props = {
 }
 
 const RelativeEvaluationReultTable: React.FC<Props> = (props) => {
-  const { t } = useLocale()
-  const localizedString = t.functional.relativeEvaluationResultTable
+  const { t } = useLocale(T_RELATIVE_EVALUATION_RESULT_TABLE)
 
   if (props.resultRanks.length === 1) {
     return (
@@ -40,7 +40,7 @@ const RelativeEvaluationReultTable: React.FC<Props> = (props) => {
         {props.resultRanks.map((results, index) => (
           <React.Fragment key={index} >
             <SupportingTextCell textAlign="left">
-              {localizedString.nPossibilityF + (index + 1) + localizedString.nPossibilityB}
+              {t.N_POSSIBILITY_1 + (index + 1) + t.N_POSSIBILITY_2}
             </SupportingTextCell>
             <table css={tableStyle}>
               {results.map((result, index) => (

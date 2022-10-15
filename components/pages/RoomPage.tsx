@@ -6,12 +6,12 @@ import { useRecoilState, useSetRecoilState } from 'recoil'
 import SignInProvider from '../common/SignInProvider'
 import SupportingTextCell from '../ui/SupportingTextCell'
 import { useLocale } from '../../i18n/useLocale'
-import { useAuth } from '../../auth/useAuth'
+import { useAuth } from '../../model/auth/useAuth'
 import Button from '../ui/Button'
 import Spacer from '../ui/Spacer'
-import { getQueryRoomTitle } from '../../room/getQueryRoomTitle'
-import { useQueryRoom } from '../../room/useQueryRoom'
-import { useHasVoted } from '../../room/useHasVoted'
+import { getQueryRoomTitle } from '../../model/room/getQueryRoomTitle'
+import { useQueryRoom } from '../../model/room/useQueryRoom'
+import { useHasVoted } from '../../model/room/useHasVoted'
 import Card from '../ui/Card'
 import TextCell from '../ui/TextCell'
 import { T_ROOM } from '../../locales/roomPage'
@@ -25,7 +25,7 @@ const RoomPage: React.FC = () => {
   const setPersonalRank = useSetRecoilState(personalRankState)
   const { attendedRoomIds, hasVoted, isLoadingHasVoted } = useHasVoted({ user: user, roomData: roomData, isLoading: isLoadingRoomData })
   const setAttendedRoomIds = useSetRecoilState(attendedRoomIdsState)
-  const t = useLocale(T_ROOM)
+  const { t } = useLocale(T_ROOM)
 
   //Set room data state globally
   useEffect(() => {

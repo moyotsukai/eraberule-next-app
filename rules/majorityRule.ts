@@ -1,10 +1,12 @@
+import { RuleDataAsset } from './../types/RuleDataAsset';
 import { RankResults } from '../types/RankResults.type'
-import { Room } from '../types/Room.type'
-import { ruleNames } from './ruleNames'
 import { rankingFormatted } from '../utils/rankingFormatted'
 import { scoreLabelString } from '../utils/scoreLabelString'
+import { RULE_NAMES } from './ruleNames'
 
-export const majorityRule = (roomData: Room, personalRanks: number[][], locale: string): RankResults[] => {
+export const majorityRule = (props: RuleDataAsset): RankResults[] => {
+  const { roomData, personalRanks, language } = props
+
   //Setup
   const results = roomData.options.map((option) => (
     {
@@ -48,8 +50,14 @@ export const majorityRule = (roomData: Room, personalRanks: number[][], locale: 
   const resultsString: RankResults = results.map((result) => (
     {
       name: result.name,
-      score: `${result.score.toString()}${scoreLabelString(ruleNames.majorityRule, locale)}(${result.obtained}%)`,
-      rank: rankingFormatted(result.rank, locale)
+      score: result.score.toString() + scoreLabelString({
+        ruleName: RULE_NAMES.MAJORITY_RULE,
+        language: language
+      }) + `(${result.obtained}%)`,
+      rank: rankingFormatted({
+        rank: result.rank,
+        language: language
+      })
     }
   ))
 

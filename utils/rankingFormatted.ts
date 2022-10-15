@@ -1,5 +1,14 @@
-export const rankingFormatted = (rank: number, locale: string) => {
-  if (locale == "ja") {
+import { Language } from "../i18n/i18n"
+
+type Props = {
+  rank: number,
+  language: Language
+}
+
+export const rankingFormatted = (props: Props) => {
+  const { rank, language } = props
+
+  if (language == "ja") {
     return rank + "位"
 
   } else {

@@ -1,6 +1,6 @@
 import { signInAnonymously } from 'firebase/auth'
-import { log } from '../utils/log'
-import { auth } from '../firebase/initialize'
+import { log } from '../../utils/log'
+import { auth } from '../../lib/firebase'
 
 export const signIn = async () => {
   try {
