@@ -17,11 +17,9 @@ const Layout: React.FC<Props> = (props) => {
   return (
     <div css={layoutStyle}>
       <div css={containerStyle}>
+        <Header />
         <div>
-          <Header />
           <TabBar path={path} />
-        </div>
-        <div>
           {props.children}
         </div>
       </div>

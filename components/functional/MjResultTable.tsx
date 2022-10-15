@@ -13,17 +13,17 @@ const MjResultTable: React.FC<Props> = (props) => {
   return (
     <div css={containerStyle}>
       <table css={tableStyle}>
-        {resultRanks[0].map((result, index) => (
-          <React.Fragment key={index}>
-            <tr css={() => rowStyle(index % 2 !== 0)}>
+        <tbody>
+          {resultRanks[0].map((result, index) => (
+            <tr key={index} css={() => rowStyle(index % 2 !== 0)} >
               <th css={rankStyle}>{result.rank}</th>
               <td css={mjBlockStyle}>
                 <p>{result.name}</p>
                 <p>{result.score}</p>
               </td>
             </tr>
-          </React.Fragment>
-        ))}
+          ))}
+        </tbody>
       </table>
     </div>
   )

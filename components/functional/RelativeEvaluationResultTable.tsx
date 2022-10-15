@@ -20,15 +20,17 @@ const RelativeEvaluationReultTable: React.FC<Props> = (props) => {
     return (
       <div css={containerStyle}>
         <table css={tableStyle}>
-          {props.resultRanks[0].map((result, index) => (
-            <tr key={index} css={() => rowStyle(index % 2 !== 0)}>
-              <th css={rankStyle}>{result.rank}</th>
-              <td css={nameStyle}>{result.name}</td>
-              {result.score &&
-                <td css={scoreStyle}>{result.score}</td>
-              }
-            </tr>
-          ))}
+          <tbody>
+            {props.resultRanks[0].map((result, index) => (
+              <tr key={index} css={() => rowStyle(index % 2 !== 0)}>
+                <th css={rankStyle}>{result.rank}</th>
+                <td css={nameStyle}>{result.name}</td>
+                {result.score &&
+                  <td css={scoreStyle}>{result.score}</td>
+                }
+              </tr>
+            ))}
+          </tbody>
         </table>
       </div>
     )
@@ -43,15 +45,17 @@ const RelativeEvaluationReultTable: React.FC<Props> = (props) => {
               {t.N_POSSIBILITY_1 + (index + 1) + t.N_POSSIBILITY_2}
             </SupportingTextCell>
             <table css={tableStyle}>
-              {results.map((result, index) => (
-                <tr key={index} css={() => rowStyle(index % 2 !== 0)}>
-                  <th css={rankStyle}>{result.rank}</th>
-                  <td css={nameStyle}>{result.name}</td>
-                  {result.score &&
-                    <td css={scoreStyle}>{result.score}</td>
-                  }
-                </tr>
-              ))}
+              <tbody>
+                {results.map((result, index) => (
+                  <tr key={index} css={() => rowStyle(index % 2 !== 0)}>
+                    <th css={rankStyle}>{result.rank}</th>
+                    <td css={nameStyle}>{result.name}</td>
+                    {result.score &&
+                      <td css={scoreStyle}>{result.score}</td>
+                    }
+                  </tr>
+                ))}
+              </tbody>
             </table>
             {index !== props.resultRanks.length - 1 &&
               <Spacer y="10px" />

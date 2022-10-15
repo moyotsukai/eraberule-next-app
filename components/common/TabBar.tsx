@@ -5,10 +5,6 @@ import { primaryShadowColor } from '../../styles/colors'
 import { useLocale } from '../../i18n/useLocale'
 import { T_TAB_BAR } from '../../locales/tabBar'
 
-type Props = {
-  path: string
-}
-
 type Tabs = {
   text: string
   path: string
@@ -33,6 +29,10 @@ const createTabs = (text: TabTexts): Tabs[] => {
       match: ["/create", "/create/new", "/create/suggest", "/create/share"],
     }
   ]
+}
+
+type Props = {
+  path: string
 }
 
 const TabBar: React.FC<Props> = (props) => {

@@ -24,18 +24,23 @@ const MjDetails: React.FC<Props> = (props) => {
 
   //Set resultRanks, mjDetails
   useEffect(() => {
-    if (roomData.rule === RULE_NAMES.MAJORITY_JUDGEMENT) {
-      const ruleDataAsset: RuleDataAsset = {
-        roomData: roomData,
-        personalRanks: personalRanks,
-        language: language
-      }
-      const mjResult = majorityJudgement(ruleDataAsset)
-      setResultRanks(mjResult)
-      const detail = mjDetails(roomData, personalRanks)
-      setMjDetailData(detail)
+    if (!personalRanks) { return }
+    if (roomData.rule !== RULE_NAMES.MAJORITY_JUDGEMENT) { return }
+
+    const ruleDataAsset: RuleDataAsset = {
+      roomData: roomData,
+      personalRanks: personalRanks,
+      language: language
     }
+    const mjResult = majorityJudgement(ruleDataAsset)
+    setResultRanks(mjResult)
+    const detail = mjDetails(roomData, personalRanks)
+    setMjDetailData(detail)
   }, [personalRanks])
+
+  const isGroupEvaluation = ({ optionIndex, evaluationIndex }): boolean => {
+    return resultRanks[0].find((option) => option.name === roomData.options[optionIndex]).score === roomData.commonLanguage[evaluationIndex]
+  }
 
   //UI
   if (mjDetailData === undefined) {
@@ -48,30 +53,32 @@ const MjDetails: React.FC<Props> = (props) => {
     return (
       <div css={containerStyle}>
         <table css={tableStyle}>
-          {mjDetailData.map((evaluations, optionIndex) => (
-            <tr key={optionIndex} css={() => rowStyle(optionIndex % 2 !== 0)}>
-              <td css={tableDataStyle}>
-                <SupportingTextCell textAlign="left">
-                  {roomData.options[optionIndex]}
-                </SupportingTextCell>
-                <ul css={listStyle}>
-                  {evaluations.map((num, evaluationIndex) => (
-                    <li
-                      key={evaluationIndex}
-                      css={() => cellStyle(resultRanks[0].find((option) => option.name === roomData.options[optionIndex]).score === roomData.commonLanguage[evaluationIndex])}
-                    >
-                      <span css={evaluationStyle}>
-                        {props.roomData.commonLanguage[evaluationIndex]}
-                      </span>
-                      <span css={scoreStyle}>
-                        {num + t.NUM_OF_VOTES}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </td>
-            </tr>
-          ))}
+          <tbody>
+            {mjDetailData.map((evaluations, optionIndex) => (
+              <tr key={optionIndex} css={() => rowStyle(optionIndex % 2 !== 0)}>
+                <td css={tableDataStyle}>
+                  <SupportingTextCell textAlign="left">
+                    {roomData.options[optionIndex]}
+                  </SupportingTextCell>
+                  <ul css={listStyle}>
+                    {evaluations.map((num, evaluationIndex) => (
+                      <li
+                        key={evaluationIndex}
+                        css={() => cellStyle(isGroupEvaluation({ optionIndex: optionIndex, evaluationIndex: evaluationIndex }))}
+                      >
+                        <span css={evaluationStyle}>
+                          {props.roomData.commonLanguage[evaluationIndex]}
+                        </span>
+                        <span css={scoreStyle}>
+                          {num + t.NUM_OF_VOTES}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </div>
     )

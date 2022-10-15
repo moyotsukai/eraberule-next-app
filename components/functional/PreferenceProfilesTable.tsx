@@ -19,6 +19,8 @@ const PreferenceProfilesTable: React.FC<Props> = (props) => {
   const [preferenceProfiles, setPreferenceProfiles] = useState<PreferenceProfilesFormatted[]>([])
   const { t } = useLocale(T_PREFERENCE_PROFILES_TABLE)
 
+  const filteredPreferenceProfiles = preferenceProfiles.filter((profile) => (profile.obtained !== 0))
+
   //Set preferenceProfilesAssumption, preferenceProfiles
   useEffect(() => {
     if (!personalRanks) { return }
@@ -33,16 +35,20 @@ const PreferenceProfilesTable: React.FC<Props> = (props) => {
       </SupportingTextCell>
       <div css={containerStyle}>
         <table css={tableStyle}>
-          <tr>
-            <th css={obtainedLabelStyle}>{t.N_VOTERS}</th>
-            <th css={rankOrderingLabelStyle}>{t.RANK_ORDERINGS}</th>
-          </tr>
-          {preferenceProfiles.map((profile, index) => (
-            <tr key={index} css={() => rowStyle(index % 2 !== 0)}>
-              <td css={obtainedStyle}>{profile.obtained + t.PEOPLE}</td>
-              <td css={rankOrderingStyle}>{profile.rankOrdering}</td>
+          <thead>
+            <tr>
+              <th css={obtainedLabelStyle}>{t.N_VOTERS}</th>
+              <th css={rankOrderingLabelStyle}>{t.RANK_ORDERINGS}</th>
             </tr>
-          ))}
+          </thead>
+          <tbody>
+            {filteredPreferenceProfiles.map((profile, index) => (
+              <tr key={index} css={() => rowStyle(index % 2 !== 0)}>
+                <td css={obtainedStyle}>{profile.obtained + t.PEOPLE}</td>
+                <td css={rankOrderingStyle}>{profile.rankOrdering}</td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </div>
     </React.Fragment>
