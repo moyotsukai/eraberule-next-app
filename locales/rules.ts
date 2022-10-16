@@ -79,5 +79,9 @@ export const T_RULES = asLocaleTable({
           return "is resilient against extreme evaluations."
       }
     }
+  },
+  DEFAULT_COMMON_LANGUAGE: {
+    ja: "素晴らしい/非常に良い/良い/容認/不十分/失格",
+    en: "Excellent/Very good/Good/Fair/Insufficient/To be rejected"
   }
 })

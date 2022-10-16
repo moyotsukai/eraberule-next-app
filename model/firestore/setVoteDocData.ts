@@ -10,8 +10,9 @@ type Props = {
   data: Vote
 }
 
-export const setVote = async (props: Props) => {
-  log("setVote: ", props.data)
-  const newVoteRef = doc(collection(db, KEYS.ROOMS, props.roomData.docId, KEYS.VOTES))
-  await setDoc(newVoteRef, props.data)
+export const setVoteDocData = async (props: Props) => {
+  const { roomData, data } = props
+  const newVoteRef = doc(collection(db, KEYS.ROOMS, roomData.docId, KEYS.VOTES))
+  await setDoc(newVoteRef, data)
+  log("setVote: ", data)
 }

@@ -5,7 +5,7 @@ import { log } from '../../utils/log'
 import { roomFromFirestore } from './dataConverter'
 import { KEYS } from './key'
 
-export const getRecentlyCreatedRoomData = async (userId: string): Promise<Room | null> => {
+export const getCreatedRoomsData = async (userId: string): Promise<Room[] | null> => {
   const q = query(collection(db, KEYS.ROOMS), where(KEYS.SENDER_ID, "==", userId))
   const querySnapshot = await getDocs(q)
 
@@ -13,9 +13,8 @@ export const getRecentlyCreatedRoomData = async (userId: string): Promise<Room |
     return null
   } else {
     const rooms = querySnapshot.docs.map((doc) => roomFromFirestore(doc))
-    log("getRecentlyCreatedRoomData, created rooms: ", rooms)
-    const newest = rooms.sort((a, b) => (a.date > b.date) ? -1 : 1)[0]
+    log("getCreatedRoomsData: ", rooms)
 
-    return newest
+    return rooms
   }
 }

@@ -1,9 +1,4 @@
 import React from 'react'
-import { css } from '@emotion/react'
-import NewPageCard from '../functional/NewPageCard'
-import Button from '../ui/Button'
-import Spacer from '../ui/Spacer'
-import { useLocale } from '../../i18n/useLocale'
 
 type Props = {
   title: string
@@ -32,53 +27,9 @@ type Props = {
 }
 
 const NewTemplate: React.FC<Props> = (props) => {
-  const { t } = useLocale()
-  const localizedString = t.templates.newTemplate
-
   return (
-    <div css={layoutStyle}>
-      <NewPageCard
-        title={props.title}
-        onTitleChange={props.onTitleChange}
-        shouldChangeTitle={props.shouldChangeTitle}
-        hasAddedExplanation={props.hasAddedExplanation}
-        onAddExplanation={props.onAddExplanation}
-        explanation={props.explanation}
-        onExplanationChange={props.onExplanationChange}
-        isAddOptionEnabled={props.isAddOptionEnabled}
-        onAddOption={props.onAddOption}
-        options={props.options}
-        onOptionsChange={props.onOptionsChange}
-        onRemoveOption={props.onRemoveOption}
-        isOptionsExceed={props.isOptionsExceed}
-        onRuleSelection={props.onRuleSelection}
-        selectedRule={props.selectedRule}
-        isAddEvaluationVocabularyEnabled={props.isAddEvaluationVocabularyEnabled}
-        onAddEvaluationVocabulary={props.onAddEvaluationVocabulary}
-        commonLanguage={props.commonLanguage}
-        onCommonLanguageChange={props.onCommonLanguageChange}
-        onRemoveEvaluationVocabulary={props.onRemoveEvaluationVocabulary}
-      />
-
-      <Button
-        onClick={props.onSend}
-        isEnabled={props.isSendEnabled}
-        isLoading={props.isSendClicked}
-      >
-        {props.isSendClicked
-          ? localizedString.sending
-          : localizedString.submit
-        }
-      </Button>
-      <Spacer y="35px" />
-    </div>
+    <div />
   )
 }
-
-const layoutStyle = css`
-  min-height: 100vh;
-  text-align: center;
-  padding: 0 15px;
-`
 
 export default NewTemplate

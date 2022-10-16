@@ -33,7 +33,7 @@ export const useHasVoted = (props: Props) => {
       .then((attendedRoomIds) => {
         setAttendedRoomIds(attendedRoomIds ?? [])
 
-        if (attendedRoomIds) {
+        if (attendedRoomIds !== null) {
           setHasVoted(attendedRoomIds.includes(props.roomData.docId))
           setHasNoUserDoc(false)
         } else {

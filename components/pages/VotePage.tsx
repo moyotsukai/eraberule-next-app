@@ -10,7 +10,7 @@ import VotePageCard from '../functional/VotePageCard'
 import Button from '../ui/Button'
 import Spacer from '../ui/Spacer'
 import { T_VOTE } from '../../locales/votePage'
-import { setVote } from '../../model/firestore/setVote'
+import { setVoteDocData } from '../../model/firestore/setVoteDocData'
 import { userDocDataToFirebase, voteToFirestore } from '../../model/firestore/dataConverter'
 import { setUserDocData } from '../../model/firestore/setUserDocData'
 import { asyncTask } from '../../utils/asyncTask'
@@ -63,13 +63,10 @@ const VotePage: React.FC = () => {
       const vote = voteToFirestore({
         personalRank: personalRank
       })
-      await setVote({ roomData: roomData, data: vote })
-
-      //Set attended room ids globally
-      const newAttendedRoomIds = [roomData.docId, ...attendedRoomIds]
-      setAttendedRoomIds(newAttendedRoomIds)
+      await setVoteDocData({ roomData: roomData, data: vote })
 
       //Send attendance
+      const newAttendedRoomIds = [roomData.docId, ...attendedRoomIds]
       const userDocData = hasNoUserDoc
         ? userDocDataToFirebase({
           attendedRooms: newAttendedRoomIds,
@@ -85,6 +82,10 @@ const VotePage: React.FC = () => {
         await updateUserDocData({ userId: user.uid, data: userDocData })
       }
 
+      //Set attended room ids globally
+      setAttendedRoomIds(newAttendedRoomIds)
+
+      //Finally
       toResult()
     })
   }

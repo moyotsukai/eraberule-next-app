@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { getRoomDataByTitle } from "../firestore/getRoomData"
+import { getRoomDataByTitle } from "../firestore/getRoomDataByTitle"
 import { Room } from "../../types/Room.type"
 import { log } from "../../utils/log"
 
