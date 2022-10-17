@@ -3,7 +3,6 @@ import { css } from '@emotion/react'
 import Card from '../ui/Card'
 import SupportingTextCell from '../ui/SupportingTextCell'
 import Spacer from '../ui/Spacer'
-import { ruleNames } from '../../rules/ruleNames'
 import Input from '../ui/Input'
 import TextArea from '../ui/TextArea'
 import TextButton from '../ui/TextButton'
@@ -11,6 +10,9 @@ import { supportingTextColor } from '../../styles/colors'
 import RemoveButton from '../ui/RemoveButton'
 import SingleSelectionCell from '../ui/SingleSelectionCell'
 import { useLocale } from '../../i18n/useLocale'
+import { T_NEW_PAGE_FORM } from '../../locales/newPageForm'
+import { T_RULES } from '../../locales/rules'
+import { RuleKeyName, RULE_KEY_NAME, RULE_KEY_NAMES } from '../../rules/ruleNames'
 
 type Props = {
   title: string
@@ -26,8 +28,8 @@ type Props = {
   onOptionsChange: (event: React.ChangeEvent<HTMLInputElement>, index: number) => void
   onRemoveOption: (number) => void
   isOptionsExceed: boolean
-  onRuleSelection: (string) => void
-  selectedRule: string
+  onRuleSelection: (ruleKeyName: RuleKeyName) => void
+  selectedRuleKeyName: RuleKeyName
   isAddEvaluationVocabularyEnabled: boolean
   onAddEvaluationVocabulary: () => void
   commonLanguage: string[]
@@ -36,47 +38,47 @@ type Props = {
 }
 
 const NewPageCard: React.FC<Props> = (props) => {
-  const { t } = useLocale()
-  const localizedString = t.functional.newPageCard
+  const { t } = useLocale(T_NEW_PAGE_FORM)
+  const t_rules = useLocale(T_RULES).t
 
   return (
     <Card>
       <SupportingTextCell textAlign="left">
-        {localizedString.title}
+        {t.TITLE}
       </SupportingTextCell>
       <Input
         value={props.title}
-        placeholder={localizedString.enterTitle}
+        placeholder={t.ENTER_TITLE}
         onChange={props.onTitleChange}
       />
       {props.shouldChangeTitle &&
         <SupportingTextCell textAlign="left" isError={true}>
-          {localizedString.errorUsedTitle}
+          {t.ERROR_USED_TITLE}
         </SupportingTextCell>
       }
       <Spacer y="15px" />
 
       <SupportingTextCell textAlign="left">
-        {localizedString.explanation}
+        {t.EXPLANATION}
       </SupportingTextCell>
       {props.hasAddedExplanation
         ?
         <TextArea
           value={props.explanation}
-          placeholder={localizedString.enterExplanation}
+          placeholder={t.ENTER_EXPLANATION}
           onChange={props.onExplanationChange}
         />
         :
         <div css={textButtonContainerStyle}>
           <TextButton onClick={props.onAddExplanation}>
-            {localizedString.addExplanation}
+            {t.ADD_EXPLANATION}
           </TextButton>
         </div>
       }
       <Spacer y="15px" />
 
       <SupportingTextCell textAlign="left">
-        {localizedString.options}
+        {t.OPTIONS}
       </SupportingTextCell>
       {props.options.map((option, index) => (
         <React.Fragment key={index}>
@@ -84,7 +86,7 @@ const NewPageCard: React.FC<Props> = (props) => {
             <div css={inputContainerStyle}>
               <Input
                 value={option}
-                placeholder={localizedString.enterOption}
+                placeholder={t.ENTER_OPTION}
                 onChange={(event) => props.onOptionsChange(event, index)}
               />
             </div>
@@ -101,38 +103,43 @@ const NewPageCard: React.FC<Props> = (props) => {
       {props.isAddOptionEnabled &&
         <div css={textButtonContainerStyle}>
           <TextButton onClick={props.onAddOption} >
-            {localizedString.addOption}
+            {t.ADD_OPTION}
           </TextButton>
         </div>
       }
       <SupportingTextCell textAlign="left" isError={props.isOptionsExceed}>
-        {localizedString.limitExplanationF + t.ruleDisplayNames.bordaRule + localizedString.and + t.ruleDisplayNames.condorcetRule + localizedString.limitExplanationB + localizedString.period}
+        {t.LIMIT_EXPLANATION_1
+          + t_rules.$RULE_DISPLAY_NAME(RULE_KEY_NAME.BORDA_COUNT_METHOD)
+          + t.AND
+          + t_rules.$RULE_DISPLAY_NAME(RULE_KEY_NAME.CONDORCET_METHOD)
+          + t.LIMIT_EXPLANATION_2 + t.PERIOD
+        }
       </SupportingTextCell>
       <Spacer y="15px" />
 
       <SupportingTextCell textAlign="left">
-        {localizedString.voringMethod}
+        {t.VOTING_MATHOD}
       </SupportingTextCell>
-      {Object.values(ruleNames).map((ruleName, index) => (
+      {Object.values(RULE_KEY_NAMES).map((ruleKeyName, index) => (
         <SingleSelectionCell
-          text={t.ruleDisplayNames[ruleName]}
-          onClick={() => props.onRuleSelection(ruleName)}
-          isSelected={ruleName === props.selectedRule}
+          text={t_rules.$RULE_DISPLAY_NAME(ruleKeyName)}
+          onClick={() => props.onRuleSelection(ruleKeyName)}
+          isSelected={ruleKeyName === props.selectedRuleKeyName}
           key={index}
         >
-          {ruleName === props.selectedRule &&
+          {ruleKeyName === props.selectedRuleKeyName &&
             <p css={explanationStyle}>
-              {t.ruleExplanations[ruleName]}
+              {t_rules.$RULE_EXPLANATION(ruleKeyName)}
             </p>
           }
         </SingleSelectionCell>
       ))}
 
-      {props.selectedRule === ruleNames.majorityJudgement &&
+      {props.selectedRuleKeyName === RULE_KEY_NAME.MAJORITY_JUDGEMENT &&
         <React.Fragment>
           <Spacer y="15px" />
           <SupportingTextCell textAlign="left">
-            {localizedString.measures}
+            {t.MEASURES}
           </SupportingTextCell>
           {props.commonLanguage.map((evaluation, index) => (
             <React.Fragment key={index}>
@@ -140,7 +147,7 @@ const NewPageCard: React.FC<Props> = (props) => {
                 <div css={inputContainerStyle}>
                   <Input
                     value={evaluation}
-                    placeholder={localizedString.enterMeasure}
+                    placeholder={t.ENTER_MEASURE}
                     onChange={(event) => props.onCommonLanguageChange(event, index)}
                   />
                 </div>
@@ -157,7 +164,7 @@ const NewPageCard: React.FC<Props> = (props) => {
           {props.isAddEvaluationVocabularyEnabled &&
             <div css={textButtonContainerStyle}>
               <TextButton onClick={props.onAddEvaluationVocabulary} >
-                {localizedString.addMeasure}
+                {t.ADD_MEASURE}
               </TextButton>
             </div>
           }

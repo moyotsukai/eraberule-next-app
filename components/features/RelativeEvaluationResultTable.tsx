@@ -6,7 +6,7 @@ import Spacer from '../ui/Spacer'
 import { RankResults } from '../../types/RankResults.type'
 import { useLocale } from '../../i18n/useLocale'
 import { dividerColor } from '../../styles/colors'
-import { T_RELATIVE_EVALUATION_RESULT_TABLE } from '../../locales/RelativeEvaluationReultTable'
+import { T_RELATIVE_EVALUATION_RESULT_TABLE } from '../../locales/relativeEvaluationReultTable'
 
 type Props = {
   resultRanks: RankResults[] | undefined

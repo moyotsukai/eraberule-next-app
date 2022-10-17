@@ -7,7 +7,7 @@ import { anySpaceToSingleSpace } from '../../utils/anySpaceToSingleSpace'
 import { removeBlanks } from '../../utils/removeBlanks'
 import Button from '../ui/Button'
 import Spacer from '../ui/Spacer'
-import NewPageCard from '../functional/NewPageCard'
+import NewPageCard from '../features/NewPageCard'
 import { css } from '@emotion/react'
 import { useAuth } from '../../model/auth/useAuth'
 import SignInProvider from '../common/SignInProvider'
@@ -24,6 +24,7 @@ import { userDocDataToFirebase } from '../../model/firestore/dataConverter'
 import { setUserDocData } from '../../model/firestore/setUserDocData'
 import { updateUserDocData } from '../../model/firestore/updateUserDocData'
 import { getRoomDataByTitle } from '../../model/firestore/getRoomDataByTitle'
+import { log } from '../../utils/log'
 
 const NewPage: React.FC = () => {
   const { user } = useAuth()
@@ -34,8 +35,10 @@ const NewPage: React.FC = () => {
   const suggestedRule = useRecoilValue(suggestedRuleState)
   const { t, language } = useLocale(T_NEW_PAGE)
   const t_rules = useLocale(T_RULES).t
-  const [selectedRule, setSelectedRule] = useState<RuleKeyName | null>(null)
+  const [selectedRuleKeyName, setSelectedRuleKeyName] = useState<RuleKeyName | null>(null)
   const [hasNoUserDoc, setHasNoUserDoc] = useRecoilState(hasNoUserDocState)
+  const [isSendEnabled, setIsSendEnabled] = useState<boolean>(false)
+  const [isSendClicked, setIsSendClicked] = useState<boolean>(false)
 
   //Set created room ids state globally
   useEffect(() => {
@@ -48,7 +51,6 @@ const NewPage: React.FC = () => {
     setCommonLanguage(defaultCommonLanguage)
   }, [language])
 
-
   const onSend = () => {
     if (_hasFetched.current) { return }
     setIsSendClicked(true)
@@ -59,7 +61,6 @@ const NewPage: React.FC = () => {
 
       //Check if title already exists
       const alreadyExistRoomData = await getRoomDataByTitle(roomData.title)
-
       if (alreadyExistRoomData !== null) {
         setShouldChangeTitle(true)
         setIsSendClicked(false)
@@ -102,8 +103,6 @@ const NewPage: React.FC = () => {
 
 
   //------以下未リファクタリング
-  const [isSendEnabled, setIsSendEnabled] = useState<boolean>(false)
-  const [isSendClicked, setIsSendClicked] = useState<boolean>(false)
   const [title, setTitle] = useState<string>("")
   const [shouldChangeTitle, setShouldChangeTitle] = useState<boolean>(false)
   const [hasAddedExplanation, setHasAddedExplanation] = useState<boolean>(false)
@@ -118,7 +117,7 @@ const NewPage: React.FC = () => {
   //Set initial selectedRule
   useEffect(() => {
     if (suggestedRule !== null) {
-      setSelectedRule(suggestedRule)
+      setSelectedRuleKeyName(suggestedRule)
     }
   }, [])
 
@@ -128,10 +127,11 @@ const NewPage: React.FC = () => {
     if (removeBlanks(title) === "") { return }
     if (validArray(options).length === 0) { return }
     if (isOptionsExceed) { return }
-    if (selectedRule === null) { return }
+    if (selectedRuleKeyName === null) { return }
     if (validArray(commonLanguage).length === 0) { return }
+    if (isSendClicked) { return }
     setIsSendEnabled(true)
-  }, [title, explanation, options, isOptionsExceed, selectedRule, commonLanguage])
+  }, [title, explanation, options, isOptionsExceed, selectedRuleKeyName, commonLanguage, isSendClicked])
 
   //Set isAddOptionEnabled
   useLayoutEffect(() => {
@@ -146,14 +146,14 @@ const NewPage: React.FC = () => {
   useLayoutEffect(() => {
     setIsOptionsExceed(false)
     if (options.length > 10) {
-      if (selectedRule === "BORDA_COUNT_METHOD") {
+      if (selectedRuleKeyName === "BORDA_COUNT_METHOD") {
         setIsOptionsExceed(true)
       }
-      if (selectedRule === "CONDORCET_METHOD") {
+      if (selectedRuleKeyName === "CONDORCET_METHOD") {
         setIsOptionsExceed(true)
       }
     }
-  }, [options, selectedRule])
+  }, [options, selectedRuleKeyName])
 
   //Set isAddEvaluationVocabularyEnabled
   useLayoutEffect(() => {
@@ -193,14 +193,14 @@ const NewPage: React.FC = () => {
     setOptions(newOptions)
   }
 
-  const onRuleSelection = (ruleName: RuleKeyName) => {
-    if (selectedRule === null) {
-      setSelectedRule(ruleName)
+  const onRuleSelection = (ruleKeyName: RuleKeyName) => {
+    if (selectedRuleKeyName === null) {
+      setSelectedRuleKeyName(ruleKeyName)
     } else {
-      if (ruleName === selectedRule) {
-        setSelectedRule(null)
+      if (ruleKeyName === selectedRuleKeyName) {
+        setSelectedRuleKeyName(null)
       } else {
-        setSelectedRule(ruleName)
+        setSelectedRuleKeyName(ruleKeyName)
       }
     }
   }
@@ -228,7 +228,7 @@ const NewPage: React.FC = () => {
     setOptions(validOptions)
     setCommonLanguage(validCommonLanguage)
     const replacedTitle = anySpaceToSingleSpace(title)
-    const databaseRuleName = RULE_NAMES[selectedRule]
+    const databaseRuleName = RULE_NAMES[selectedRuleKeyName]
 
     const roomData: Room = {
       title: replacedTitle,
@@ -239,7 +239,7 @@ const NewPage: React.FC = () => {
       senderId: user.uid,
       date: new Date()
     }
-    if (selectedRule === "MAJORITY_JUDGEMENT") {
+    if (selectedRuleKeyName === "MAJORITY_JUDGEMENT") {
       roomData[KEYS.COMMON_LANGUAGE] = validCommonLanguage
     }
 
@@ -288,7 +288,7 @@ const NewPage: React.FC = () => {
           onRemoveOption={onRemoveOption}
           isOptionsExceed={isOptionsExceed}
           onRuleSelection={onRuleSelection}
-          selectedRule={selectedRule}
+          selectedRuleKeyName={selectedRuleKeyName}
           isAddEvaluationVocabularyEnabled={isAddEvaluationVocabularyEnabled}
           onAddEvaluationVocabulary={onAddEvaluationVocabulary}
           commonLanguage={commonLanguage}

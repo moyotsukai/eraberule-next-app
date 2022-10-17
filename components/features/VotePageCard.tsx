@@ -21,8 +21,8 @@ type Props = {
 const VotePageCard: React.FC<Props> = (props) => {
   const roomData = useRecoilValue(roomDataState)
   const ruleKeyName: RuleKeyName = ruleKeyNameFromRuleName(roomData.rule)
-  const t = useLocale(T_VOTE)
-  const t_RULES = useLocale(T_RULES)
+  const { t } = useLocale(T_VOTE)
+  const t_RULES = useLocale(T_RULES).t
 
   //UI
   const Table = () => {

@@ -11,7 +11,7 @@ import SupportingTextCell from '../ui/SupportingTextCell'
 import { useLocale } from '../../i18n/useLocale'
 import { T_INDEX_PAGE } from '../../locales/indexPage'
 import { supportingTextColor } from '../../styles/colors'
-import SearchBox from '../functional/SearchBox'
+import SearchBox from '../features/SearchBox'
 
 const IndexPage: React.FC = () => {
   const router = useRouter()

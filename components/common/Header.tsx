@@ -2,7 +2,7 @@ import React from 'react'
 import { css } from '@emotion/react'
 import Image from 'next/image'
 import Logo from '../../public/logo.png'
-import LanguageMenu from '../functional/LanguageMenu'
+import LanguageMenu from '../features/LanguageMenu'
 
 const Header: React.FC = () => {
   return (
