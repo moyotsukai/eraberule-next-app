@@ -31,15 +31,14 @@ const textStyle = css`
   font-family: 'Noto Sans JP', sans-serif;
   font-size: 12pt;
   margin: 0 10px;
+  display: inline-block;
 `
-
 const loadingStyle = css`
   padding: 30px 0;
   display: flex;
   align-items: center;
   justify-content: center;
 `
-
 const messageStyle = css`
   padding: 30px 0;
   text-align: center;
